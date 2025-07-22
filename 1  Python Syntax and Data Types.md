@@ -105,7 +105,7 @@ employee_roles = dict(employee_data_raw)
 print(f"The Role Dictionary (a key-value kingdom): {employee_roles}")
 
 # The magic of O(1) lookup—a query that's a speed demon.
-role_of_102 = employee_roles
+role_of_102 = employee_roles[102]
 print(f"Role of employee 102: {role_of_102}")
 
 # A set comprehension to banish the duplicates

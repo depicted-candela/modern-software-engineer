@@ -78,7 +78,8 @@ These exercises will guide you from basic data manipulation to complex, single-l
         {'name': 'Keyboard', 'price': '150', 'in_stock': True},
         {'name': 'Webcam', 'price': 105.99, 'in_stock': True}
     ]
-    ```*   **Task:**
+    ```
+    *   **Task:**
     Using a **set comprehension**, create a `set` named `premium_products_in_stock` that contains the names of all products that are currently `in_stock` AND have a price greater than $100.00.
 *   **Entities Covered:**
     *   **Concepts**: `list`, `dict`, `set`, `float`, `str`, `bool`, comparison operators (`>`), logical operators (`and`).
@@ -89,43 +90,73 @@ These exercises will guide you from basic data manipulation to complex, single-l
 
 ***
 
-# **Part 2: Hardcore Combined Problem for Chunk 2: Python Control Structures**
+# **Part 2: Hardcore Combined Problem for Chunk 2: Control Structures**
 
-*   **Objective:** To integrate all concepts from Chunk 2 (`if/elif/else`, `for`, `while`, `break`, `continue`, `enumerate`, `zip`, and nested structures) to solve a single, complex data validation and processing problem.
-*   **Problem Description:** You are in charge of an automated system that processes a queue of incoming server requests. Each request must be validated against several criteria: it must be from a recognized IP, it must not be on a denylist, and you can only process a certain number of `high_priority` requests per batch.
+*   **Objective:** To design and implement a "Log File Anomaly Detector" algorithm. This problem requires you to integrate and strategically apply **all** concepts, patterns, and relationships from Chunk 2 to solve a complex data processing and validation task. You must leverage each tool for its specific strengths to create a solution that is both robust and elegantly simple despite the complexity of the requirements.
+*   **Concepts & Patterns to Combine**: `if/elif/else`, `for`, `while`, loop control statements (`break`, `continue`, `pass`), nested structures, iteration with `enumerate()`, combining `zip()`, and `ternary expressions`.
+
+*   **Problem Description:**
+    You are building an anomaly detection system that parses a stream of server log entries and correlates them with a parallel stream of system performance metrics. The system must identify potential security events, such as brute-force login attempts or resource exhaustion attacks. The log stream is noisy, and your algorithm's primary challenge is to intelligently filter, correlate, and detect complex patterns that span multiple log entries.
+
 *   **Artificial Data:**
     ```python
-    request_queue = [
-        ('192.168.1.5', 'read', 'high_priority'),
-        ('10.0.0.3', 'write', 'low_priority'),
-        ('192.168.1.5', 'delete', 'high_priority'),  Duplicate IP, should be skipped
-        ('203.0.113.1', 'read', 'low_priority'),   Unrecognized IP
-        ('10.0.0.2', 'connect', 'high_priority'),
-        ('10.0.0.4', 'read', 'low_priority'),
+    # A stream of log entries: (timestamp, level, message)
+    log_stream = [
+        (1668837600, 'INFO', 'User admin logged in successfully'),
+        (1668837601, 'DEBUG', 'Database connection established'), # Should be ignored
+        (1668837602, 'ERROR', 'Failed login attempt for user guest from IP 192.168.1.100'),
+        (1668837603, 'ERROR', 'Failed login attempt for user guest from IP 192.168.1.100'),
+        (1668837604, 'INFO', 'User alex logged in successfully'), # Breaks the consecutive error pattern
+        (1668837605, 'ERROR', 'Failed login attempt for user guest from IP 192.168.1.100'),
+        (1668837606, 'WARN', 'High CPU load detected'),
+        (1668837607, 'ERROR', 'Service unavailable: connection timeout to payment_gateway'),
     ]
-    recognized_ips = {'192.168.1.5', '10.0.0.1', '10.0.0.2', '10.0.0.3'}
-    denylist_ips = {'10.0.0.4'}
-    priority_quota = 2
+
+    # A parallel stream of system metrics: (timestamp, cpu_usage_percent, memory_usage_mb)
+    system_metrics = [
+        (1668837600, 10, 256),
+        (1668837601, 12, 258),
+        (1668837602, 15, 260),
+        (1668837603, 18, 262),
+        (1668837604, 13, 270),
+        (1668837605, 25, 280),
+        (1668837606, 95, 300), # Correlates with the 'High CPU load' warning
+        (1668837607, 88, 290),
+    ]
+    
+    # Configuration
+    BRUTE_FORCE_THRESHOLD = 3 # Number of consecutive failed logins from one IP to trigger an alert
+    CPU_WARNING_THRESHOLD = 90
     ```
-*   **Task:**
-    Write a script that processes the `request_queue`.
-    1.  Initialize `processed_ips = set()` to track duplicates, `priority_requests_processed = 0`, and `report = []`.
-    2.  Use a `for` loop with `enumerate` to iterate through the `request_queue` to get both a `step` number and the `(ip, action, priority)` tuple.
-    3.  **Nested Control Flow:**
-        *   **`continue`**: If the `ip` is in the `denylist_ips` OR if the `ip` has already been processed (is in `processed_ips`), print a "REJECTED" message and use `continue` to immediately move to the next request.
-        *   **`if/else`**: If the `ip` is not in `recognized_ips`, print a "WARNING" message and skip to the next request with `continue`.
-    4.  **`while` Loop and `break`**: If a request is `high_priority`:
-        *   Use a `while priority_requests_processed < priority_quota:` loop. If the condition is met, increment `priority_requests_processed`, print a "PROCESSING PRIORITY" message, and `break` the `while` loop to proceed.
-        *   If the quota is already met, print a "DEFERRED" message and `continue` to the next request in the outer `for` loop.
-    5.  **Successful Processing & `zip`**: If a request passes all checks:
-        *   Add the `ip` to the `processed_ips` set.
-        *   Use `zip` to pair the `(ip, action, priority)` tuple with a list of `actions_to_log = ["log_event", "validate_permissions", "execute_action"]`. Loop through the pairs and print each loggable action.
-        *   Append a success string to your `report`.
-    6.  **`else` on `for` loop**: After the `for` loop finishes naturally (without a `break`), print a final message: "Batch processing complete."
-    7.  Print the final `report`.
-*   **Entities Covered:**
-    *   **Concepts**: `if/elif/else`, `for`, `while`, `break`, `continue`.
-    *   **Patterns**: `Nested structures`, `iteration with enumerate()`, `combining zip() with for loops`.
-    *   **Relationships**: This problem shows how control structures are the engine for implementing complex business logic, orchestrating the flow of operations based on multiple, interdependent conditions and data states.
-*   **Software Engineering Principle:** **Reliability**. The script must robustly handle various failure modes (denylisted, duplicate, unrecognized IPs) without crashing, and it must strictly adhere to the processing quota for priority requests.
-*   **Source & Theory:** This problem is a synthesis of the control flow tools detailed in the Python Official Documentation and Real Python. The core logic uses `if/elif/else` blocks for decision-making. Advanced patterns, including nested loops, the use of `continue` to manage flow, and the `else` clause on the `for` loop, are all concepts explained in the official documentation. The use of `enumerate()` and `zip()` to write cleaner, more Pythonic loops is also a key pattern from the official docs that this problem requires you to implement.
+
+*   **Task: The Anomaly Detection Algorithm**
+    Write a script that processes the `log_stream` and `system_metrics`.
+
+    1.  Initialize necessary data structures: `incident_report = []` and `ip_fail_count = {}`.
+    2.  Use a `for` loop that combines `zip` and `enumerate` to iterate over the `log_stream` and `system_metrics` simultaneously. This provides the index, the log entry, and the corresponding metric for each step, which is a massive simplification over manual indexing.
+    3.  **Guard Clauses for Simplification**:
+        *   At the top of your loop, check if the log level is 'DEBUG'. If it is, use the `pass` keyword to signify that we are intentionally taking no action. Then, use `continue` to immediately skip to the next log entry. This prevents cluttering your main logic with checks for irrelevant data.
+    4.  **Leverage Ternary Expressions**:
+        *   For each log, assign a `status` string. Use a **ternary expression** for conciseness: `status = 'CRITICAL' if log[1] == 'ERROR' else 'NORMAL'`.
+    5.  **Complex Nested Logic with `while` for Pattern Detection**:
+        *   If a log entry is an 'ERROR' indicating a `'Failed login'`, extract the IP address.
+        *   Increment the failure count for that IP in your `ip_fail_count` dictionary.
+        *   **Here is the core pattern detection**: If the failure count for an IP reaches `BRUTE_FORCE_THRESHOLD`, initiate a **`while` loop** to look *ahead* in the log stream to confirm if this is part of a sustained attack.
+            *   The `while` loop should continue as long as the next few logs are *also* failed logins from the same IP. This is a condition-based check that a `for` loop cannot easily handle.
+            *   Use `break` to exit the `while` loop immediately if you encounter a log that is *not* a failed login from that IP, as this breaks the attack pattern.
+            *   If the `while` loop completes its checks and confirms a sustained attack, add a detailed "BRUTE-FORCE ALERT" to your `incident_report`.
+    6.  **Correlating Data with `zip`**:
+        *   If a log entry is a 'WARN', check the corresponding `cpu_usage_percent` from the `system_metrics` tuple that `zip` provided for that iteration. If the CPU usage is above `CPU_WARNING_THRESHOLD`, add a "RESOURCE EXHAUSTION ALERT" to the report.
+    7.  **`for-else` Clause**:
+        *   Attach an `else` block to your main `for` loop. This block will only execute if the `for` loop completes without being interrupted by a `break`. Print a message like "System Scan Complete. All logs processed." This confirms the integrity of the completed scan.
+
+*   **Why This Design Maximizes Simplification:**
+    *   **The Problem is Complex**: Correlating parallel data streams and detecting stateful, multi-entry patterns is a genuinely complex task.
+    *   **`for/zip/enumerate` as a Simplifier**: This combination turns three separate, error-prone loops or manual index tracking into a single, elegant iteration statement. It provides all necessary data (`index`, `log`, `metric`) contextually.
+    *   **`continue` as a Simplifier**: The guard clause `if level == 'DEBUG': continue` radically cleans up the code. Without it, all subsequent logic would need to be nested inside an `if level != 'DEBUG':` block.
+    -   **`while` for the Right Reason**: The nested `while` loop is not just for show; it solves a problem that is difficult for the main `for` loop: looking ahead based on a *dynamic condition* (are the *next N* logs also errors?) rather than just iterating a fixed sequence.
+    -   **`break` for Efficiency**: Breaking out of the `while` loop is the most efficient way to stop checking for a pattern once it's been invalidated.
+    - **Ternary for Conciseness**: Using a ternary expression to set the `status` is cleaner and more readable than a full `if/else` block for a simple assignment.
+    -   **`pass` for Clarity**: Using `pass` makes it explicit to other developers that the 'DEBUG' case was considered and intentionally ignored, not forgotten.
+
+This enhanced problem forces a deep understanding of *when* and *why* to use each control structure, pushing you to write code that is not just correct, but is a model of algorithmic elegance and clarity.

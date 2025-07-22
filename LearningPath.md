@@ -7,6 +7,7 @@ The learning path is divided into phases and chunks, progressing from foundation
 ## Phase 1: Foundational Language Skills (Weeks 1-2, July 19 - August 1, 2025)
 
 ### Chunk 1: Python Syntax and Data Types (Days 1-3)
+
 - **Concepts**:
   - Variables: declaration, assignment, naming conventions
   - Primitive types: integers (int), floats (float), strings (str), booleans (bool)
@@ -30,6 +31,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with single-type operations, progress to mixed-type manipulations (e.g., converting strings to integers within a list)
 
 ### Chunk 2: Python Control Structures (Days 4-5)
+
 - **Concepts**:
   - Conditionals: if, elif, else for decision-making
   - Loops: for (iterating over sequences), while (condition-based iteration)
@@ -52,6 +54,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with single loops, advance to nested loops with conditionals
 
 ### Chunk 3: Python Functions (Days 6-7)
+
 - **Concepts**:
   - Function definition: def keyword, return statements
   - Parameters: positional, keyword, default values, *args (variable positional), **kwargs (variable keyword)
@@ -74,6 +77,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with simple functions, progress to recursive and higher-order function applications
 
 ### Chunk 4: Python Modules and Packages (Days 8-9)
+
 - **Concepts**:
   - Module creation: .py files, importing with import
   - Packages: directories with __init__.py, hierarchical organization
@@ -95,6 +99,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with single modules, advance to multi-file packages
 
 ### Chunk 5: Python Object-Oriented Programming (Days 10-12)
+
 - **Concepts**:
   - Classes: definition, attributes, methods
   - Inheritance: extending classes, method overriding
@@ -117,6 +122,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with single classes, progress to inheritance and polymorphism
 
 ### Chunk 6: Python Error Handling (Days 13-14)
+
 - **Concepts**:
   - Exception handling: try, except, else, finally blocks
   - Raising exceptions: raise keyword, custom exception classes
@@ -138,6 +144,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with basic exception handling, advance to custom exceptions and resource management
 
 ### Chunk 7: TypeScript Basic Types and Interfaces (Days 15-17)
+
 - **Concepts**:
   - Primitive types: number, string, boolean, void, null, undefined
   - Utility types: any, unknown, never
@@ -160,6 +167,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with basic types, progress to complex interfaces and unions
 
 ### Chunk 8: TypeScript Functions (Days 18-19)
+
 - **Concepts**:
   - Function declarations: typed parameters, return types
   - Optional parameters (? :), default values
@@ -182,6 +190,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with simple functions, advance to generics and overloading
 
 ### Chunk 9: TypeScript Classes (Days 20-22)
+
 - **Concepts**:
   - Class syntax: constructors, properties, methods
   - Inheritance: extends, super() calls
@@ -204,6 +213,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with basic classes, progress to abstract classes and interfaces
 
 ### Chunk 10: TypeScript Generics and Modules (Days 23-25)
+
 - **Concepts**:
   - Generics: type parameters for functions, classes, interfaces
   - Constraints: extends keyword to limit generic types
@@ -230,6 +240,7 @@ The learning path is divided into phases and chunks, progressing from foundation
 ## Phase 2: Data Structures and Algorithms (Weeks 3-5, August 2 - August 22, 2025)
 
 ### Chunk 11: Arrays and Strings (Days 26-28)
+
 - **Concepts**:
   - Arrays: contiguous memory, indexing, slicing
   - Strings: immutable sequences, character access
@@ -251,6 +262,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with basic operations, progress to algorithmic patterns
 
 ### Chunk 12: Linked Lists, Stacks, and Queues (Days 29-31)
+
 - **Concepts**:
   - Linked lists: nodes (value, next), singly vs. doubly linked
   - Stacks: LIFO, push(), pop()
@@ -272,6 +284,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with basic implementations, advance to algorithmic use
 
 ### Chunk 13: Trees and Graphs (Days 32-34)
+
 - **Concepts**:
   - Trees: nodes, root, leaves, binary trees, BSTs
   - Graphs: vertices, edges, adjacency lists
@@ -293,6 +306,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Start with simple trees, progress to graph algorithms
 
 ### Chunk 14: Sorting, Searching, and Complexity (Days 35-37)
+
 - **Concepts**:
   - Sorting: bubble sort, merge sort, quicksort
   - Searching: linear, binary search
@@ -314,6 +328,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with simple sorts, advance to complex analysis
 
 ### Chunk 15: Dynamic Programming and Advanced Algorithms (Days 38-42)
+
 - **Concepts**:
   - DP: memoization, tabulation, subproblems
   - Greedy: local optimum choices
@@ -339,6 +354,7 @@ The learning path is divided into phases and chunks, progressing from foundation
 ## Phase 3: Specialized Libraries and Tools (Week 6, August 23 - August 29, 2025)
 
 ### Chunk 16: Pandas and NumPy for Data Manipulation (Days 43-45)
+
 - **Concepts**:
   - NumPy: ndarray, vector operations, broadcasting
   - Pandas: Series (1D), DataFrame (2D), indexing, merging
@@ -360,6 +376,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with basic operations, advance to multi-table joins
 
 ### Chunk 17: React with TypeScript (Optional, Days 46-47)
+
 - **Concepts**:
   - Components: functional, typed props
   - Hooks: useState, useEffect with types
@@ -385,6 +402,7 @@ The learning path is divided into phases and chunks, progressing from foundation
 ## Phase 4: Practice and Review (Weeks 7-8, August 30 - September 15, 2025)
 
 ### Chunk 18: CodeSignal Practice and Timed Coding (Days 48-54)
+
 - **Concepts**:
   - Problem types: arrays, strings, DP
   - Timed constraints: 70 minutes, 4 problems
@@ -406,6 +424,7 @@ The learning path is divided into phases and chunks, progressing from foundation
   - **Complexity**: Begin with medium problems, progress to hard
 
 ### Chunk 19: Comprehensive Review and Final Preparation (Days 55-63)
+
 - **Concepts**:
   - Review: syntax, algorithms, libraries
   - Weak area focus: targeted practice
@@ -429,6 +448,7 @@ The learning path is divided into phases and chunks, progressing from foundation
 ---
 
 ## Software Engineering Principles to Emphasize
+
 - **Efficiency**: Focus on time/space complexity in solutions.
 - **Scalability**: Design modular, reusable code.
 - **Modifiability**: Use clear naming and structure.
