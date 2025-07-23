@@ -79,7 +79,7 @@ for step, entry in enumerate(zip(log_stream, system_metrics)):
         ip_fail_count[failingIp] = 1
     if failingIp and ip_fail_count[failingIp] == BRUTE_FORCE_THRESHOLD:
         count = step
-        while zip(log_stream, system_metrics)[count][0][1] == 'ERROR':
+        while zip(log_stream, system_metrics)[count][0][1] == 'ERROR' and entry[0][2].split()[-2] == 'IP' and entry[0][2].split()[-1] == failingIp:
             print(f"Keeps failing with logs {zip(log_stream, system_metrics)[count][0]}")
             count += 1
         if count > 1: incident_report.append('BRUTE-FORCE ALERT')
