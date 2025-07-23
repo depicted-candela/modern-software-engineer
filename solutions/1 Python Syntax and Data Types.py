@@ -72,11 +72,11 @@ for step, entry in enumerate(zip(log_stream, system_metrics)):
         pass
         continue
     status = 'CRITICAL' if entry[0][1] == 'ERROR' else 'NORMAL'
-    failingIp = entry[0][0] if status == 'ERROR' else None
+    failingIp = entry[0][2].split()[-1] if entry[0][2].split()[-2] == 'IP' and status == 'ERROR' else None
     if failingIp in ip_fail_count.keys(): 
         ip_fail_count[failingIp] += 1
     else:
-        ip_fail_count[failingIp] = 0
+        ip_fail_count[failingIp] = 1
     if failingIp and ip_fail_count[failingIp] == BRUTE_FORCE_THRESHOLD:
         count = step
         while zip(log_stream, system_metrics)[count][0][1] == 'ERROR':
