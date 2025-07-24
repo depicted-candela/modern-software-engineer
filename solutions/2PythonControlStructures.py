@@ -49,7 +49,6 @@ print("____________________________________________________________________")
 print("Hardcore Combined Problem: Intelligent Log Processor")
 import random
 import time
-import pprint
 
 # --- Configuration ---
 
@@ -159,10 +158,11 @@ def critical_sequence(generated_log_batches, max_logs):
     limit_reached = False
     logged_users = dict()
     for batch in generated_log_batches:
-        for step_m, movement in enumerate(batch):
+        for movement in batch:
             print("Movement:", movement)
             if not movement or movement[2] == 'heartbeat': continue
-            counter =+ step_m
+            counter += 1
+            print(f"Counter {counter}")
             if counter == max_logs: 
                 limit_reached = True
                 break

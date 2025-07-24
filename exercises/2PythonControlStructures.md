@@ -98,43 +98,25 @@ These exercises are structured to build from simple logical branching to complex
 
 *   **Artificial Data**:
 Use this script to create sufficient data to make this exercise significant and complete the main 
+
 ```python
 import random
 import time
 import pprint
 
 # --- Configuration ---
-
-# Total number of log entries to generate
 TOTAL_LOGS_TO_GENERATE = 100000
-
-# Number of unique user IDs to simulate
 NUM_USERS = 20
-
-# The types of events a user can perform
-# We can make 'login' and 'logout' special
 EVENT_TYPES = ['heartbeat', 'purchase', 'view_page', 'add_to_cart']
-
-# Starting point for timestamps (uses current time as a base)
-# Using a fixed value makes the output reproducible if you also fix the random seed
-# random.seed(42) # Uncomment for reproducible results
 START_TIMESTAMP = int(time.time())
-
-# The maximum time gap between consecutive events
 MAX_TIME_JUMP_SECONDS = 15
-
 # --- Session Simulation Probabilities ---
-# Chance that the next log event is a new user logging in
-NEW_LOGIN_PROBABILITY = 0.30 # 30%
-
-# Chance that an active user will log out after an action
-LOGOUT_PROBABILITY = 0.15 # 15%
-
+NEW_LOGIN_PROBABILITY = 0.30
+LOGOUT_PROBABILITY = 0.15
 # --- Batching Configuration ---
 # The minimum and maximum number of logs in a single batch
 MIN_BATCH_SIZE = 2
 MAX_BATCH_SIZE = 5
-
 # The probability of injecting a None into a batch
 NONE_INJECTION_PROBABILITY = 0.10 # 10%
 
@@ -155,47 +137,33 @@ def generate_significant_log_data():
         log_entry = None
         if should_create_new_login:
             inactive_users = [uid for uid in user_ids if uid not in active_users]
-            if not inactive_users:
-                continue 
-            
+            if not inactive_users: continue 
             user_id = random.choice(inactive_users)
             event_type = 'login'
-            
             active_users[user_id] = current_timestamp
             log_entry = (current_timestamp, user_id, event_type)
-            
         else:
             user_id = random.choice(list(active_users.keys()))
             event_type = random.choice(EVENT_TYPES)
-            
             log_entry = (current_timestamp, user_id, event_type)
-            
             if random.random() < LOGOUT_PROBABILITY:
                 current_timestamp += random.randint(1, MAX_TIME_JUMP_SECONDS)
                 logout_entry = (current_timestamp, user_id, 'logout')
                 all_logs.append(logout_entry)
-                
                 del active_users[user_id]
-
         if log_entry:
             all_logs.append(log_entry)
-        
         current_timestamp += random.randint(1, MAX_TIME_JUMP_SECONDS)
-
     log_batches = []
     current_batch = []
-    
-    random.shuffle(all_logs) 
-
-    all_logs.sort(key=lambda x: x[0]) 
-
+    random.shuffle(all_logs)
+    all_logs.sort(key=lambda x: x[0])
     remaining_logs = len(all_logs)
     batch_sizes = []
     while remaining_logs > 0:
         size = random.randint(MIN_BATCH_SIZE, MAX_BATCH_SIZE)
         batch_sizes.append(min(size, remaining_logs))
         remaining_logs -= size
-
     log_iterator = iter(all_logs)
     for size in batch_sizes:
         batch = []
@@ -224,75 +192,34 @@ if __name__ == "__main__":
 
     generated_log_batches = generate_significant_log_data()
 
-    critical_sequence()
+    critical_sequence(generated_log_batches)
 ```
 
 *   **Solution**:
 
 ```python
-    def find_first_critical_sequence_user(batches, window, max_logs):
-        active_logins = {}  # Relationship: Using a dict from Chunk 1 for state management.
-        found_user_id = None
-        logs_processed = 0
+def critical_sequence(generated_log_batches, max_logs):
+    counter = 0
+    limit_reached = False
+    logged_users = dict()
+    for batch in generated_log_batches:
+        for step_m, movement in enumerate(batch):
+            print("Movement:", movement)
+            if not movement or movement[2] == 'heartbeat': continue
+            counter =+ step_m
+            if counter == max_logs: 
+                limit_reached = True
+                break
+            if movement[2] == 'login': logged_users[id] = movement[0]
+            if id in logged_users.keys() and movement[2] == 'purchase' and movement[0] - logged_users[id] < 61:
+                logging.info(f"Critical sequence found at {movement}")
+                limit_reached = True
+                break
+            if id in logged_users.keys() and movement[0] == 'logout':
+                logged_users.pop(id)
+        if limit_reached: break
+```
 
-        # Outer loop to iterate through batches
-        for batch in batches:
-            # Nested loop to iterate through logs in a batch
-            for log_entry in batch:
-                if logs_processed >= max_logs:
-                    print("Processing limit reached. Stopping.")
-                    break  # break from the inner loop
-
-                logs_processed += 1
-
-                if log_entry is None:
-                    print(f"Log {logs_processed}: Corrupted entry. Skipping.")
-                    continue # Skip this iteration for corrupted data
-
-                timestamp, user_id, action = log_entry
-
-                # Use if/elif/else to handle different actions
-                if action == 'login':
-                    print(f"Log {logs_processed}: User {user_id} logged in at {timestamp}.")
-                    active_logins[user_id] = timestamp
-                elif action == 'purchase':
-                    # Check if the user has an active login session
-                    if user_id in active_logins:
-                        login_time = active_logins[user_id]
-                        time_diff = timestamp - login_time
-                        
-                        # Ternary for a concise status message
-                        status = "within" if time_diff <= window else "outside"
-                        print(f"Log {logs_processed}: User {user_id} purchase detected. Time diff: {time_diff}s ({status} window).")
-                        
-                        if time_diff <= window:
-                            print(f"CRITICAL SEQUENCE DETECTED for user {user_id}!")
-                            found_user_id = user_id
-                            break # Found our user, exit inner loop
-                    else:
-                        print(f"Log {logs_processed}: User {user_id} made a purchase without a recent login.")
-                elif action == 'logout':
-                    print(f"Log {logs_processed}: User {user_id} logged out. Invalidating session.")
-                    if user_id in active_logins:
-                        del active_logins[user_id]
-                elif action == 'heartbeat':
-                    # Use 'pass' as a placeholder for an ignored action
-                    pass
-            
-            if found_user_id is not None or logs_processed >= max_logs:
-                break # break from the outer loop if user found or limit reached
-
-        return found_user_id
-
-    # --- Execution ---
-    result = find_first_critical_sequence_user(log_batches, TIME_WINDOW, MAX_LOGS_TO_PROCESS)
-    print("\n--- RESULT ---")
-    if result:
-        print(f"The first user to complete the critical sequence was: {result}")
-    else:
-        print("No user completed the critical sequence within the given constraints.")
-
-    ```
 *   **Explanation**:
     *   **Nested `for` Loops**: The code iterates through `batches` and then `log_entry` within each batch, a classic nested structure for processing batched data.
     *   **`break`**: This is used in three key places for **Efficiency**. First, it stops the entire process when the `max_logs` limit is hit. Second, and more importantly, it exits both the inner and outer loops once `found_user_id` is set, ensuring no unnecessary work is done after the goal is achieved.
