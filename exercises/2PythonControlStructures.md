@@ -97,19 +97,139 @@ These exercises are structured to build from simple logical branching to complex
     5.  The entire process should not scan more than `100` total log entries across all batches to prevent run-away processing.
 
 *   **Artificial Data**:
-    ```python
-    log_batches = [
-        [(1678886400, 1, 'login'), (1678886405, 2, 'login'), (1678886410, 1, 'heartbeat')],
-        [None, (1678886420, 1, 'purchase'), (1678886430, 2, 'logout'), (1678886440, 3, 'login')],
-        [(1678886450, 4, 'login'), (1678886460, 4, 'purchase')], # User 4 is a potential candidate
-        [(1678886470, 3, 'purchase'), (1678886480, 5, 'login')],
-    ]
+Use this script to create sufficient data to make this exercise significant and complete the main 
+```python
+import random
+import time
+import pprint
+
+# --- Configuration ---
+
+# Total number of log entries to generate
+TOTAL_LOGS_TO_GENERATE = 100000
+
+# Number of unique user IDs to simulate
+NUM_USERS = 20
+
+# The types of events a user can perform
+# We can make 'login' and 'logout' special
+EVENT_TYPES = ['heartbeat', 'purchase', 'view_page', 'add_to_cart']
+
+# Starting point for timestamps (uses current time as a base)
+# Using a fixed value makes the output reproducible if you also fix the random seed
+# random.seed(42) # Uncomment for reproducible results
+START_TIMESTAMP = int(time.time())
+
+# The maximum time gap between consecutive events
+MAX_TIME_JUMP_SECONDS = 15
+
+# --- Session Simulation Probabilities ---
+# Chance that the next log event is a new user logging in
+NEW_LOGIN_PROBABILITY = 0.30 # 30%
+
+# Chance that an active user will log out after an action
+LOGOUT_PROBABILITY = 0.15 # 15%
+
+# --- Batching Configuration ---
+# The minimum and maximum number of logs in a single batch
+MIN_BATCH_SIZE = 2
+MAX_BATCH_SIZE = 5
+
+# The probability of injecting a None into a batch
+NONE_INJECTION_PROBABILITY = 0.10 # 10%
+
+
+def generate_significant_log_data():
+    """
+    Generates realistic, structured log data by simulating user sessions.
+    """
+    all_logs = []
+    active_users = {}
+    current_timestamp = START_TIMESTAMP
+    user_ids = list(range(1, NUM_USERS + 1))
+    print(f"Generating {TOTAL_LOGS_TO_GENERATE} logs for {NUM_USERS} potential users...")
+    while len(all_logs) < TOTAL_LOGS_TO_GENERATE:
+        should_create_new_login = random.random() < NEW_LOGIN_PROBABILITY
+        if not active_users:
+            should_create_new_login = True
+        log_entry = None
+        if should_create_new_login:
+            inactive_users = [uid for uid in user_ids if uid not in active_users]
+            if not inactive_users:
+                continue 
+            
+            user_id = random.choice(inactive_users)
+            event_type = 'login'
+            
+            active_users[user_id] = current_timestamp
+            log_entry = (current_timestamp, user_id, event_type)
+            
+        else:
+            user_id = random.choice(list(active_users.keys()))
+            event_type = random.choice(EVENT_TYPES)
+            
+            log_entry = (current_timestamp, user_id, event_type)
+            
+            if random.random() < LOGOUT_PROBABILITY:
+                current_timestamp += random.randint(1, MAX_TIME_JUMP_SECONDS)
+                logout_entry = (current_timestamp, user_id, 'logout')
+                all_logs.append(logout_entry)
+                
+                del active_users[user_id]
+
+        if log_entry:
+            all_logs.append(log_entry)
+        
+        current_timestamp += random.randint(1, MAX_TIME_JUMP_SECONDS)
+
+    log_batches = []
+    current_batch = []
+    
+    random.shuffle(all_logs) 
+
+    all_logs.sort(key=lambda x: x[0]) 
+
+    remaining_logs = len(all_logs)
+    batch_sizes = []
+    while remaining_logs > 0:
+        size = random.randint(MIN_BATCH_SIZE, MAX_BATCH_SIZE)
+        batch_sizes.append(min(size, remaining_logs))
+        remaining_logs -= size
+
+    log_iterator = iter(all_logs)
+    for size in batch_sizes:
+        batch = []
+        for _ in range(size):
+            try:
+                if random.random() < NONE_INJECTION_PROBABILITY:
+                    batch.append(None)
+                
+                batch.append(next(log_iterator))
+
+            except StopIteration:
+                break
+        if batch:
+            log_batches.append(batch)
+            
+    print("Log generation complete.")
+    return log_batches
+
+def critical_sequence(generate_log_batches):
+    pass
+
+# --- Main execution ---
+if __name__ == "__main__":
     TIME_WINDOW = 60
     MAX_LOGS_TO_PROCESS = 100
-    ```
+
+    generated_log_batches = generate_significant_log_data()
+
+    critical_sequence()
+```
 
 *   **Solution**:
-    ```python
+
+```python
     def find_first_critical_sequence_user(batches, window, max_logs):
         active_logins = {}  # Relationship: Using a dict from Chunk 1 for state management.
         found_user_id = None
