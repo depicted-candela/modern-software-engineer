@@ -162,7 +162,6 @@ def critical_sequence(generated_log_batches, max_logs):
             print("Movement:", movement)
             if not movement or movement[2] == 'heartbeat': continue
             counter += 1
-            print(f"Counter {counter}")
             if counter == max_logs: 
                 limit_reached = True
                 break
