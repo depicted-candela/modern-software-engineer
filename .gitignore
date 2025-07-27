@@ -1,2 +1,3 @@
 .venv
 GENERATOR.md
+*.pyc
