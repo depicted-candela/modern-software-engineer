@@ -1,0 +1,4 @@
+id,owner,wkt
+201,state,"POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))"
+202,federal,"INVALID_GEOMETRY"
+203,city,"POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))"
