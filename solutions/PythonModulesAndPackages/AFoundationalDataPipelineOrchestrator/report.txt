@@ -1,0 +1,13 @@
+{
+  "files_processed": 2,
+  "valid_rows": 2,
+  "invalid_rows": 6,
+  "errors": [
+    "region_A.csv in its line 0 defined as {'id': '101', 'owner': 'city', 'wkt': 'POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))'} does not have a valid polygon id",
+    "region_A.csv in its line 1 defined as {'id': '102', 'owner': 'private', 'wkt': 'POLYGON((20 20, 30 20, 30 30, 20 30, 20 20))'} does not have a valid polygon id",
+    "region_B.csv in its line 0 defined as {'id': '201', 'owner': 'state', 'wkt': 'POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))'} does not have a valid polygon id",
+    "region_B.csv in its line 1 defined as {'id': '202', 'owner': 'federal', 'wkt': 'INVALID_GEOMETRY'} does not have a valid polygon id",
+    "region_B.csv in its line 1 defined as {'id': '202', 'owner': 'federal', 'wkt': 'INVALID_GEOMETRY'} does not have geometry",
+    "region_B.csv in its line 2 defined as {'id': '203', 'owner': 'city', 'wkt': 'POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))'} does not have a valid polygon id"
+  ]
+}
