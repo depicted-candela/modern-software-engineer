@@ -1,5 +1,3 @@
-Of course. Here is the enhanced version of the markdown file with the new book references integrated, while preserving all original content and structure.
-
 ***
 
 # Enhanced Learning Path for Mastering Python and TypeScript for a Technical Job Role
@@ -30,9 +28,14 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
   - *Python Official Documentation*: [3. An Informal Introduction to Python](https://docs.python.org/3/tutorial/introduction.html) (sections on numbers, strings, lists).
   - *Real Python*: [Python Data Types and Variables](https://realpython.com/python-data-types/).
   - *W3Schools*: [Python String Methods](https://www.w3schools.com/python/python_strings_methods.asp), [Python List Methods](https://www.w3schools.com/python/python_lists_methods.asp).
-  - **Foundational Book References**:
-    - *Python for Data Analysis*: Chapter 2 ("Python Language Basics, IPython, and Jupyter Notebooks") and Chapter 3 ("Built-In Data Structures, Functions, and Files").
-    - *Python 3.13 Docs*: `tutorial.txt`, Chapter 3 ("An Informal Introduction to Python") & Chapter 5 ("Data Structures"); `library.txt`, Chapter 4 ("Built-in Types").
+- **Book & Documentation References**:
+  - **Primary**:
+    - *PythonForDataAnalysis_WesMcKinney_2022*: `05_Chapter_02_Python_Language_Basics...` and `06_Chapter_03_Built_In_Data_Structures...`.
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../03_An_Informal_Introduction_to_Python.pdf` & `05_Data_Structures.pdf`.
+    - *python-3.13-docs-pdf-a4*: `ThePythonLibraryReference.../04_Built-in_Types.pdf` (for detailed methods).
+  - **For Deeper Understanding**:
+    - *python-3.13-docs-pdf-a4*: `ThePythonLanguageReference.../Chapter_04_Data_model.pdf` (to understand how types work internally).
+    - *SQLforDataScientists_ReneeM.P.Teate_2021*: `05_Chapter_02_The_SELECT_Statement.pdf` (to see parallels in how data types are handled in SQL).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Manipulating primitive/collection types, performing type conversions, applying operators.
   - **Exercise Context**: Sum a list of integers, reformat strings with f-strings, create dictionaries from raw data.
@@ -56,10 +59,12 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
   - *Python Official Documentation*: [4. More Control Flow Tools](https://docs.python.org/3/tutorial/controlflow.html) (sections on `if`, `for`, `while`).
   - *Real Python*: [Python Conditionals](https://realpython.com/python-conditional-statements/).
   - *GeeksforGeeks*: [Python Loops](https://www.geeksforgeeks.org/loops-in-python/).
-  - **Foundational Book References**:
-    - *Python for Data Analysis*: Chapter 2 covers control flow constructs.
-    - *Python 3.13 Docs*: `tutorial.txt`, Chapter 4 ("More Control Flow Tools").
-    - *The C Programming Language*: Chapter 3 ("Control Flow") for understanding the fundamental logic that underlies Python's control structures.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../04_More_Control_Flow_Tools.pdf`.
+    - *PythonForDataAnalysis_WesMcKinney_2022*: `05_Chapter_02...` (covers control flow).
+  - **For Deeper Understanding**:
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_09_Statements.pdf` and `Chapter_10_Expressions.pdf` (for the fundamental logic that underlies Python's control structures).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Writing conditional logic, iterating data, optimizing loops.
   - **Exercise Context**: Filter lists with conditions, count occurrences, process nested structures.
@@ -83,9 +88,13 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
   - *Python Official Documentation*: [4.6. Defining Functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions).
   - *Real Python*: [Python Functions](https://realpython.com/defining-your-own-python-function/).
   - *GeeksforGeeks*: [Python Lambda Functions](https://www.geeksforgeeks.org/python-lambda-anonymous-functions/).
-  - **Foundational Book References**:
-    - *Python for Data Analysis*: Chapter 3 covers functions, `lambda`, generators, and `*args`/`**kwargs`.
-    - *Python 3.13 Docs*: `tutorial.txt`, Sections 4.8 & 4.9 ("Defining Functions", "More on Defining Functions"); `howto-functional.txt` for a deep dive into functional patterns.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../04_More_Control_Flow_Tools.pdf` (sections on defining functions).
+    - *python-3.13-docs-pdf-a4*: `FunctionalProgrammingHOWTO...` (entire document for a deep dive).
+    - *PythonForDataAnalysis_WesMcKinney_2022*: `06_Chapter_03...` (covers functions, `lambda`, generators).
+  - **For Deeper Understanding**:
+    - *MathematicsForComputerScience_Lehman-Leighton-Meyer_2015*: `07_5_Induction.pdf` (to build a solid foundation for recursion).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Defining reusable functions, handling variable arguments, managing scope.
   - **Exercise Context**: Write filtering functions, implement recursive factorial, use `lambda` with `map()`.
@@ -107,9 +116,11 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *Python Official Documentation*: [6. Modules](https://docs.python.org/3/tutorial/modules.html).
   - *Real Python*: [Python Modules and Packages](https://realpython.com/python-modules-packages/).
-  - *Python Crash Course by Eric Matthes*: Chapter 8 (sections on modules).
-  - **Foundational Book References**:
-    - *Python 3.13 Docs*: `tutorial.txt`, Chapter 6 ("Modules"); `installing.txt` for understanding the package ecosystem.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../06_Modules.pdf`.
+    - *python-3.13-docs-pdf-a4*: `InstallingPythonModules...` (entire document).
+    - *python-3.13-docs-pdf-a4*: `ThePythonLibraryReference.../32_Importing_Modules.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Structuring code into modules, using standard library tools.
   - **Exercise Context**: Create utility function modules, use `os` to list directories, build a small package.
@@ -133,9 +144,13 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *Python Official Documentation*: [9. Classes](https://docs.python.org/3/tutorial/classes.html), [abc module](https://docs.python.org/3/library/abc.html).
   - *Real Python*: [Object-Oriented Programming in Python](https://realpython.com/python3-object-oriented-programming/), [Abstract Base Classes](https://realpython.com/inheritance-composition-python/).
-  - *Python Crash Course by Eric Matthes*: Chapter 9 (sections on classes and inheritance).
-  - **Foundational Book References**:
-    - *Python 3.13 Docs*: `tutorial.txt`, Chapter 9 ("Classes"); `howto-descriptor.txt` for deep understanding of attribute access; `howto-mro.txt` for multiple inheritance.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../09_Classes.pdf`.
+    - *python-3.13-docs-pdf-a4*: `DescriptorGuide...` (for a deep understanding of attribute access).
+  - **For Deeper Understanding**:
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_16_Classes.pdf`, `Chapter_17_Construction_Cleanup_Copy_and_Move.pdf`, and `Chapter_20_Derived_Classes.pdf`.
+    - *python-3.13-docs-pdf-a4*: `ThePythonLanguageReference.../Chapter_04_Data_model.pdf` (essential for special methods).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Designing class hierarchies, implementing encapsulation, using abstract classes.
   - **Exercise Context**: Model a library system with classes, implement inheritance for subtypes, create abstract interfaces.
@@ -157,10 +172,12 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *Python Official Documentation*: [8. Errors and Exceptions](https://docs.python.org/3/tutorial/errors.html).
   - *Real Python*: [Python Exceptions](https://realpython.com/python-exceptions/).
-  - *GeeksforGeeks*: [User-Defined Exceptions](https://www.geeksforgeeks.org/user-defined-exceptions-python-examples/).
-  - **Foundational Book References**:
-    - *Python 3.13 Docs*: `tutorial.txt`, Chapter 8 ("Errors and Exceptions").
-    - *Python 3.13 Docs*: `c-api.txt`, Chapter 5 ("Exception Handling") for insight into how exceptions work at the C level.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../08_Errors_and_Exceptions.pdf`.
+  - **For Deeper Understanding**:
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_13_Exception_Handling.pdf`.
+    - *python-3.13-docs-pdf-a4*: `c-api/05_Chapter_05_Exception_Handling.pdf` (to see how exceptions work at a lower level).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Handling runtime errors, creating custom exceptions.
   - **Exercise Context**: Handle file reading errors, raise custom exceptions for invalid inputs.
@@ -183,7 +200,9 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *TypeScript Handbook*: [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [Interfaces](https://www.typescriptlang.org/docs/handbook/2/objects.html).
   - *Basarat’s TypeScript Deep Dive*: [Type System Basics](https://basarat.gitbook.io/typescript/type-system).
-  - *W3Schools*: [TypeScript Types](https://www.w3schools.com/typescript/typescript_basic_types.php).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *typescript-handbook-v4.1*: `04_Handbook.pdf` and `05_Handbook_Reference.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Defining types, applying interfaces, ensuring type safety.
   - **Exercise Context**: Create interfaces for API data, use unions for flexible inputs.
@@ -206,7 +225,9 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *TypeScript Handbook*: [Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
   - *Basarat’s TypeScript Deep Dive*: [Functions](https://basarat.gitbook.io/typescript/type-system/functions).
-  - *GeeksforGeeks*: [TypeScript Function Types](https://www.geeksforgeeks.org/typescript-function-types/).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *typescript-handbook-v4.1*: `04_Handbook.pdf` and `05_Handbook_Reference.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Writing typed functions, handling variable arguments.
   - **Exercise Context**: Implement overloaded functions, use rest parameters for data aggregation.
@@ -229,7 +250,9 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *TypeScript Handbook*: [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html).
   - *Basarat’s TypeScript Deep Dive*: [Classes](https://basarat.gitbook.io/typescript/type-system/classes).
-  - *W3Schools*: [TypeScript Classes](https://www.w3schools.com/typescript/typescript_classes.php).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *typescript-handbook-v4.1*: `04_Handbook.pdf` and `05_Handbook_Reference.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Building class hierarchies, applying access control.
   - **Exercise Context**: Create a vehicle class system, implement abstract classes.
@@ -252,7 +275,11 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *TypeScript Handbook*: [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Modules](https://www.typescriptlang.org/docs/handbook/modules.html).
   - *Basarat’s TypeScript Deep Dive*: [Generics](https://basarat.gitbook.io/typescript/type-system/generics).
-  - *GeeksforGeeks*: [TypeScript Modules](https://www.geeksforgeeks.org/typescript-modules/).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *typescript-handbook-v4.1*: `04_Handbook.pdf`, `05_Handbook_Reference.pdf`, and `07_Declaration_Files.pdf`.
+  - **For Deeper Understanding**:
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_23_Templates.pdf` (the C++ origin of generics).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Writing generic code, organizing modules.
   - **Exercise Context**: Build a generic stack, structure a multi-module project.
@@ -279,12 +306,14 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Relationships**:
   - Core data structures; underpin lists, trees, and dynamic programming.
 - **Resources**:
-  - *Python Official Documentation*: [5.1. More on Lists](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists).
-  - *GeeksforGeeks*: [Array Operations](https://www.geeksforgeeks.org/python-arrays/), [Kadane’s Algorithm](https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/), [KMP Algorithm](https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/).
+  - *GeeksforGeeks*: [Kadane’s Algorithm](https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/), [KMP Algorithm](https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/).
   - *LeetCode*: [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/), [Implement strStr()](https://leetcode.com/problems/implement-strstr/).
-  - **Foundational Book References**:
-    - *The C Programming Language*: Chapter 5 ("Pointers and Arrays") for a deep understanding of how arrays and strings are represented in memory.
-    - *Python 3.13 Docs*: `howto-regex.txt` and `library.txt`, Section 6.2 ("re — Regular expression operations") for advanced pattern matching.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *IntroductionToInformationRetrieval_Manning-Raghavan-Schutze_2008*: `04_Chapter_02_The_term_vocabulary_and_postings_lists.pdf` and `05_Chapter_03_Dictionaries_and_tolerant_retrieval.pdf`.
+  - **For Deeper Understanding**:
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_07_Pointers_Arrays_and_References.pdf` and `Chapter_36_Strings.pdf`.
+    - *ComputerOrganizationAndDesign_Patterson-Hennessy_2020*: `05_Chapter_02_Instructions_Language_of_the_Computer.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Manipulating arrays/strings, optimizing operations, efficient pattern matching.
   - **Exercise Context**: Reverse arrays in-place, find longest substring, implement Kadane’s, apply KMP.
@@ -309,10 +338,12 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *GeeksforGeeks*: [Linked List in Python](https://www.geeksforgeeks.org/linked-list-in-python/), [LRU Cache](https://www.geeksforgeeks.org/lru-cache-implementation/).
   - *Python Official Documentation*: [collections.deque](https://docs.python.org/3/library/collections.html#collections.deque).
-  - *LeetCode*: [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), [LRU Cache](https://leetcode.com/problems/lru-cache/).
-  - **Foundational Book References**:
-    - *The C Programming Language*: Chapter 6, Section 6.5 ("Self-Referential Structures") is the classic reference for implementing linked structures from first principles.
-    - *Python 3.13 Docs*: `tutorial.txt`, Sections 5.1.1 ("Using Lists as Stacks") and 5.1.2 ("Using Lists as Queues").
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `PythonTutorial.../05_Data_Structures.pdf` (Sections on using lists as stacks/queues).
+    - *TheC++ProgrammingLanguage_BjarneStroustrup_2013_FourthEdition*: `Chapter_31_STL_Containers.pdf` (covers `std::list`, `std::stack`, `std::queue`).
+  - **For Deeper Understanding**:
+    - *DesigningData-IntensiveApplications_MartinKleppmann_2017*: `Chapter_03_Storage_and_Retrieval.pdf` (connects these structures to disk-based systems like B-Trees and LSM-Trees).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Implementing dynamic structures, using stacks/queues, hybrid data structures.
   - **Exercise Context**: Reverse linked lists, validate parentheses with stacks, merge lists, implement LRU Cache.
@@ -336,9 +367,10 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *GeeksforGeeks*: [Binary Tree](https://www.geeksforgeeks.org/binary-tree-data-structure/), [Dijkstra’s Algorithm](https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/).
   - *Python Official Documentation*: [heapq](https://docs.python.org/3/library/heapq.html).
-  - *LeetCode*: [Lowest Common Ancestor](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/), [Network Delay Time](https://leetcode.com/problems/network-delay-time/).
-  - **Foundational Book References**:
-    - *The C Programming Language*: Chapter 6 ("Structures") provides the foundation for implementing node-based data structures like trees and graphs.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *DiscreteMathematicsandItsApplications_KennethHRosen_2018*: `17_Chapter_10_Graphs.pdf` and `18_Chapter_11_Trees.pdf`.
+    - *MathematicsForComputerScience_Lehman-Leighton-Meyer_2015*: `13_10_Directed_graphs__Partial_Orders.pdf`, `14_11_Communication_Networks.pdf`, `15_12_Simple_Graphs.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Building trees, traversing graphs, shortest path computation.
   - **Exercise Context**: Implement inorder traversal, find shortest paths with Dijkstra’s, compute LCA.
@@ -360,11 +392,14 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
   - Optimizes data access; informs efficiency for algorithms.
 - **Resources**:
   - *GeeksforGeeks*: [Merge Sort](https://www.geeksforgeeks.org/merge-sort/), [Heap Sort](https://www.geeksforgeeks.org/heap-sort/), [Interpolation Search](https://www.geeksforgeeks.org/interpolation-search/).
-  - *Introduction to Algorithms by Cormen*: Chapter 2 (Sorting), Chapter 6 (Heapsort).
   - *LeetCode*: [Sort an Array](https://leetcode.com/problems/sort-an-array/), [Binary Search](https://leetcode.com/problems/binary-search/).
-  - **Foundational Book References**:
-    - *Python 3.13 Docs*: `howto-sorting.txt` provides a comprehensive guide to Python's sorting capabilities.
-    - *Computer Organization and Design*: Chapter 1 ("Performance") explains the hardware context for why time complexity (Big O) is a critical measure.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *python-3.13-docs-pdf-a4*: `SortingTechniques...` (entire document).
+    - *ConcreteMathematics_Graham-Knuth-Patashnik_1994*: `11_Chapter_09_Asymptotics.pdf` (the definitive guide to Big O).
+    - *MathematicsForComputerScience_Lehman-Leighton-Meyer_2015*: `18_14_Sums_and_Asymptotics.pdf`.
+  - **For Deeper Understanding**:
+    - *ComputerOrganizationAndDesign_Patterson-Hennessy_2020*: `04_Chapter_01_Computer_Abstractions_and_Technology.pdf` (relates complexity to machine performance).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Implementing algorithms, analyzing performance, optimized searching.
   - **Exercise Context**: Sort arrays with heap sort, search with interpolation search.
@@ -389,7 +424,12 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *GeeksforGeeks*: [Dynamic Programming](https://www.geeksforgeeks.org/dynamic-programming/), [Bellman-Ford](https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/), [N-Queens](https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/).
   - *NeetCode*: [DP Tutorials](https://neetcode.io/courses/dynamic-programming), [N-Queens Video](https://neetcode.io/courses/backtracking).
-  - *LeetCode*: [N-Queens](https://leetcode.com/problems/n-queens/), [Shortest Path with Negative Weights](https://leetcode.com/problems/cheapest-flights-within-k-stops/).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *DiscreteMathematicsandItsApplications_KennethHRosen_2018*: `12_Chapter_05_Induction_and_Recursion.pdf` and `15_Chapter_08_Advanced_Counting_Techniques.pdf`.
+  - **For Deeper Understanding**:
+    - *ReinforcementLearningAndOptimalControl_DimitriPBertsekas_2019*: `Chapter_01.pdf` (DP as the foundation of RL).
+    - *ConcreteMathematics_Graham-Knuth-Patashnik_1994*: `03_Chapter_01_Recurrent_Problems.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Solving optimization problems, exploring solutions, bitwise optimization.
   - **Exercise Context**: Compute Fibonacci with DP, solve N-Queens with bitsets, implement Bellman-Ford.
@@ -412,9 +452,10 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *GeeksforGeeks*: [Hashing in Python](https://www.geeksforgeeks.org/hashing-set-1-introduction/).
   - *LeetCode*: [Two Sum](https://leetcode.com/problems/two-sum/), [Group Anagrams](https://leetcode.com/problems/group-anagrams/).
-  - *Introduction to Algorithms by Cormen*: Chapter 11 (Hash Tables).
-  - **Foundational Book References**:
-    - *The C Programming Language*: Chapter 6, Section 6.6 ("Table Lookup") provides a classic, low-level implementation of a hash table.
+- **Book & Documentation References**:
+  - **For Deeper Understanding**:
+    - *DesigningData-IntensiveApplications_MartinKleppmann_2017*: `Chapter_06_Partitioning.pdf` (discusses hashing for data distribution).
+    - *PostgreSQL1513Documentation...*: `Chapter_72_Hash_Indexes.pdf` (a production implementation).
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Implementing hash tables, solving problems with hash maps.
   - **Exercise Context**: Solve Two-Sum, group anagrams using hash maps.
@@ -436,8 +477,10 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
   - Extends strings (Chunk 11) and trees (Chunk 13); prepares for search/text analysis applications.
 - **Resources**:
   - *GeeksforGeeks*: [Trie Data Structure](https://www.geeksforgeeks.org/trie-insert-and-search/).
-  - *LeetCode*: [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/), [Longest Common Substring](https://leetcode.com/problems/longest-common-substring/).
-  - *Introduction to Algorithms by Cormen*: Chapter 31 (String Matching).
+  - *LeetCode*: [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *IntroductionToInformationRetrieval_Manning-Raghavan-Schutze_2008*: `06_Chapter_04_Index_construction.pdf` and `07_Chapter_05_Index_compression.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Building tries, solving advanced string problems.
   - **Exercise Context**: Implement trie for autocomplete, find longest common substring.
@@ -463,9 +506,12 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *Pandas Documentation*: [10 Minutes to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html).
   - *NumPy Documentation*: [Quickstart](https://numpy.org/doc/stable/user/quickstart.html).
-  - *Kaggle*: [Pandas Tutorial](https://www.kaggle.com/learn/pandas).
-  - **Foundational Book References**:
-    - *Python for Data Analysis*: This book is the primary resource. Read Chapters 4, 5, 6, 7, 8, and 10.
+- **Book & Documentation References**:
+  - **Primary**:
+    - *PythonForDataAnalysis_WesMcKinney_2022*: `07_Chapter_04` (NumPy) through `13_Chapter_10` (Aggregation).
+  - **For Deeper Understanding**:
+    - *MathematicsForMachineLearning_Deisenroth-Faisal-Ong_2020*: `04_Chapter_02_Linear_Algebra.pdf`.
+    - *SQLforDataScientists_ReneeM.P.Teate_2021*: `09_Chapter_06_Aggregating_Results_for_Analysis.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Data wrangling, numerical computation.
   - **Exercise Context**: Clean datasets, compute group statistics.
@@ -487,7 +533,9 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *React TypeScript Cheatsheet*: [Basic Usage](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup).
   - *FreeCodeCamp*: [React with TypeScript](https://www.freecodecamp.org/news/how-to-use-typescript-with-react/).
-  - *TypeScript Handbook*: [React Integration](https://www.typescriptlang.org/docs/handbook/react.html).
+- **Book & Documentation References**:
+  - **Primary**:
+    - *typescript-handbook-v4.1*: Review handbook sections on advanced types and generics, then apply in React.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Building typed UI components.
   - **Exercise Context**: Create typed counter, fetch/display data.
@@ -496,7 +544,7 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 
 ---
 
-## Phase 4: Practice and Review (Weeks 9-10, October 3 - October 5, 2025)
+## Phase 4: Practice and Review (Weeks 9-10, October 3 - October 18, 2025)
 
 ### Chunk 20: CodeSignal Practice and Timed Coding (Days 55-61, October 3-9)
 
@@ -513,9 +561,8 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *CodeSignal*: [Practice Problems](https://app.codesignal.com/assessments/practice).
   - *LeetCode*: [Mock Interviews](https://leetcode.com/mockinterview/).
-  - *HackerRank*: [Algorithm Challenges](https://www.hackerrank.com/domains/algorithms).
-  - **Foundational Book References (for Deeper Understanding)**:
-    - *Computer Organization and Design*: Chapter 4 ("The Processor"), Chapter 5 ("Large and Fast: Exploiting Memory Hierarchy"), Chapter 7 ("Multicores, Multiprocessors, and Clusters").
+- **Book & Documentation References (for Deeper Understanding)**:
+  - *ComputerOrganizationAndDesign_Patterson-Hennessy_2020*: Review `07_Chapter_04_The_Processor.pdf` and `08_Chapter_05_Large_and_Fast_Exploiting_Memory_Hierarchy.pdf` to better reason about performance.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Problem-solving, time management.
   - **Exercise Context**: Solve mixed array/graph problems, debug failing cases.
@@ -537,10 +584,15 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Resources**:
   - *Anki*: Spaced repetition flashcards.
   - *LeetCode*: [Top Interview Questions](https://leetcode.com/problemset/top-interview-questions/).
-  - *Pramp*: [Mock Interviews](https://www.pramp.com/).
-  - **Foundational Book References (for Deeper Understanding)**:
-    - *Python 3.13 Docs*: Review internal mechanisms with `howto-free-threading-python.txt`, `c-api.txt`, `extending.txt`, and `howto-gdb_helpers.txt`.
-    - *Computer Organization and Design*: Review Chapters 4, 5, and 7 to solidify knowledge on performance, memory, and parallelism for system design questions.
+- **Book & Documentation References (for System Design & Big Picture Context)**:
+  - **Your Top Priority**:
+    - *DesigningData-IntensiveApplications_MartinKleppmann_2017*: Review the entire book. It is the bible for system design.
+  - **Highly Recommended**:
+    - *FundamentalsofDataEngineering_JoeReis-MattHousley_2022*: Review `06_Chapter_03_Designing_Good_Data_Architecture.pdf`.
+    - *DesigningMachineLearningSystems_ChipHuyen_2022*: Review `07_Chapter_03_Data_Engineering_Fundamentals.pdf` and `11_Chapter_07_Model_Deployment...`.
+  - **For Deeper System Internals**:
+    - *python-3.13-docs-pdf-a4*: Review `c-api...` and `ExtendingandEmbeddingPython...` to understand Python's core machinery.
+    - *PostgreSQL1513Documentation...*: Skim `Chapter_52_Overview_of_PostgreSQL_Internals.pdf`.
 - **Relational and Specific Properties for AI-Generated Exercises and Lectures**:
   - **Key Skills**: Mastery of all topics, articulation.
   - **Exercise Context**: Solve 5-10 daily problems, explain solutions aloud.
@@ -552,11 +604,7 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 ## Software Engineering Principles to Emphasize
 
 - **Efficiency**: Optimize time/space complexity (e.g., O(n) for Kadane’s, O(1) lookups with hash maps).
-- **Scalability**: Design modular, reusable code (e.g., trie-based systems, modular classes).
+- **Scalability**: Design modular, reusable code (e.g., trie-based systems, partitioned data as in DDIA).
 - **Modifiability**: Use clear naming and structure (e.g., descriptive method names in ABCs).
 - **Testability**: Write testable units with edge cases (e.g., LRU Cache with boundary tests).
 - **Reliability**: Handle errors and edge cases robustly (e.g., negative weights in Bellman-Ford).
-
----
-
-This enhanced syllabus equips you with the skills to excel in a technical role, leveraging AI-generated exercises and lectures in VSCode. By mastering these concepts, patterns, and algorithms, you’ll be ready to collaborate with skilled professionals and contribute to impactful projects. The extended algorithmic focus ensures preparedness for technical interviews and real-world applications.

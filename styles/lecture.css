@@ -104,7 +104,6 @@ animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 .container > h2 { animation-delay: 0.4s; }
 .container > h3 { animation-delay: 0.5s; }
 .container > p { animation-delay: 0.6s; }
-.container > pre { animation-delay: 0.7s; }
 .container > table { animation-delay: 0.8s; }
 .container > .oracle-specific { animation-delay: 0.9s; }
 .container > ul, .container > ol { animation-delay: 0.65s; }
@@ -182,25 +181,25 @@ padding-left: 0;
 }
 
 ul > li {
-font-size: 1.15em;
-padding-left: 25px;
-position: relative;
-margin-bottom: 10px;
+    font-size: 1.15em;
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
 }
 
 ul > li::before {
-content: '►';
-color: var(--accent-color);
-position: absolute;
-left: 0;
-top: 1px;
-font-size: 1em;
-transition: transform 0.2s ease-out, color 0.2s ease-out;
+    content: '►';
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 1em;
+    transition: transform 0.2s ease-out, color 0.2s ease-out;
 }
 
 ul > li:hover::before {
-color: var(--primary-color);
-transform: scale(1.2) translateX(2px);
+    color: var(--primary-color);
+    transform: scale(1.2) translateX(2px);
 }
 
 ul ul {
@@ -381,32 +380,6 @@ transition: all var(--transition-speed) ease;
 code:hover {
 background-color: #2a2d2a;
 border-color: var(--primary-color);
-}
-
-pre {
-background-color: var(--code-background);
-border: 1px solid var(--code-border);
-border-left: 5px solid var(--secondary-color);
-border-radius: 5px;
-padding: 18px;
-overflow-x: auto;
-box-shadow: 2px 2px 8px var(--box-shadow-color);
-font-size: 1em;
-transition: all var(--transition-speed) ease;
-}
-
-pre:hover {
-border-color: var(--primary-color);
-box-shadow: 0 0 15px rgba(160, 193, 184, 0.3);
-}
-
-pre code {
-font-family: var(--code-font);
-background-color: transparent;
-border: none;
-padding: 0;
-color: inherit;
-font-size: 1rem;
 }
 
 table {
