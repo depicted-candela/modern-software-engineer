@@ -248,7 +248,7 @@ The timeline spans 10 weeks (July 28 - October 5, 2025), with a reorganized stru
 - **Relationships**:
   - Classes leverage functions and types; essential for structured, object-oriented TypeScript code.
 - **Resources**:
-  - *TypeScript Handbook*: [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html).
+  - *TypeScript Handbook*: [Classes](https://basarat.gitbook.io/typescript/future-javascript/classes#classes).
   - *Basarat’s TypeScript Deep Dive*: [Classes](https://basarat.gitbook.io/typescript/type-system/classes).
 - **Book & Documentation References**:
   - **Primary**:
