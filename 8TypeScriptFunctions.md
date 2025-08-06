@@ -57,7 +57,7 @@
     <li>
         <strong>Typed Parameters</strong>: Each parameter is a named entry in the contract, defined with a strict type (e.g., <code>id: number</code>).
         <div class="oracle-specific">
-            <strong>Grounded Example (Adj+Noun)</strong>: This creates a <strong>predictable function</strong>.
+            <strong>Grounded Example </strong>: This creates a <strong>predictable function</strong>.
         </div>
         <p>This is your primary defense against the chaos of unexpected data types. It transforms an entire category of runtime errors into compile-time impossibilities.</p>
     </li>
@@ -120,7 +120,7 @@ const user = findUserById(101, userDatabase); // 'user' is correctly inferred as
     </div>
     <div class="grid-cell">
         <ul>
-            <li><strong>Clarifying Risks (Noun+Noun)</strong>: This creates a <strong>responsibility contract</strong>. The function's internal logic *must* handle the <code>undefined</code> case to prevent runtime failure.</li>
+            <li><strong>Clarifying Risks </strong>: This creates a <strong>responsibility contract</strong>. The function's internal logic *must* handle the <code>undefined</code> case to prevent runtime failure.</li>
             <li>Optional parameters must appear after all required parameters.</li>
         </ul>
     </div>
@@ -153,7 +153,7 @@ logEvent('Data validation failed', 'ERROR', { input: 'user@domain.com' }); // 'd
     Using the <code>=</code> syntax provides a parameter with a <strong>safety net</strong> value. If the caller provides nothing for that parameter, the default is automatically used, ensuring the function always has a concrete, predictable value to work with.
 </p>
 <div class="oracle-specific">
-    <strong>Paradoxical Example (Noun+Adj)</strong>: This is a <strong>choice invisible</strong>. If you don't make a choice, a sensible one is made for you, simplifying the call while ensuring robust behavior.
+    <strong>Paradoxical Example </strong>: This is a <strong>choice invisible</strong>. If you don't make a choice, a sensible one is made for you, simplifying the call while ensuring robust behavior.
 </div>
 <p class="rhyme">
     When a value’s not set, there’s no need to fret,<br>
@@ -186,7 +186,7 @@ const getRequest = createAPIRequest('/users');
     The <code>...</code> syntax on the final parameter of a function transforms it into a <strong>gathering net</strong>. It catches all remaining arguments passed by the caller and bundles them neatly into an array.
 </p>
 <div class="postgresql-bridge">
-    <strong>Paradoxical Example (Adj+Noun)</strong>: It represents a <strong>finite infinity</strong> of arguments—a single parameter that can hold a boundless number of values, giving your function immense flexibility.
+    <strong>Paradoxical Example </strong>: It represents a <strong>finite infinity</strong> of arguments—a single parameter that can hold a boundless number of values, giving your function immense flexibility.
 </div>
 
 <h4>Example: The Universal Aggregator</h4>
@@ -210,7 +210,7 @@ const total = sum(10, 20, 30, 40, 50); // total is 150
     Arrow functions offer a concise syntax for creating functions, but their most powerful feature is acting as a <strong>lexical anchor</strong> for the <code>this</code> keyword.
 </p>
 <div class="oracle-specific">
-    <strong>Paradoxical Example (Verb+Noun)</strong>: The <strong>binding arrow</strong> that never misses its contextual target. It solves one of JavaScript’s oldest problems by refusing to have its own <code>this</code> context, instead inheriting it from its parent scope. This makes it invaluable for callbacks in object-oriented code.
+    <strong>Paradoxical Example </strong>: The <strong>binding arrow</strong> that never misses its contextual target. It solves one of JavaScript’s oldest problems by refusing to have its own <code>this</code> context, instead inheriting it from its parent scope. This makes it invaluable for callbacks in object-oriented code.
 </div>
 
 <h4>Example: Preserving Context in Asynchronous Code</h4>
@@ -284,7 +284,7 @@ loggedAdd(5, 10);
     <strong>Comedy (Punctuation Joke)</strong>: Why did the TypeScript function go to the costume party? Because with overloading, it could be a <code>string-reverser</code>, a <code>number-doubler</code>, or an <code>array-flattener</code>—it had a different signature for every occasion!
 </div>
 <div class="oracle-specific">
-    <strong>Paradoxical Example (Adj+Noun)</strong>: It is a <strong>singular plurality</strong>—one function with many faces. The compiler knows which face to expect based on your call, providing unparalleled type safety for flexible APIs.
+    <strong>Paradoxical Example </strong>: It is a <strong>singular plurality</strong>—one function with many faces. The compiler knows which face to expect based on your call, providing unparalleled type safety for flexible APIs.
 </div>
 
 <h4>Example: The Multi-Purpose Identifier Factory</h4>

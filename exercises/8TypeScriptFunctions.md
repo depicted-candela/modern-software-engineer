@@ -73,7 +73,9 @@ console.log(greeting2); // Expected: "Hello, Alan!"
 **Problem**:
 Create a higher-order function named `filterData` that takes an array of numbers and a callback function. The callback, a "predicate," should accept a number and return `true` if the number should be included in the output. `filterData` should return a new array containing only the numbers for which the predicate returned `true`.
 
-**Artificial Data**:```typescript
+**Artificial Data**:
+
+```typescript
 const numericData: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 ```
 
@@ -88,6 +90,7 @@ const numericData: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 -   **Implementation**: `typescript-handbook-v4.1.pdf`, Page 45, "Typing the function", demonstrates defining a function's type, which we use here for the callback. Basarat’s TypeScript Deep Dive - [Functions](https://basarat.gitbook.io/typescript/type-system/functions) provides further examples of callbacks and arrow function syntax.
 
 **Solution**:
+
 ```typescript
 type NumberPredicate = (n: number) => boolean;
 
@@ -229,8 +232,36 @@ const users: User[] = [
 
 **Solution**:
 ```typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  isActive: boolean;
+}
+
+const users: User[] = [
+    { 
+        id: 1, 
+        name: "Alice", 
+        email: "alice@example.com", 
+        isActive: true 
+    },
+    { 
+        id: 2, 
+        name: "Bob", 
+        email: "bob@example.com", 
+        isActive: false 
+    },
+    { 
+        id: 3, 
+        name: "Charlie", 
+        email: "charlie@example.com", 
+        isActive: true 
+    },
+];
+
 // Type alias for any transformation function
-type Transformer<T, U> = (data: T) => U;
+type Transform<T, U> = (data: T) => U;
 
 // Default callback if none is provided
 const defaultCallback = (result: any) => console.log("Pipeline Result:", result);
@@ -238,12 +269,12 @@ const defaultCallback = (result: any) => console.log("Pipeline Result:", result)
 // Overload 1: Immediate execution
 function createDataPipeline<T>(
   initialData: T[],
-  ...transformers: Transformer<any, any>[]
+  ...transformers: Transform<any, any>[]
 ): void;
 
 // Overload 2: Deferred execution (returns a new function)
 function createDataPipeline<T, U>(
-  ...transformers: Transformer<any, any>[]
+  ...transformers: Transform<any, any>[]
 ): (initialData: T[], onComplete?: (finalData: U) => void) => void;
 
 // Implementation
@@ -252,17 +283,17 @@ function createDataPipeline(
 ): void | ((initialData: any[], onComplete?: (finalData: any) => void) => void) {
   // Check if the first argument is data (for immediate execution)
   const isImmediate = Array.isArray(args[0]);
-  
-  const transformers: Transformer<any, any>[] = isImmediate ? args.slice(1) : args;
-
+  const transformers: Transform<any, any>[] = isImmediate ? args.slice(1) : args;
   const pipelineLogic = (
     initialData: any[], 
     onComplete: (finalData: any) => void = defaultCallback
   ) => {
-    const result = transformers.reduce((currentData, transformer) => transformer(currentData), initialData);
+    const result = transformers.reduce(
+      (currentData, transformer) => transformer(currentData), 
+      initialData
+    );
     onComplete(result);
   };
-
   if (isImmediate) {
     pipelineLogic(args[0]);
     return;
@@ -271,33 +302,22 @@ function createDataPipeline(
   }
 }
 
-// Data
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  isActive: boolean;
-}
-const users: User[] = [
-  { id: 1, name: "Alice", email: "alice@example.com", isActive: true },
-  { id: 2, name: "Bob", email: "bob@example.com", isActive: false },
-  { id: 3, name: "Charlie", email: "charlie@example.com", isActive: true },
-];
-
 // --- Usage 1: Immediate Execution ---
 console.log("--- Immediate Execution ---");
-const filterActive: Transformer<User[], User[]> = (data) => data.filter(u => u.isActive);
-const getEmails: Transformer<User[], string[]> = (data) => data.map(u => u.email);
-const countItems: Transformer<string[], string> = (data) => `Found ${data.length} active user emails.`;
+const filterActive: Transform<User[], User[]> = (data) => data.filter(u => u.isActive);
+const getEmails: Transform<User[], string[]> = (data) => data.map(u => u.email);
+const countItems: Transform<string[], string> = (data) => `Found ${data.length} active user emails.`;
 
 createDataPipeline(users, filterActive, getEmails, countItems); // Uses default console.log callback
 
 // --- Usage 2: Deferred Execution ---
 console.log("\n--- Deferred Execution ---");
-const nameToUppercase: Transformer<User[], { name: string }[]> = (data) => 
+const nameToUppercase: Transform<User[], { name: string }[]> = (data) => 
   data.map(u => ({ name: u.name.toUpperCase() }));
 
-const reusablePipeline = createDataPipeline(nameToUppercase);
+const reusablePipeline = createDataPipeline<User, { name: string }[]>(
+    nameToUppercase
+);
 
 reusablePipeline(users, (finalData) => {
   console.log("Transformed User Names:", finalData);
