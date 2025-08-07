@@ -42,14 +42,17 @@ function createDataPipeline() {
         return pipelineLogic;
     }
 }
-// --- Usage 1: Immediate Execution ---
-console.log("--- Immediate Execution ---");
 var filterActive = function (data) { return data.filter(function (u) { return u.isActive; }); };
 var getEmails = function (data) { return data.map(function (u) { return u.email; }); };
-var countItems = function (data) { return "Found ".concat(data.length, " active user emails."); };
+var countItems = function (data) { return console.log("There exists ".concat(data.length, " items")); };
+// --- Usage 1: Immediate Execution ---
+console.log("--- Immediate Execution ---");
+createDataPipeline(users, filterActive, getEmails, countItems);
 createDataPipeline(users, filterActive, getEmails, countItems); // Uses default console.log callback
 // --- Usage 2: Deferred Execution ---
 console.log("\n--- Deferred Execution ---");
+var reusablePipeline = createDataPipeline(filterActive);
+reusablePipeline(users);
 var nameToUppercase = function (data) {
     return data.map(function (u) { return ({ name: u.name.toUpperCase() }); });
 };
