@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var console_1 = require("console");
-var singleString = "hello world";
-var stringArray = ["typescript", "is", "powerful"];
+const console_1 = require("console");
+const singleString = "hello world";
+const stringArray = ["typescript", "is", "powerful"];
 function formatInput(string) {
     if (typeof string == 'string')
         return string.toUpperCase();

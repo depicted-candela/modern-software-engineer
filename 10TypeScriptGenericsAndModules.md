@@ -302,7 +302,6 @@ console.log(add(PI, 1));          // Output: 4.14159
 ```typescript
 // 1. src/lib/chrono-event-types.ts (The Book of Truth)
 // Technical Superstrate: A perfectly valid interface.
-// Humorous Substrate: The content is absurd.
 export interface ChronoEventMap {
   'timeline:branched': { newTimelineId: string; divergencePoint: Date };
   'paradox:detected': { realityInstabilityIndex: number; originatingTimeline: string };

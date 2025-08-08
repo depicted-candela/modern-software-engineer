@@ -1,11 +1,12 @@
-var promotedVideo = {
+"use strict";
+const promotedVideo = {
     id: 1,
     sourceUrl: "https://example.com/video.mp4",
     duration: 120,
     sponsor: "TechCorp",
     campaignId: "TC-001"
 };
-var promotedImage = {
+const promotedImage = {
     id: 2,
     sourceUrl: "https://example.com/image.jpg",
     width: 1920,
@@ -13,7 +14,7 @@ var promotedImage = {
     sponsor: "AdCo",
     campaignId: "AC-002"
 };
-var promotedVideoT = promotedVideo;
-var promotedImageT = promotedImage;
+const promotedVideoT = promotedVideo;
+const promotedImageT = promotedImage;
 console.log(promotedVideoT);
 console.log(promotedImageT);

@@ -1,4 +1,5 @@
-var inputs = [
+"use strict";
+const inputs = [
     "hello world",
     12345,
     true,
@@ -9,21 +10,20 @@ function logError(message) {
     throw Error(message);
 }
 function processInput(input) {
-    var error_log = "The input <".concat(input, "> is unexpectedly neither a number nor a string");
+    const error_log = `The input <${input}> is unexpectedly neither a number nor a string`;
     switch (typeof input) {
         case "string": return input;
         case "number": return input.toString();
         default: logError(error_log);
     }
 }
-for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
-    var input = inputs_1[_i];
+for (const input of inputs) {
     try {
-        var response = processInput(input);
+        const response = processInput(input);
         console.log(response);
     }
     catch (error) {
-        console.log("Error: ".concat(error));
+        console.log(`Error: ${error}`);
         continue;
     }
 }

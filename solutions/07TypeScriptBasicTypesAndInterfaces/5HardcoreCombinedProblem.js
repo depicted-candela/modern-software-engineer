@@ -1,4 +1,5 @@
-var rawEvents = [
+"use strict";
+const rawEvents = [
     { eventType: "USER_SIGN_IN", userId: "user-123", timestamp: 1672531200 },
     "this is not an event",
     { eventType: "MESSAGE_BROADCAST", senderId: "user-456", message: "Hello everyone!" },
@@ -13,7 +14,7 @@ function isSystemEvent(obj) {
     if (!('eventType' in obj) || !('timestamp' in obj) || typeof obj.eventType !== 'string' || typeof obj.timestamp !== 'number') {
         return false;
     }
-    var event = obj;
+    const event = obj;
     switch (event.eventType) {
         case "USER_SIGN_IN":
         case "USER_SIGN_OUT": return 'userId' in event && typeof event.userId === 'string';
@@ -26,19 +27,18 @@ function processEvent(event) {
     switch (event.eventType) {
         case "USER_SIGN_IN":
         case "USER_SIGN_OUT":
-            console.log("uid: ".concat(event.userId, ", tstmp: ").concat(event.timestamp));
+            console.log(`uid: ${event.userId}, tstmp: ${event.timestamp}`);
             break;
         case "MESSAGE_BROADCAST":
-            console.log("uid: ".concat(event.senderId, ", tstmp: ").concat(event.recipientId));
+            console.log(`uid: ${event.senderId}, tstmp: ${event.recipientId}`);
             break;
         default: unreachable(event);
     }
 }
 function unreachable(x) {
-    throw Error("Unexpected object ".concat(x));
+    throw Error(`Unexpected object ${x}`);
 }
-for (var _i = 0, rawEvents_1 = rawEvents; _i < rawEvents_1.length; _i++) {
-    var event_1 = rawEvents_1[_i];
-    if (isSystemEvent(event_1))
-        processEvent(event_1);
+for (const event of rawEvents) {
+    if (isSystemEvent(event))
+        processEvent(event);
 }
