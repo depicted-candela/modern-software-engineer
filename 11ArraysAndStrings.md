@@ -204,9 +204,6 @@ nums = [2, 3, 1, 2, 4, 3]
 ```
         
 <h1 id="part3">Part 3: Advanced Algorithms - Forging Order from Chaos</h1>
-
-<h1 id="part3">Part 3: Advanced Algorithms - Forging Order from Chaos</h1>
-
 <h2 id="algo3-1">Algorithm 3.1: Kadane's Algorithm - The Forgetful Optimist</h2>
 
 <p><strong>Core Idea</strong>: Find the maximum subarray sum by making a simple, local choice at each step: either extend the current subarray or start a new one.</p>
@@ -334,8 +331,8 @@ def kmp_search(dna_strand, gene_marker):
 
 # --- Real-World Scenario Data ---
 dna_strand = "ACGTACGTACGTABACGTACGTACGT"
-gene_marker = "ACGTAB"
-# LPS for "ACGTAB": [0, 0, 0, 0, 1, 2]
+gene_marker = "ACGTAC"
+# LPS for "ACGTAC": [0, 0, 0, 0, 1, 2]
 # The algorithm will find the marker starting at index 8.
 # When it mismatches at `dna_strand[14]` ('C') vs `gene_marker[6]` (end),
 # it uses the LPS to shift smartly instead of naively.

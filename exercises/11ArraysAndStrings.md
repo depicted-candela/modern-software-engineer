@@ -141,23 +141,23 @@ Write a function `max_score_for_patterned_segment(data_stream: str, engagement_p
 - **Step 4**: The overall maximum is `max(23, 15) = 23`. The function should return 23.
 
 **Artificial Data**:
-```python
  Input Data
+```python
 data_stream = "axbyabxyabxyc"
 engagement_pattern = "abxy"
 scores = [-1, 10, -5, 1, 8, -2, 4, 5, 2, 3, 6, -10, 20]
- Expected Output: 17
- Pattern "abxy" found at index 4. Segment is [8, -2, 4, 5, 2, 3, 6, -10, 20].
- Max subarray sum in this segment is [8, -2, 4, 5, 2] = 17.
+# Expected Output: 17
+# Pattern "abxy" found at index 4. Segment is [8, -2, 4, 5, 2, 3, 6, -10, 20].
+# Max subarray sum in this segment is [8, -2, 4, 5, 2] = 17.
 
 data_stream_2 = "aaaaaaaa"
 engagement_pattern_2 = "aa"
 scores_2 = [1, -5, 4, -5, 4, -5, 4, -5]
- Expected Output: 4
- Occurrences at 0, 1, 2, 3, 4, 5, 6.
- Segment 0: [1, -5, 4, -5, 4, -5, 4, -5] -> Max sum is 4
- Segment 1: [-5, 4, -5, 4, -5, 4, -5] -> Max sum is 4
- ... and so on. The highest max is 4.
+# Expected Output: 4
+# Occurrences at 0, 1, 2, 3, 4, 5, 6.
+# Segment 0: [1, -5, 4, -5, 4, -5, 4, -5] -> Max sum is 4
+# Segment 1: [-5, 4, -5, 4, -5, 4, -5] -> Max sum is 4
+# ... and so on. The highest max is 4.
 ```
 
 **Theoretical and Source References**:
