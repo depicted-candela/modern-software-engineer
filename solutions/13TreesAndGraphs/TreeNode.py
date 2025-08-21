@@ -1,22 +1,11 @@
-#   Exercise 1: Foundational Tree Representation & Traversal (BST & DFS)
-# Objective: Implement a Binary Search Tree (BST) data structure from scratch. You 
-# will implement node insertion that respects the BST property and then perform 
-# Depth-First Search (DFS) traversals (inorder, preorder, postorder) to verify its 
-# structure and properties. This exercise solidifies your understanding of tree 
-# nodes, hierarchical data, and the fundamental pattern of recursive tree processing.
-
-# Problem Description: A company is organizing its employee database. To enable 
-# efficient lookups, they decide to store employee records in a Binary Search Tree, 
-# using a unique integer employee ID as the key. Your task is to build this BST and 
-# implement the standard traversals to list the employees in different orders.
-employee_ids = [50, 30, 70, 20, 40, 60, 80, 25, 35, 75]
-
 class TreeNode:
-    key: int = None
-    left_child = None
-    right_child = None
-    def __init__(self, key: int):
+    key: int | str = None
+    def __init__(self, key: int | str):
         self.key = key
+        self.left_child = None
+        self.right_child = None
+    def __str__(self):
+        return f"key: {self.key}"
 
 class BinarySearchTree:
     root: TreeNode = None
@@ -68,11 +57,3 @@ class BinarySearchTree:
             self.recursive_postorder_traversal(node.left_child, buffer)
             self.recursive_postorder_traversal(node.right_child, buffer)
             buffer.append(node.key)
-    
-bfs = BinarySearchTree()
-for employee in employee_ids:
-    bfs.insert(employee)
-print(f"Normal traversal:    {employee_ids}")
-print(f"Inorder traversal:   {bfs.inorder_traversal()}")
-print(f"Preorder traversal:  {bfs.preorder_traversal()}")
-print(f"Postorder traversal: {bfs.postorder_traversal()}")
