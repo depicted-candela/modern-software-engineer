@@ -15,8 +15,8 @@ class TreeNode:
     key: int | str = None
     def __init__(self, key: int | str):
         self.key = key
-        left_child = None
-        right_child = None
+        self.left_child = None
+        self.right_child = None
 
 class BinarySearchTree:
     root: TreeNode = None

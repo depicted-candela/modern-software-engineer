@@ -55,5 +55,8 @@ def bfs_shortest_path(graph, start_node, end_node):
         if friend not in visited:
           visited.add(friend)
           queue.append((friend, path + [friend]))
-print(bfs_shortest_path(friends_adjlist, 'Alice', 'Frank'))
-print(bfs_shortest_path(friends_adjlist, 'Bob', 'Grace'))
+
+visited = bfs_shortest_path(friends_adjlist, 'Alice', 'Frank')
+print(visited)
+visited = bfs_shortest_path(friends_adjlist, 'Bob', 'Grace')
+print(visited)
