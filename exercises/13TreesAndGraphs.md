@@ -129,7 +129,47 @@ A binary tree structure (note: this is **not** a BST). Construct this tree manua
 
 ---
 
-# Exercise 5: Hardcore Combined Problem - Multi-Modal Transit Network Optimization
+# Exercise 5: Adversarial Search with the Minimax Algorithm
+
+**Objective**: Model a simple two-player, zero-sum game using a game tree and implement the Minimax algorithm to find the optimal move. This exercise applies your understanding of tree traversal (DFS) to the domain of AI and strategic decision-making, directly addressing the new content in **Chunk 15**.
+
+**Problem Description**: You are building an AI for a simplified game of Tic-Tac-Toe. Given a game state, your AI needs to determine the best possible move by assuming the opponent will also play optimally. This requires exploring the tree of all possible future game states.
+
+**Artificial Data**:
+*   A Tic-Tac-Toe board state where it is Player 'X' (the MAX player) to move.
+    ```
+    board = [
+        ['O', None, 'X'],
+        ['X', 'O', 'O'],
+        [None, None, 'X']
+    ]
+    ```
+*   Player 'X' wants to maximize the score (win = +10, draw = 0).
+*   Player 'O' (the MIN player) wants to minimize the score (loss = -10).
+
+**Tasks**:
+1.  **Represent the Game State**: Create a simple representation for the game board (a list of lists is fine). Write helper functions to check for a win, loss, or draw, and to generate possible moves from a given state.
+2.  **Implement the Minimax Function**: Write a recursive function `minimax(board, is_maximizing_player)`.
+    *   **Base Case**: If the game is over (win, lose, or draw), return the score (+10, -10, or 0).
+    *   **Recursive Step (MAX player)**: Find the maximum score among all possible next moves by recursively calling `minimax` for each move. Return this max score.
+    *   **Recursive Step (MIN player)**: Find the minimum score among all possible next moves. Return this min score.
+3.  **Find the Best Move**: Write a wrapper function `find_best_move(board)` that iterates through all empty cells, simulates placing an 'X' there, calls `minimax` on the resulting board, and returns the move that leads to the highest score.
+
+**Relevant Sources & Theory**:
+*   **Source**: **Artificial Intelligence: A Modern Approach (Russell & Norvig), Chapter 5 ("Adversarial Search")**.
+    *   **Theory**: This is the canonical source. Your `minimax` function is a direct implementation of the Minimax algorithm described here. The algorithm is a **DFS-based traversal** of the game tree.
+*   **Source**: `DiscreteMathematicsandItsApplications_KennethHRosen_2018/12_Chapter_05_Induction_and_Recursion.pdf`.
+    *   **Theory**: The recursive structure of the `minimax` function is a classic example of the recursive problem-solving patterns grounded in this chapter.
+*   **Source**: `MathematicsForComputerScience_Lehman-Leighton-Meyer_2015/08_6_State_Machines.pdf`.
+    *   **Theory**: This source provides the formal model for what you are building. Each board configuration is a **state**, and each move is a **transition**. The game tree is the unrolled state space graph starting from a given configuration.
+
+**Software Engineering Principles**:
+*   **Reliability**: For deterministic, perfect information, zero-sum games, Minimax is provably optimal. Your AI will play perfectly (though not necessarily efficiently).
+*   **Modifiability**: The core `minimax` logic can be decoupled from the Tic-Tac-Toe rules. By changing the `generate_moves` and `evaluate_board` functions, the same algorithm could be adapted to other simple games.
+
+---
+
+# Exercise 6: Hardcore Combined Problem - Multi-Modal Transit Network Optimization
 
 **Objective**: Synthesize all concepts from this chunk to build a sophisticated routing algorithm. You will model a complex network, apply different shortest-path algorithms based on different optimization criteria (hops vs. time), and use tree-based logic (LCA) to analyze the resulting paths.
 

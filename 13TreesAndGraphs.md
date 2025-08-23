@@ -46,6 +46,8 @@
                 </ul>
             </li>
             <li><a href="#part5-hardcore">Part 5: Hardcore Problem & Immersion Joke</a></li>
+            <li><a href="#part6-adversarial">Part 6: The Frontier - Adversarial Search and Game Trees</a></li>
+            <li><a href="#part7-hardcore-revisited">Part 7: Hardcore Problem Revisited - The Ministry's Budget War</a></li>
         </ul>
     </div>
 </div>
@@ -415,6 +417,148 @@ if ceo_path:
 print(f"The Decision Nexus is: '{decision_nexus}'")
 ```
 <p><small><strong>Source & Theory</strong>: This problem is a synthesis. It uses the <strong>Adjacency List</strong> pattern (Cormen 20.1), <strong>BFS</strong> (Cormen 20.2), <strong>Dijkstra's Algorithm</strong> (Cormen 22.3), and applies tree-based <strong>LCA logic</strong> to the resulting path structures derived from predecessor subgraphs (Rosen 11.1). The humor transforms it into a memorable <strong>Fictional Case Study</strong>.</small></p>
+
+<h2 id="part6-adversarial">Part 6: The Frontier - Adversarial Search and Game Trees</h2>
+
+<p>
+    We have seen how trees model disciplined hierarchies and graphs model interconnected networks. Now, we will explore a fascinating synthesis of these ideas that forms the bedrock of artificial intelligence and strategic decision-making: the <strong>Game Tree</strong>.
+</p>
+
+<h3 id="section6-1">6.1 Concept: The Game Tree - A Map of Possibilities</h3>
+
+<p>
+    Imagine a game like Tic-Tac-Toe or Chess. Every choice you make opens up a new set of possible futures. This branching cascade of "what-ifs" can be perfectly modeled by a tree, where:
+</p>
+<ul>
+    <li><strong>Nodes</strong> are not just data points, but entire <strong>game states</strong> (e.g., the configuration of a chessboard).</li>
+    <li><strong>Edges</strong> represent <strong>moves</strong> that transition the game from one state to another.</li>
+    <li>The <strong>Root</strong> is the starting position of the game.</li>
+</ul>
+
+<div class="oracle-specific">
+    <h4>From Data Structure to State Space</h4>
+    <p>This is a profound conceptual leap. The tree is no longer just storing static data; it is mapping out a dynamic <strong>state space</strong>. We are using a simple, hierarchical structure to explore a complex, adversarial environment. This is the foundational model for any AI that needs to "think ahead."</p>
+</div>
+<p><small><strong>Source & Theory</strong>: This directly applies the concepts of trees from <code>DiscreteMathematicsandItsApplications_KennethHRosen_2018/18_Chapter_11_Trees.pdf</code>. The idea of modeling problems as a set of states and transitions is formally known as a state machine, covered in <code>FoundationalMathematics&Statistics/MathematicsForComputerScience_Lehman-Leighton-Meyer_2015/08_6_State_Machines.pdf</code>.</small></p>
+
+<h3 id="section6-2">6.2 The Challenge: Searching for the Optimal Future</h3>
+
+<p>
+    In a simple BST, we search for a *value*. In a game tree, we search for a *winning strategy*. The core algorithm for this is <strong>Minimax</strong>, a classic recursive, DFS-based approach. It operates on a simple, powerful principle:
+</p>
+<ol>
+    <li>Assume you (the <strong>MAX</strong> player) will always choose the move that maximizes your score.</li>
+    <li>Assume your opponent (the <strong>MIN</strong> player) will always choose the move that minimizes your score.</li>
+</ol>
+<p>
+    By recursively exploring the game tree, you can "back up" the potential outcomes from the future to decide on the optimal move to make right now.
+</p>
+
+<div class="caution">
+    <h4>Foreshadowing Chunk 14: The Combinatorial Explosion</h4>
+    <p>There's a huge problem. Game trees are astronomically large. For Tic-Tac-Toe, it's manageable. For Chess, the number of possible game states exceeds the number of atoms in the observable universe. Searching this tree naively is impossible.</p>
+    <p>The complexity of searching a game tree is often described as <strong>O(b<sup>d</sup>)</strong>, where `b` is the branching factor (average number of moves from any state) and `d` is the depth (number of turns we look ahead). This is the "state space search" problem that your next chunk on <strong>Complexity</strong> will prepare you to analyze.</p>
+</div>
+<p><small><strong>Source & Theory</strong>: The foundational logic for adversarial search and the Minimax algorithm is detailed in <code>Artificial Intelligence: A Modern Approach (Russell & Norvig)</code>, Chapter 5.</small></p>
+
+<h3 id="section6-3">6.3 Looking Ahead to Chunk 15: Building the Solution</h3>
+
+<p>
+    After we analyze the daunting complexity in Chunk 14, we will build the solution in Chunk 15. We will implement:
+</p>
+<ul>
+    <li>The recursive <strong>Minimax</strong> algorithm to traverse the game tree.</li>
+    <li>A brilliant optimization called <strong>Alpha-Beta Pruning</strong> to intelligently ignore vast, irrelevant sections of the tree.</li>
+    <li>An extension called <strong>Expectiminimax</strong> to handle games involving chance, like dice rolls.</li>
+</ul>
+
+<p>This journey from trees and graphs (Chunk 13), through complexity analysis (Chunk 14), to advanced adversarial search algorithms (Chunk 15) is a core pillar of modern computer science and AI.</p>
+    
+```python
+# A conceptual structure for a GameState node.
+# In Chunk 15, we will build the logic to traverse this.
+class GameStateNode:
+    def __init__(self, board_config, player_turn):
+        self.board = board_config  # e.g., a 2D list for a Tic-Tac-Toe board
+        self.turn = player_turn    # 'MAX' or 'MIN'
+        self.children = []         # Possible next states after one move
+        self.score = None          # Will be determined by Minimax
+
+    def add_child_state(self, child_node):
+        self.children.append(child_node)
+
+# --- Conceptual Example ---
+# This is not a full implementation, but a demonstration of the structure.
+initial_state = GameStateNode(board_config=[[None]*3 for _ in range(3)], player_turn='MAX')
+
+# After MAX places an 'X' in the center:
+move1_state = GameStateNode(board_config=[[None, None, None], [None, 'X', None], [None, None, None]], player_turn='MIN')
+initial_state.add_child_state(move1_state)
+
+print("\n--- Game Tree Structure ---")
+print(f"Initial state created. Player to move: {initial_state.turn}")
+print(f"Number of possible first moves (children): {len(initial_state.children)}")
+print("In Chunk 15, we will learn how to recursively explore this entire tree.")
+```
+
+<h2 id="part7-hardcore-revisited">Part 7: Hardcore Problem Revisited - The Ministry's Budget War</h2>
+
+<div class="oracle-specific">
+    <h4>Immersion Joke: The Follow-Up</h4>
+    <p>The Ministry of Procedural Efficiency was so pleased with our route-finding work that they've given us a new, highly confidential task. They are in a bitter budget allocation war with their rivals, the "Ministry of Random Spending."</p>
+    <p>They start with a pool of 10 "Discretionary Units" (DUs). The game is played in turns. On each turn, a Ministry can allocate 2 or 3 DUs to their own projects. The game ends after two rounds (one turn for each Ministry). The Ministry of Procedural Efficiency (our client, the MAX player) wins if the final remaining DU count is an <strong>odd number</strong>. The Ministry of Random Spending (the MIN player) wins if it's <strong>even</strong>.</p>
+    <p>Your task is to map out the complete <strong>game tree</strong> for this two-turn scenario and determine if our client has a guaranteed winning strategy.</p>
+</div>
+
+```python
+class BudgetGameState:
+    def __init__(self, dus_remaining, turn, move_made="Start"):
+        self.dus = dus_remaining
+        self.turn = turn
+        self.move = move_made
+        self.children = []
+    
+    def generate_next_states(self):
+        next_turn = 'MIN' if self.turn == 'MAX' else 'MAX'
+        if self.dus >= 2:
+            self.children.append(BudgetGameState(self.dus - 2, next_turn, "Allocated 2"))
+        if self.dus >= 3:
+            self.children.append(BudgetGameState(self.dus - 3, next_turn, "Allocated 3"))
+
+def print_game_tree(node, depth=0):
+    indent = "    " * depth
+    outcome = ""
+    if not node.children: # It's a leaf node
+        if node.dus % 2 != 0:
+            outcome = "-> MAX wins"
+        else:
+            outcome = "-> MIN wins"
+            
+    print(f"{indent}Move by {node.turn}: {node.move}, DUs left: {node.dus} {outcome}")
+    
+    for child in node.children:
+        print_game_tree(child, depth + 1)
+
+# --- The Budget War Simulation ---
+start_node = BudgetGameState(10, 'MAX')
+
+# Level 1: MAX's moves
+start_node.generate_next_states() 
+
+# Level 2: MIN's moves
+for child_of_start in start_node.children:
+    child_of_start.generate_next_states()
+
+print("\n--- The Ministry Budget War Game Tree ---")
+print_game_tree(start_node)
+
+print("\nAnalysis: By inspection, MAX can choose to allocate 3 DUs, leaving 7.")
+print("From there, MIN can leave either 5 or 4. If MIN leaves 5, MAX wins. MAX has a winning path!")
+```
+
+<p><small><strong>Source & Theory</strong>: This problem applies the tree-building concepts of Rosen (Chapter 11) to a state space (Lehman et al., Chapter 6) representing an adversarial game (Russell & Norvig, Chapter 5). It provides a concrete, small-scale example of the game trees we will analyze for complexity in Chunk 14 and solve algorithmically in Chunk 15.</small></p>
+</div>
+
 </div>
 
 </body>
