@@ -1,12 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastering Sorting, Searching, and Complexity</title>
+    <title>Sorting, Searching, and Complexity</title>
     <link rel="stylesheet" href="styles/lecture.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="toc-popup-container">
@@ -16,1111 +13,1223 @@
             <span class="toc-icon-open"></span>
         </label>
         <div class="toc-content">
-            <h4>Lecture Outline</h4>
+            <h4>Table of Contents</h4>
             <ul>
-                <li><a href="#part-1-algorithmic-complexity">Part 1: Algorithmic Complexity</a>
+                <li><a href="#part-1-searching-algorithms">1. Searching Algorithms</a>
                     <ul>
-                        <li><a href="#concept-big-o-notation">Concept: Big O Notation</a></li>
+                        <li><a href="#linear-search">1.1 Linear Search</a></li>
+                        <li><a href="#binary-search">1.2 Binary Search</a></li>
+                        <li><a href="#interpolation-search">1.3 Interpolation Search</a></li>
                     </ul>
                 </li>
-                <li><a href="#part-2-sorting-algorithms">Part 2: Sorting Algorithms</a>
+                <li><a href="#part-2-sorting-algorithms">2. Sorting Algorithms</a>
                     <ul>
-                        <li><a href="#21-bubble-sort">2.1 Bubble Sort</a></li>
-                        <li><a href="#22-merge-sort">2.2 Merge Sort</a></li>
-                        <li><a href="#23-heap-sort">2.3 Heap Sort</a></li>
-                        <li><a href="#24-quicksort">2.4 Quicksort</a></li>
+                        <li><a href="#bubble-sort-revisited-for-properties">2.1 Bubble Sort (Revisited for Properties)</a></li>
+                        <li><a href="#merge-sort">2.2 Merge Sort</a></li>
+                        <li><a href="#heap-sort">2.3 Heap Sort</a></li>
+                        <li><a href="#quicksort">2.4 Quicksort</a></li>
+                        <li><a href="#radix-sort-non-comparison-sort">2.5 Radix Sort (Non-comparison Sort)</a></li>
                     </ul>
                 </li>
-                <li><a href="#part-3-searching-algorithms">Part 3: Searching Algorithms</a>
+                <li><a href="#part-3-complexity-analysis-big-o-omega-theta">3. Complexity Analysis (Big O, Omega, Theta)</a>
                     <ul>
-                        <li><a href="#31-linear-search">3.1 Linear Search</a></li>
-                        <li><a href="#32-binary-search">3.2 Binary Search</a></li>
-                        <li><a href="#33-interpolation-search">3.3 Interpolation Search</a></li>
+                        <li><a href="#asymptotic-notations-o-omega-theta">3.1 Asymptotic Notations: O, Ω, Θ</a></li>
                     </ul>
                 </li>
-                <li><a href="#part-4-kth-order-statistics">Part 4: Kth Order Statistics</a>
+                <li><a href="#part-4-advanced-search-algorithms-interpolation-search">4. Advanced Search Algorithms: Interpolation Search</a>
                     <ul>
-                        <li><a href="#concept-medians-and-order-statistics">Concept: Medians and Order Statistics</a></li>
+                        <li><a href="#interpolation-search-the-educated-guesser">4.1 Interpolation Search: The Educated Guesser</a></li>
                     </ul>
                 </li>
-                <li><a href="#part-5-empirical-performance">Part 5: Empirical Performance Comparison</a></li>
+                <li><a href="#hardcore-combined-problem-dynamic-package-prioritization-with-adaptive-dispatch-system">5. Hardcore Combined Problem: Dynamic Package Prioritization with Adaptive Dispatch System</a></li>
+                <li><a href="#key-software-engineering-principles">6. Key Software Engineering Principles</a></li>
             </ul>
         </div>
     </div>
     <div class="container">
-        <h1 id="mastering-sorting-searching-and-complexity">Mastering Sorting, Searching, and Complexity</h1>
-        <h2 id="part-1-algorithmic-complexity">Part 1: Algorithmic Complexity - The Language of Efficiency</h2>
-        <h3 id="concept-big-o-notation">Concept: Big O Notation – The "Time Carpet" of Algorithms</h3>
-        <p>Imagine a vast <span class="rhyme">Time Carpet</span> stretching out before you, its fibers representing the operations an algorithm performs. Big O notation (<code>O(n)</code>, <code>O(log n)</code>, <code>O(n log n)</code>, <code>O(n^2)</code>) is our way of describing how this carpet grows, how its <em>area</em> (time) or <em>thickness</em> (space) stretches as your input, <code>n</code>, expands. It's not about the exact thread count, but the fundamental <em>pattern</em> of its weave.</p>
+        <h1>Sorting, Searching, and Complexity</h1>
+        <p>This lecture will guide you through the intricate dance of algorithms that organize and locate data, crucial for architecting foundational systems that manage the flow of information with unparalleled precision. We will unravel the layers of abstraction, from the swift <span class="math"><i>O</i>(1)</span> lookup to the robust <span class="math"><i>O</i>(<i>N</i> log <i>N</i>)</span> sort, illuminating how each plays a vital role in our journey from chaotic data to a state ordered.</p>
+        <h2 id="part-1-searching-algorithms">1. Searching Algorithms</h2>
+        <p>Searching is the process of finding a specific element within a collection of data. The efficiency of a search algorithm largely depends on the data structure and whether the data is ordered.</p>
+        <h3 id="linear-search">1.1 Linear Search</h3>
+        <p class="rhyme">"What do you call an algorithm that always finishes before its <span class="math"><i>O</i>(<i>n</i><sup>2</sup>)</span> deadline?"<br/>"...An overachiever with a fast <code>for</code> loop."</p>
+        <p>The joke highlights the sequential, potentially exhaustive nature of linear search.
+        <small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 1.1.</small></p>
+        <p><strong>Concept:</strong> Linear search, also known as sequential search, checks each element in a collection one by one until the target is found or the end of the collection is reached. It's a <strong>Sequential Scan</strong>.</p>
+        <p><strong>Characteristics:</strong></p>
         <ul>
-            <li><strong>Property: "Dominant Thread" Focus</strong> – Big O is a <span class="rhyme">strategic over-specification</span> of complexity. It focuses on the boldest, thickest thread (<code>n^2</code> in <code>5n^2 + 20n + 100</code>) that dictates the carpet’s overall growth, letting the thinner, ancillary threads fade into the background.
-                <ul>
-                    <li><strong>Value/Advantage: <span class="rhyme">Clarity Immediate</span></strong> – This <span class="rhyme">simplicity made complex</span> allows for instant, head-to-head comparison of algorithms. Which algorithm is faster for a truly enormous dataset? Big O gives you the answer without needing to count every minuscule operation. It's why we say <code>O(100n^2 + 500n + 1000)</code> is simply <code>O(n^2)</code>—the squared term is the <span class="rhyme">growth engine</span>, driving the performance narrative.</li>
-                    <li><strong>Disadvantage: <span class="rhyme">Tiny Cuts</span> in Performance</strong> – While <code>O(n^2)</code> vs. <code>O(n log n)</code> is a <span class="rhyme">future unknowable</span> for small inputs, sometimes an <code>O(n^2)</code> algorithm with incredibly small "hidden constant" factors can actually <em>beat</em> an <code>O(n log n)</code> algorithm with large constants. This makes initial "back-of-the-envelope" estimates useful, but for production systems, <span class="rhyme">benchmarking is a conversation with the machine</span>.</li>
-                    <li><strong>Utility Context: <span class="rhyme">Infinite Scale</span> on Demand</strong> – It's the <span class="rhyme">architectural primary</span> when designing systems for scalability, helping us choose algorithms that perform well as data volume reaches <span class="rhyme">infinite scale</span> on demand.</li>
-                </ul>
-            </li>
+            <li><strong>No Order Required:</strong> Operates on unsorted data.</li>
+            <li><strong>Simplicity:</strong> Minimal implementation complexity.</li>
         </ul>
-        <div class="oracle-specific">
-            <small><strong>References:</strong></small>
-            <ul>
-                <li><code>ConcreteMathematics_Graham-Knuth-Patashnik_1994</code>: Chapter 9, "Asymptotics," is the definitive resource for understanding Big O and related notations.<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></li>
-                <li><code>MathematicsForComputerScience_Lehman-Leighton-Meyer_2015</code>: Chapter 14, "Sums and Asymptotics," provides a detailed mathematical treatment.<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup></li>
-                <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 3, "Characterizing Running Times," formally defines O-notation, Ω-notation, and Θ-notation.<sup class="footnote-ref" id="fnref:3"><a href="#fn:3">3</a></sup></li>
-                <li><code>Metaphorical Scaffolding Framework</code>: This section heavily uses "Noun + Noun" (Time Carpet), "Adv + Adj" (Simplicity Made Complex, Future Unknowable, Infinite Scale), "Multi-Word" (Growth Engine, Benchmarking is a Conversation with the Machine), and "Punctuation" (Architectural Primary).</li>
-            </ul>
-        </div>
-        <h4>Example 1.1: Understanding Big O with Polynomials – Plotting Your Algorithm's Destiny</h4>
-        <p>Imagine plotting your algorithm's <em>destiny</em> on a Time Carpet:</p>
+        <p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref1" href="#fn1">1</a></sup>):</strong></p>
         <ul>
-            <li><code>f1(n) = 5n^2 + 20n + 100</code> (A <span class="rhyme">quadratic ascent</span>)</li>
-            <li><code>f2(n) = 0.1n^3 + 50n^2</code> (A <span class="rhyme">cubic surge</span>)</li>
-            <li><code>f3(n) = 1000 * log(n) + 50</code> (A <span class="rhyme">logarithmic whisper</span>)</li>
+            <li><strong>Best Case:</strong> <span class="math">&Theta;(1)</span> - The target element is at the very beginning of the list.</li>
+            <li><strong>Worst Case:</strong> <span class="math">&Theta;(n)</span> - The target element is at the very end of the list, or it is not present at all. The algorithm must traverse all 'n' elements.</li>
+            <li><strong>Average Case:</strong> <span class="math">&Theta;(n)</span> - On average, the algorithm checks about half of the elements.</li>
         </ul>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+            <li>Works on any unsorted list.</li>
+            <li>Simple to understand and implement.</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+            <li>Inefficient for large datasets.</li>
+        </ul>
+        <p><strong>Utility Contexts:</strong> Small collections, or when the data cannot be sorted.</p>
+        <p><strong>Structural Usages:</strong> Iterating through a list or array.</p>
+        <p><strong>Python Example:</strong></p>
 
 ```python
-import math
-import matplotlib.pyplot as plt
-def f1(n):
-    return 5 * n**2 + 20 * n + 100
-def f2(n):
-    return 0.1 * n**3 + 50 * n**2
-def f3(n):
-    return 1000 * math.log10(n) + 50 if n > 0 else 0
-# Artificial Data: A journey from tiny to vast inputs
-n_values = range(1, 100) # Small to medium range, where constants *play*
-large_n_values = range(1, 1000) # Larger range, where destiny becomes clear
-# --- Plot 1: Initial view (where constants can mislead) ---
-plt.figure(figsize=(10, 6))
-plt.plot(n_values, [f1(n) for n in n_values], label='f1 (O(n^2))')
-plt.plot(n_values, [f2(n) for n in n_values], label='f2 (O(n^3))')
-plt.plot(n_values, [f3(n) for n in n_values], label='f3 (O(log n))')
-plt.xlabel('Input Size (n)')
-plt.ylabel('Operations')
-plt.title('Function Growth Rates (Initial View, n=1-99)')
-plt.legend()
-plt.grid(True)
-plt.show()
-# Discussion: For very small 'n', the `0.1` coefficient in f2(n) can temporarily hide its cubic growth.
-# f1(10) = 800
-# f2(10) = 5100 (f2 is currently higher than f1, due to its large constant factor for n^2)
-# --- Plot 2: The "Asymptotic Revelation" (Log Scale for true understanding) ---
-plt.figure(figsize=(10, 6))
-plt.plot(large_n_values, [f1(n) for n in large_n_values], label='f1 (O(n^2))')
-plt.plot(large_n_values, [f2(n) for n in large_n_values], label='f2 (O(n^3))')
-plt.plot(large_n_values, [f3(n) for n in large_n_values], label='f3 (O(log n))')
-plt.yscale('log') # The "Time Carpet" stretched to reveal its true patterns
-plt.xlabel('Input Size (n)')
-plt.ylabel('Operations (Log Scale)')
-plt.title('Function Growth Rates (Asymptotic Revelation, Log Scale)')
-plt.legend()
-plt.grid(True)
-plt.show()
-# Discussion: With the y-axis on a logarithmic scale, the curves' true shapes emerge.
-# Even with a small coefficient, f2(n)'s cubic growth rapidly surpasses f1(n)'s quadratic growth.
-# f1(100) = 52100
-# f2(100) = 600000 (f2 now vastly surpasses f1, the cubic term has become the "growth engine")
-# f3(n) remains a gentle whisper, always dwarfed by the polynomial giants.
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: This visualization is a <span class="rhyme">clarity immediate</span> for understanding performance trade-offs, enabling informed decisions for <span class="rhyme">infinite scale</span> systems.</small></p>
-<h2 id="part-2-sorting-algorithms">Part 2: Sorting Algorithms - Arranging Data for Optimal Access</h2>
-<p>Sorting algorithms are the <span class="rhyme">data choreographers</span>, arranging elements into a harmonious order. This order isn't just aesthetic; it's the <span class="rhyme">golden key that unlocks data</span> for vastly more efficient operations like searching.</p>
-<div class="oracle-specific">
-<small><strong>References:</strong></small>
-<ul>
-    <li><code>python-3.13-docs-pdf-a4</code>: "SortingTechniques..." provides an overview of various Python sorting methods.</li>
-    <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapters 2, 6, 7, and 8 provide in-depth coverage of specific sorting algorithms.</li>
-    <li><code>Metaphorical Scaffolding Framework</code>: This section uses "Noun + Noun" (Data Choreographers, Golden Key that Unlocks Data) and "Verb + Noun" (Arranging Elements).</li>
-</ul>
-</div>
-<h3 id="21-bubble-sort">2.1 Bubble Sort – The <span class="rhyme">Persistent Pusher</span></h3>
-<p><strong>Concept:</strong> Bubble Sort is the <span class="rhyme">persistent pusher</span> of sorting algorithms. It's like gently nudging adjacent elements in a crowded line. If one person is out of place, you swap them with their neighbor, and you keep doing this, repeatedly passing through the line, until everyone is finally in order.</p>
-<ul>
-<li><strong>Pattern: Adjacent Comparison and Swap</strong> – The fundamental <span class="rhyme">motion without movement</span> of Bubble Sort. Each pair is a mini-decision point.</li>
-<li><strong>Property (In-place): <span class="rhyme">Space-Divine Efficiency</span></strong> – It's a <span class="rhyme">space-divine</span> sort, operating directly on the input array, requiring minimal extra room—just enough for a temporary swap. This is a <span class="rhyme">seamless integration</span> of data and processing.
-    <ul>
-        <li><strong>Value/Advantage: <span class="rhyme">Unprecedented Accuracy</span></strong> – <code>O(1)</code> space complexity is its <span class="rhyme">unprecedented accuracy</span> for memory-constrained environments.</li>
-        <li><strong>Disadvantage: <span class="rhyme">Terminal Obsolete</span> Time</strong> – For large datasets, its <code>O(n^2)</code> <span class="rhyme">quadratic ascent</span> makes it <span class="rhyme">terminal obsolete</span>. It’s like trying to sort a library by only comparing two adjacent books at a time.</li>
-    </ul>
-</li>
-<li><strong>Relationship:</strong> Its simplicity is a <span class="rhyme">simplicity bridge</span> to understanding more complex sorts. It’s often used as a baseline for <span class="rhyme">performance optimal</span> comparisons.</li>
-<li><strong>Utility Context:</strong> Best for extremely small lists or teaching. It's where <span class="rhyme">complexity surrenders</span> to intuitive understanding.</li>
-</ul>
-<div class="oracle-specific">
-<small><strong>References:</strong></small>
-<ul>
-    <li>*GeeksforGeeks Bubble Sort*: <a href="https://www.geeksforgeeks.org/bubble-sort/" target="_blank">https://www.geeksforgeeks.org/bubble-sort/</a></li>
-    <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapters 2.1 (for basic sorting concepts).</li>
-    <li><code>Metaphorical Scaffolding Framework</code>: This section uses "Noun + Noun" (Persistent Pusher, Motion Without Movement, Space-Divine Efficiency), "Adv + Adj" (Unprecedented Accuracy, Terminal Obsolete, Performance Optimal), and "Multi-Word" (Simplicity Bridge, Complexity Surrenders).</li>
-</ul>
-</div>
-<h4>Code Example 2.1.1: Bubble Sort – Watching the Nudges</h4>
-
-```python
-def bubble_sort(arr):
+# Artificial Data for demonstration
+unsorted_data_linear = [10, 3, 25, 1, 8, 17, 4]
+target_present_linear = 8
+target_absent_linear = 99
+def linear_search(arr: list[int], target: int) -> int | None:
     """
-    Concept: Bubble Sort - repeatedly compares and swaps adjacent elements.
-    Pattern: Adjacent comparison and swap.
-    Property: In-place sorting.
-    """
-    n = len(arr)
-    # Traverse through all array elements
-    for i in range(n):
-        # Last i elements are already in place, so we don't need to check them.
-        swapped = False # Optimization: if no swaps in a pass, list is sorted (Best case: O(n))
-        for j in range(0, n - i - 1):
-            # Traverse the array from 0 to n-i-1
-            # Swap if the element found is greater than the next element
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        if not swapped: # Best-case optimization: The "early exit" shortcut.
-            break
-    return arr
-# Artificial Data: See how different starting points affect the "nudges"
-data_worst_case = [5, 4, 3, 2, 1] # A completely backwards line
-data_best_case = [1, 2, 3, 4, 5]  # An already perfect line
-data_average_case = [64, 34, 25, 12, 22, 11, 90] # A typically jumbled queue
-print(f"Bubble Sort Worst Case: {bubble_sort(list(data_worst_case))}")
-print(f"Bubble Sort Best Case: {bubble_sort(list(data_best_case))}")
-print(f"Bubble Sort Average Case: {bubble_sort(list(data_average_case))}")
-# Time Complexity:
-# Worst-case (reverse sorted): O(n^2) - a "quadratic ascent" of comparisons and swaps.
-# Best-case (already sorted): O(n) - a "linear stroll" to confirm order.
-# Average-case: O(n^2) - still a "quadratic ascent."
-# Space Complexity: O(1) (in-place) - a "space-divine" sort.
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: Code includes an optimization to achieve <code>O(n)</code> in the best case, demonstrating awareness of common improvements. <strong>Clarity</strong>: Its simplicity makes it a good <span class="rhyme">starting point</span> for understanding more complex sorts.</small></p>
-<h3 id="22-merge-sort">2.2 Merge Sort – The <span class="rhyme">Assembly Line Harmonizer</span></h3>
-<p><strong>Concept:</strong> Merge Sort is the <span class="rhyme">assembly line harmonizer</span> of sorting algorithms. It breaks down the problem into smaller, independent chunks, sorts them, and then meticulously reassembles them. Think of it as a <span class="rhyme">digital assembly-line</span>, where data flows through a <span class="rhyme">process alchemical</span>, transforming chaos into order.</p>
-<ul>
-    <li><strong>Pattern: Divide-and-Conquer</strong> – This is its <span class="rhyme">growth engine</span>. The list is recursively split until each piece is trivially sorted, then the pieces are merged. This <span class="rhyme">seamless integration</span> ensures all elements are processed.
-        <ul>
-            <li><strong>Divide</strong>: The array undergoes a <span class="rhyme">recursive split</span>, becoming two halves.</li>
-            <li><strong>Conquer</strong>: Each half undergoes <span class="rhyme">synthetic evolution</span>, sorting itself independently.</li>
-            <li><strong>Combine</strong>: The two sorted halves are melded in a <span class="rhyme">symbiotic dance</span>, creating a single, larger sorted list.</li>
-        </ul>
-    </li>
-    <li><strong>Property (Stable): <span class="rhyme">Order Emerges</span></strong> – Merge Sort is a <span class="rhyme">state-divine</span> stable sort. If two elements have the same value, their original relative order is preserved after sorting.
-        <ul>
-            <li><strong>Value/Advantage:</strong> Essential when data carries additional context (satellite data) that must remain associated with its original position if keys are equal. This makes its workflow <span class="rhyme">frictionless absolute</span>.</li>
-            <li><strong>Disadvantage: Space <span class="rhyme">Gravity Song</span></strong> – It requires <code>O(n)</code> auxiliary space for merging, making it a <span class="rhyme">space-hungry</span> sort. This is the <span class="rhyme">gravity song</span> of its memory footprint.</li>
-        </ul>
-    </li>
-    <li><strong>Relationship:</strong> Its <code>O(n log n)</code> performance is a <span class="rhyme">time conductor</span>, consistently efficient in all scenarios. It's often compared to Quick Sort, which is generally faster due to lower constant factors but sacrifices stability.</li>
-    <li><strong>Utility Context:</strong> Critical for large datasets, especially when stability is a requirement, such as in external sorting or data processing pipelines. It's where <span class="rhyme">order emerges</span> from a sea of data.</li>
-</ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*GeeksforGeeks Merge Sort*: <a href="https://www.geeksforgeeks.org/merge-sort/" target="_blank">https://www.geeksforgeeks.org/merge-sort/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 2.3, "Designing algorithms," specifically 2.3.1 for Merge Sort. Chapter 4 explores the recurrence relations for divide-and-conquer.</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Assembly Line Harmonizer, Digital Assembly-Line, Process Alchemical, Growth Engine, Symbiotic Dance, Time Conductor, Gravity Song), "Verb + Noun" (Recursive Split, Synthetic Evolution), "Noun + Adj" (State Divine, Frictionless Absolute, Space-Hungry), "Multi-Word" (Order Emerges).</li>
-    </ul>
-</div>
-<h4>Code Example 2.2.1: Merge Sort – The Elegant Choreography</h4>
-
-```python
-def merge_sort(arr):
-    """
-    Concept: Merge Sort - uses divide-and-conquer to sort.
-    Pattern: Divide-and-Conquer (recursive).
-    Property: Stable sorting.
-    """
-    if len(arr) <= 1: # Base Case: A trivially sorted sublist
-        return arr
-    mid = len(arr) // 2
-    left_half = arr[:mid]  # Divide: The recursive split
-    right_half = arr[mid:] # Divide: The recursive split
-    # Conquer: Recursively sort halves - each half undergoes "synthetic evolution"
-    left_half = merge_sort(left_half)
-    right_half = merge_sort(right_half)
-    # Combine: Merge sorted halves - the "symbiotic dance"
-    return merge(left_half, right_half)
-def merge(left, right):
-    """
-    Helper function to merge two sorted lists.
-    Relationship: The 'combine' step of the merge_sort algorithm. It's a "process alchemical."
-    Property: Handles equal elements in a way that preserves their original order (stability).
-    """
-    result = []
-    i = j = 0
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]: # Property: '<=' ensures stability, original order of equals is preserved.
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
-    result.extend(left[i:]) # Appending any remaining elements
-    result.extend(right[j:])
-    return result
-# Artificial Data: A list with duplicates to observe stability
-data_merge = [38, 27, 43, 3, 9, 82, 10, 10, 100, 10] 
-# Assume original positions for '10' were idx 6, 7, 9. If sorted, they should appear in that order.
-print(f"Merge Sort: {merge_sort(list(data_merge))}")
-# Time Complexity: O(n log n) in all cases (worst, best, average) - a "time conductor."
-# Space Complexity: O(n) (due to temporary lists for merging) - its "space gravity song."
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Scalability</strong>: Consistent <code>O(n log n)</code> makes it a <span class="rhyme">frictionless absolute</span> for large data. <strong>Modifiability</strong>: The separation of <code>merge_sort</code> and <code>merge</code> functions exemplifies modular design. <strong>Reliability</strong>: The <code>left[i] <= right[j]</code> comparison ensures stability, a crucial <span class="rhyme">system risk</span> consideration for certain applications.</small></p>
-<h3 id="23-heap-sort">2.3 Heap Sort – The <span class="rhyme">Hierarchical Constructor</span></h3>
-<p><strong>Concept:</strong> Heap Sort is the <span class="rhyme">hierarchical constructor</span> of sorting algorithms. It builds a specialized <span class="rhyme">data mountain</span> (a max-heap) where the highest peak is always the largest element, then systematically dismantles it to create a sorted array. It's a <span class="rhyme">top-down builder</span> that prioritizes the largest element at each step.</p>
-<ul>
-    <li><strong>Concept (Max-Heap): The <span class="rhyme">Data Mountain</span></strong> – A complete binary tree with the <span class="rhyme">parental dominance</span> property: <code>value(parent) >= value(children)</code>. The largest element is always at the root.</li>
-    <li><strong>Pattern (Heapify): <span class="rhyme">Sift-down Cascade</span></strong> – This <span class="rhyme">sift-down cascade</span> maintains the heap property. If a node falls below its children in rank, it "sifts down," swapping with the larger child until its rightful place is found. This is a <span class="rhyme">recursive motion</span> ensuring balance.</li>
-    <li><strong>Pattern (Build Max-Heap): <span class="rhyme">Structural Genesis</span></strong> – This <span class="rhyme">structural genesis</span> transforms any random array into a max-heap. It's like carefully arranging a <span class="rhyme">digital landscape</span> by calling <code>heapify</code> on all non-leaf nodes, working upwards from the base.</li>
-    <li><strong>Property (In-place): <span class="rhyme">Space-Divine Efficiency</span></strong> – Like Bubble Sort and Quick Sort, Heap Sort is <span class="rhyme">space-divine</span>, operating directly on the input array with <code>O(1)</code> auxiliary space.
-        <ul>
-            <li><strong>Value/Advantage:</strong> Ideal for memory-constrained environments, offering a <span class="rhyme">performance optimal</span> solution.</li>
-            <li><strong>Disadvantage:</strong> Not a stable sort.</li>
-        </ul>
-    </li>
-    <li><strong>Relationship:</strong> It's another <code>O(n log n)</code> <span class="rhyme">time conductor</span>, making it asymptotically efficient in all cases (worst, average, best). Its strength lies in its guaranteed performance and minimal memory footprint.</li>
-    <li><strong>Utility Context:</strong> Operating systems for priority queues, embedded systems with limited memory, or scenarios where guaranteed performance is more critical than stability.</li>
-</ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*GeeksforGeeks Heap Sort*: <a href="https://www.geeksforgeeks.org/heap-sort/" target="_blank">https://www.geeksforgeeks.org/heap-sort/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 6, "Heapsort," covers heaps (6.1), maintaining the heap property (6.2), building a heap (6.3), and the Heap Sort algorithm itself (6.4).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Hierarchical Constructor, Data Mountain, Sift-Down Cascade, Structural Genesis, Digital Landscape), "Adj + Noun" (Parental Dominance), "Noun + Adj" (Space-Divine Efficiency, Performance Optimal), "Multi-Word" (Recursive Motion, Time Conductor).</li>
-    </ul>
-</div>
-<h4>Code Example 2.3.1: Heap Sort – Constructing the Peak</h4>
-
-```python
-def heapify(arr, n, i):
-    """
-    Concept: Heapify - maintains the max-heap property. It's a "sift-down cascade."
-    Pattern: Sift-down operation (recursive).
-    Relationship: Core subroutine for building and maintaining a heap, ensuring "parental dominance."
-    """
-    largest = i  # Assume current node is the largest initially
-    l = 2 * i + 1  # Index of left child
-    r = 2 * i + 2  # Index of right child
-    # If left child exists and is greater than current largest
-    if l < n and arr[l] > arr[largest]:
-        largest = l
-    # If right child exists and is greater than current largest
-    if r < n and arr[r] > arr[largest]:
-        largest = r
-    # If largest is not the root, swap and recursively heapify the affected sub-tree
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  # Swap: a "recursive motion"
-        heapify(arr, n, largest)  # Continue the "sift-down cascade"
-def heap_sort(arr):
-    """
-    Concept: Heap Sort - uses a max-heap for sorting. It's a "hierarchical constructor."
-    Pattern: Build Max-Heap + Repeated Extraction.
-    Property: In-place sorting.
-    """
-    n = len(arr)
-    # Build a max-heap (Pattern: Build Max-Heap) - "structural genesis"
-    # Starting from the last non-leaf node, heapify upwards to create the initial "data mountain."
-    for i in range(n // 2 - 1, -1, -1):
-        heapify(arr, n, i)
-    # Extract elements one by one (Pattern: Repeated Extraction)
-    # The sorted array emerges from the repeated extraction of the largest element.
-    for i in range(n - 1, 0, -1):
-        # Move current root (largest element) to end of array
-        arr[i], arr[0] = arr[0], arr[i]
-        # Call heapify on the reduced heap
-        heapify(arr, i, 0)
-    return arr
-# Artificial Data: A jumbled landscape of numbers
-data_heap = [4, 10, 3, 5, 1, 9, 8]
-print(f"Heap Sort: {heap_sort(list(data_heap))}")
-# Time Complexity: O(n log n) in all cases (worst, best, average) - a "time conductor."
-# Space Complexity: O(1) (in-place) - its "space-divine efficiency."
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: Its <code>O(n log n)</code> performance is a <span class="rhyme">frictionless absolute</span>, making it ideal for systems with strict performance budgets. <strong>Reliability</strong>: The <code>heapify</code> function is a <span class="rhyme">robust security</span> mechanism, ensuring the heap property is always upheld.</small></p>
-<h3 id="24-quicksort">2.4 Quicksort – The <span class="rhyme">Dynamic Partitioner</span></h3>
-<p><strong>Concept:</strong> Quicksort is the <span class="rhyme">dynamic partitioner</span>, a high-performance <span class="rhyme">divide-and-conquer</span> sorting algorithm. It's like organizing a large group of people by having one person step forward (the pivot), and then everyone else quickly arranges themselves into two groups: those shorter than the pivot, and those taller. This process is then repeated in each smaller group.</p>
-<ul>
-    <li><strong>Pattern (Partitioning): <span class="rhyme">The Great Divide</span></strong> – This <span class="rhyme">great divide</span> splits the array into two sub-arrays based on a chosen pivot. Elements smaller than the pivot go to one side, larger to the other.</li>
-    <li><strong>Concept (Randomized Pivot): <span class="rhyme">The Dice Roll Strategy</span></strong> – Instead of a fixed pivot, Quicksort often employs a <span class="rhyme">randomized pivot</span> strategy, akin to <span class="rhyme">the dice roll strategy</span>. This <code>O(1)</code> average selection helps avoid worst-case scenarios by making it highly probable to get a relatively balanced partition.
-        <ul>
-            <li><strong>Value/Advantage:</strong> Makes the <code>O(n^2)</code> <span class="rhyme">worst-case path</span> extremely rare in practice, leading to <span class="rhyme">average-case optimal</span> performance.</li>
-            <li><strong>Disadvantage:</strong> Adds a minor overhead of random number generation.</li>
-        </ul>
-    </li>
-    <li><strong>Property (In-place): <span class="rhyme">Space-Divine Efficiency</span></strong> – Like Heap Sort, Quicksort is <span class="rhyme">space-divine</span>, requiring minimal auxiliary space (average <code>O(log n)</code> for the recursion stack).
-        <ul>
-            <li><strong>Value/Advantage:</strong> Excellent for memory-constrained systems, particularly due to its <span class="rhyme">good cache performance</span>.</li>
-            <li><strong>Disadvantage:</strong> Not stable.</li>
-        </ul>
-    </li>
-    <li><strong>Relationship:</strong> Its average <code>O(n log n)</code> makes it one of the fastest general-purpose sorts in practice. It's a <span class="rhyme">performance driver</span> in many standard library implementations.</li>
-    <li><strong>Utility Context:</strong> General-purpose sorting where average-case speed is prioritized and stability is not required. It's where <span class="rhyme">speed demons</span> reside.</li>
-</ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*GeeksforGeeks Quick Sort*: <a href="https://www.geeksforgeeks.org/quick-sort/" target="_blank">https://www.geeksforgeeks.org/quick-sort/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 7, "Quicksort," covers its description (7.1), performance (7.2), and randomized versions (7.3, 7.4).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Dynamic Partitioner, Dice Roll Strategy, Worst-Case Path), "Verb + Noun" (Great Divide), "Noun + Adj" (Space-Divine Efficiency, Average-Case Optimal), "Adj + Noun" (Performance Driver, Speed Demons).</li>
-    </ul>
-</div>
-<h4>Code Example 2.4.1: Quicksort – The Art of Subdivision</h4>
-
-```python
-import random
-def lomuto_partition(arr, low, high):
-    """
-    Concept: Lomuto Partitioning scheme. It's "the great divide."
-    Pattern: In-place partitioning around a pivot (last element).
-    Relationship: The core 'divide' step of the quicksort algorithm, placing the pivot correctly.
-    """
-    pivot = arr[high]  # Pivot chosen as the last element (can be randomized beforehand)
-    i = low - 1       # Index of smaller element, marks the boundary of elements <= pivot
-    for j in range(low, high): # Traverse all elements up to the pivot
-        if arr[j] <= pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i] # Swap: moves smaller elements to the left
-            
-    # Place the pivot in its final sorted position
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1 # Return the pivot's final index
-def randomized_partition(arr, low, high):
-    """
-    Concept: Randomized Partitioning. It's "the dice roll strategy."
-    Pattern: Random pivot selection to improve average-case performance.
-    Relationship: A crucial optimization for quicksort and quickselect to avoid worst-case O(n^2).
-    """
-    rand_idx = random.randint(low, high) # Pick a random index
-    arr[rand_idx], arr[high] = arr[high], arr[rand_idx] # Swap random pivot to the end
-    return lomuto_partition(arr, low, high) # Then use Lomuto partition
-def quick_sort(arr, low, high):
-    """
-    Concept: Quicksort - the "dynamic partitioner."
-    Pattern: Divide-and-Conquer (recursive).
-    Property: In-place sorting, with randomized pivot for "average-case optimal" performance.
-    """
-    if low < high: # Only sort if there's more than one element in the partition
-        # pi is partitioning index, arr[pi] is now at right place
-        pi = randomized_partition(arr, low, high) # The "great divide" in action
-        
-        # Recursively sort elements before partition and after partition
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
-    return arr # Return the sorted array for consistency
-# Artificial Data: A jumbled mess for the "dynamic partitioner"
-data_quick = [10, 7, 8, 9, 1, 5, 2, 4, 6, 3]
-n_quick = len(data_quick)
-print(f"Quicksort: {quick_sort(list(data_quick), 0, n_quick - 1)}")
-# Time Complexity:
-# Average-case: O(n log n) - "average-case optimal" due to randomized pivots.
-# Worst-case: O(n^2) - The "worst-case path" is highly unlikely with randomization.
-# Space Complexity: O(log n) (average for recursion stack), O(n) (worst for recursion stack).
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: The <code>randomized_partition</code> makes Quicksort a <span class="rhyme">speed demon</span> on average. <strong>Reliability</strong>: The randomization is a <span class="rhyme">robust security</span> against pathological inputs. <strong>Clarity</strong>: The recursive structure with a clear partitioning step is a <span class="rhyme">simplicity bridge</span>.</small></p>
-<h2 id="part-3-searching-algorithms">Part 3: Searching Algorithms - Finding Data Efficiently</h2>
-<p>Searching algorithms are the <span class="rhyme">information hunters</span>, tasked with retrieving specific data points from potentially vast datasets. Their efficiency is paramount in any data-intensive application.</p>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*LeetCode Binary Search*: <a href="https://leetcode.com/problems/binary-search/" target="_blank">https://leetcode.com/problems/binary-search/</a></li>
-        <li>*GeeksforGeeks Interpolation Search*: <a href="https://www.geeksforgeeks.org/interpolation-search/" target="_blank">https://www.geeksforgeeks.org/interpolation-search/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 9.3 (for selection, which is a specialized search).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Information Hunters).</li>
-    </ul>
-</div>
-<h3 id="31-linear-search">3.1 Linear Search – The <span class="rhyme">Sequential Surveyor</span></h3>
-<p><strong>Concept:</strong> Linear Search is the <span class="rhyme">sequential surveyor</span>. It’s like searching for a specific item in a disordered room: you simply start from one end and check every single item until you find what you’re looking for.</p>
-<ul>
-    <li><strong>Pattern: Sequential Traversal</strong> – The most basic <span class="rhyme">iteration engine</span>, checking each element one by one.</li>
-    <li><strong>Property (Unsorted Data): <span class="rhyme">Chaos Acceptable</span></strong> – It works universally on <span class="rhyme">chaos acceptable</span> data, requiring no prior organization.
-        <ul>
-            <li><strong>Value/Advantage:</strong> Uncomplicated to implement, no preprocessing required.</li>
-            <li><strong>Disadvantage:</strong> Excessively slow for large datasets.</li>
-        </ul>
-    </li>
-    <li><strong>Time Complexity:</strong> <code>O(n)</code> in worst and average cases. This is a <span class="rhyme">linear stroll</span> through the data.</li>
-    <li><strong>Utility Context:</strong> Only practical for very small lists or when the data is intrinsically unsorted and cannot be pre-sorted. It's a <span class="rhyme">simple solution</span> for simple problems.</li>
-</ul>
-<h4>Code Example 3.1.1: Linear Search – The Direct Walk</h4>
-
-```python
-def linear_search(arr, target):
-    """
-    Concept: Linear Search - the "sequential surveyor."
-    Pattern: Sequential traversal.
-    Property: Works on unsorted data ("chaos acceptable").
+    Performs a linear search for a target element in a list.
+    SE Principle (Modifiability, Testability): Clear, single responsibility, easy to test.
     """
     for i in range(len(arr)):
         if arr[i] == target:
-            return i # Target found!
-    return -1 # Target not found, the "empty void"
-# Artificial Data: A jumbled list for the "sequential surveyor"
-unsorted_array = [56, 12, 89, 4, 72, 23, 16, 5, 38, 91]
-target_found_unsorted = 23
-target_not_found_unsorted = 42
-print(f"Linear Search for {target_found_unsorted} in unsorted_array: Index {linear_search(unsorted_array, target_found_unsorted)}")
-print(f"Linear Search for {target_not_found_unsorted} in unsorted_array: Index {linear_search(unsorted_array, target_not_found_unsorted)}")
-# Time Complexity: O(n) - a "linear stroll."
-# Space Complexity: O(1)
+            return i
+    return None
+# Demonstrating linear search
+print(f"Linear search for {target_present_linear} in {unsorted_data_linear}: Index = {linear_search(unsorted_data_linear, target_present_linear)}")
+print(f"Linear search for {target_absent_linear} in {unsorted_data_linear}: Index = {linear_search(unsorted_data_linear, target_absent_linear)}")
 ```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Clarity</strong>: Its simplicity makes it a <span class="rhyme">simplicity bridge</span> for understanding basic search. <strong>Efficiency</strong>: Highlights the need for more complex algorithms for large datasets.</small></p>
-<h3 id="32-binary-search">3.2 Binary Search – The <span class="rhyme">Divide-and-Conquer Detective</span></h3>
-<p><strong>Concept:</strong> Binary Search is the <span class="rhyme">divide-and-conquer detective</span>. It's like finding a word in a physical dictionary: you don't start at the beginning; you open to the middle, decide if your word is before or after, and repeat, quickly narrowing down the possibilities.</p>
+<h3 id="binary-search">1.2 Binary Search</h3>
+<p class="rhyme">"Why don't binary search algorithms ever get lost?"<br/>"Because they always know whether to go left or right!"</p>
+<p>The joke emphasizes the decision-making process inherent in binary search, which quickly narrows down the search space.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 2.3-6.</small></p>
+<p><strong>Concept:</strong> Binary search is an efficient algorithm for finding an element in a <em>sorted</em> list. It works by repeatedly dividing the search interval in half. If the value of the search key is less than the item in the middle of the interval, the algorithm narrows the interval to the lower half. Otherwise, it narrows it to the upper half. It's a <strong>Logarithmic Divide</strong>.</p>
+<p><strong>Characteristics:</strong></p>
 <ul>
-    <li><strong>Pattern: Halving the Search Space</strong> – This <span class="rhyme">halving strategy</span> is its core. Each comparison eliminates half of the remaining search space.</li>
-    <li><strong>Prerequisite (Sorted Data): <span class="rhyme">Order Imperative</span></strong> – It operates only on <span class="rhyme">order imperative</span> data. The list <em>must</em> be sorted.
-        <ul>
-            <li><strong>Value/Advantage:</strong> Extremely efficient (<code>O(log n)</code>) for large sorted datasets. This is a <span class="rhyme">super-speed</span> lookup.</li>
-            <li><strong>Disadvantage:</strong> Requires data to be sorted, which can be an <code>O(n log n)</code> preprocessing cost.</li>
-        </ul>
-    </li>
-    <li><strong>Relationship:</strong> A fundamental logarithmic algorithm. It's the <span class="rhyme">performance blueprint</span> for many tree-based data structures and dictionary lookups.</li>
-    <li><strong>Utility Context:</strong> Ideal for large, static, and sorted datasets like database indices, sorted arrays, or lookup tables. It's a <span class="rhyme">clarity immediate</span> for search efficiency.</li>
+    <li><strong>Prerequisite:</strong> Requires the input data to be sorted.</li>
+    <li><strong>Divide and Conquer:</strong> A classic example of the divide-and-conquer paradigm.</li>
 </ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*LeetCode Binary Search*: <a href="https://leetcode.com/problems/binary-search/" target="_blank">https://leetcode.com/problems/binary-search/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: The concept is foundational to many algorithms, and its efficiency is discussed in Chapter 3. Exercise 2.3-6 introduces binary search.</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Divide-and-Conquer Detective, Halving Strategy, Order Imperative, Performance Blueprint), "Adv + Adj" (Super-Speed), "Multi-Word" (Clarity Immediate).</li>
-    </ul>
-</div>
-<h4>Code Example 3.2.1: Binary Search – The Precise Cut</h4>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref2" href="#fn2">2</a></sup>):</strong></p>
+<ul>
+    <li><strong>Best Case:</strong> <span class="math"><i>O</i>(1)</span> - The target element is the middle element of the initial search interval.</li>
+    <li><strong>Worst Case:</strong> <span class="math"><i>O</i>(log <i>n</i>)</span> - The target element is found after repeatedly halving the search space until only one element remains.</li>
+    <li><strong>Average Case:</strong> <span class="math"><i>O</i>(log <i>n</i>)</span> - Similar to the worst case, as the search space is consistently reduced by half.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Extremely efficient for large, sorted datasets.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Requires the data to be sorted, which might incur an additional sorting cost (<span class="math"><i>O</i>(<i>n</i> log <i>n</i>)</span>).</li>
+</ul>
+<p><strong>Utility Contexts:</strong> Searching in databases, dictionaries, or any large, ordered collection where data retrieval speed is critical.</p>
+<p><strong>Structural Usages:</strong> Recursive or iterative halving of an array segment.</p>
+<p><strong>Python Example:</strong></p>
 
 ```python
-def binary_search(arr, target):
+# Artificial Data for demonstration
+sorted_data_binary = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+target_present_binary = 70
+target_absent_binary = 35
+def binary_search(arr: list[int], target: int) -> int | None:
     """
-    Concept: Binary Search - the "divide-and-conquer detective."
-    Pattern: Halving the search space.
-    Prerequisite: Array must be sorted ("order imperative").
+    Performs a binary search for a target element in a sorted list.
+    SE Principle (Reliability, Testability): Handles empty/single-element lists and out-of-bounds targets.
     """
     low = 0
     high = len(arr) - 1
-    while low <= high:
-        mid = low + (high - low) // 2 # Calculated as "the precise cut"
+    while low &lt;= high:
+        mid = (low + high) // 2
         if arr[mid] == target:
-            return mid # Target found, mission accomplished!
-        elif arr[mid] < target:
-            low = mid + 1 # Search in the right half: "shifting boundaries"
+            return mid
+        elif arr[mid] &lt; target:
+            low = mid + 1
         else:
-            high = mid - 1 # Search in the left half: "shifting boundaries"
-    return -1 # Target not found, the "empty void"
-# Artificial Data: A meticulously ordered collection
-sorted_array = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-target_found = 23
-target_not_found = 42
-print(f"Binary Search for {target_found} in sorted_array: Index {binary_search(sorted_array, target_found)}")
-print(f"Binary Search for {target_not_found} in sorted_array: Index {binary_search(sorted_array, target_not_found)}")
-# Time Complexity: O(log n) - a "super-speed" lookup.
-# Space Complexity: O(1) (iterative)
+            high = mid - 1
+    return None
+# Demonstrating binary search
+print(f"Binary search for {target_present_binary} in {sorted_data_binary}: Index = {binary_search(sorted_data_binary, target_present_binary)}")
+print(f"Binary search for {target_absent_binary} in {sorted_data_binary}: Index = {binary_search(sorted_data_binary, target_absent_binary)}")
+print(f"Binary search for empty list: Index = {binary_search([], target_present_binary)}") # Test empty list
+print(f"Binary search for single element list: Index = {binary_search([5], 5)}") # Test single element list
+print(f"Binary search for single element list (absent): Index = {binary_search([5], 10)}") # Test single element list (absent)
 ```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: Its logarithmic performance is a <span class="rhyme">frictionless absolute</span> for lookup operations. <strong>Reliability</strong>: The <code>mid</code> calculation is a <span class="rhyme">robust security</span> against integer overflow in large arrays.</small></p>
-<h3 id="33-interpolation-search">3.3 Interpolation Search – The <span class="rhyme">Probabilistic Oracle</span></h3>
-<p><strong>Concept:</strong> Interpolation Search is the <span class="rhyme">probabilistic oracle</span>, a <span class="rhyme">super-optimized</span> search algorithm designed for <span class="rhyme">uniformly distributed</span> sorted data. Unlike Binary Search's rigid midpoint, Interpolation Search <em>estimates</em> a likely position for the target, much like an oracle offering a educated guess based on current context.</p>
+<h3 id="interpolation-search">1.3 Interpolation Search</h3>
+<p class="rhyme">"Binary Search always splits in the middle, like a rule-follower. Interpolation Search? It's the one that says, 'Given how evenly spread these numbers are, I bet it's <em>right about here</em>!' It's usually right, unless the numbers play a trick on it."</p>
+<p>The joke highlights Interpolation Search's "educated guess" based on data distribution, contrasting it with Binary Search's rigid midpoint approach.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, GeeksforGeeks: Interpolation Search.</small></p>
+<p><strong>Concept:</strong> Interpolation search is an improvement over binary search for <em>uniformly distributed</em> sorted data. Instead of always checking the middle element, it estimates the position of the target based on its value relative to the low and high elements. It's a <strong>Smart Probe</strong>.</p>
+<p><strong>Characteristics:</strong></p>
 <ul>
-    <li><strong>Pattern: Probabilistic Estimation</strong> – Its core is a <span class="rhyme">mathematical intuition</span> that uses the target's value relative to the array's endpoints to guess a position. This is the <span class="rhyme">prediction engine</span> of search.</li>
-    <li><strong>Prerequisite (Sorted & Uniformly Distributed Data): <span class="rhyme">Distribution Aligned</span></strong> – Its efficiency is <span class="rhyme">distribution aligned</span>. It achieves <code>O(log log n)</code> average time complexity when data is uniformly spread.
-        <ul>
-            <li><strong>Value/Advantage (Average Case): <span class="rhyme">Near-Instantaneous Wisdom</span></strong> – For ideal data, it offers <span class="rhyme">near-instantaneous wisdom</span>, outperforming even binary search.</li>
-            <li><strong>Disadvantage (Worst Case): <span class="rhyme">Skewed Catastrophe</span></strong> – If the data is <span class="rhyme">skewed catastrophe</span> (not uniformly distributed), its performance can plummet to <code>O(n)</code>, akin to a guessing game gone wrong.</li>
-        </ul>
-    </li>
-    <li><strong>Relationship:</strong> It's a <span class="rhyme">specialized tool</span> built upon the sorted data prerequisite of Binary Search, pushing the limits of search efficiency under specific conditions.</li>
-    <li><strong>Utility Context:</strong> Ideal for large datasets with known uniform distribution, such as ID ranges, sorted timestamps, or certain numerical lookup tables. It's a <span class="rhyme">clarity immediate</span> for understanding how data properties dictate algorithm choice.</li>
+    <li><strong>Prerequisite:</strong> Requires sorted data and performs best on uniformly distributed data.</li>
+    <li><strong>Probabilistic Estimation:</strong> Uses a formula to guess the <span class="math"><i>pos</i></span> of the target.</li>
 </ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>*GeeksforGeeks Interpolation Search*: <a href="https://www.geeksforgeeks.org/interpolation-search/" target="_blank">https://www.geeksforgeeks.org/interpolation-search/</a></li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 3 (for general complexity reasoning).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Probabilistic Oracle, Prediction Engine, Distribution Aligned, Skewed Catastrophe), "Adv + Adj" (Super-Optimized, Near-Instantaneous Wisdom), "Multi-Word" (Mathematical Intuition, Specialized Tool).</li>
-    </ul>
-</div>
-<h4>Code Example 3.3.1: Interpolation Search – The Educated Guess</h4>
+<p><strong>Properties (Time Complexity - <em>GeeksforGeeks: Interpolation Search</em>):</strong></p>
+<ul>
+    <li><strong>Average Case:</strong> <span class="math"><i>O</i>(log log <i>n</i>)</span> - Achieved when data is uniformly distributed. This is faster than <span class="math"><i>O</i>(log <i>n</i>)</span> for very large n.</li>
+    <li><strong>Worst Case:</strong> <span class="math"><i>O</i>(<i>n</i>)</span> - Occurs when the data is not uniformly distributed (e.g., exponential distribution or clustered data), forcing it to perform a linear scan in portions.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Potentially faster than binary search for uniformly distributed data.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Degrades to <span class="math"><i>O</i>(<i>n</i>)</span> in worst-case scenarios with non-uniform data.</li>
+    <li>More complex to implement than binary search.</li>
+</ul>
+<p><strong>Utility Contexts:</strong> Datasets where values are known to be evenly spread, such as ID ranges, sensor data with fine granularity, or product serial numbers.</p>
+<p><strong>Structural Usages:</strong> Similar to binary search but with a <span class="math"><i>pos</i></span> calculation that varies based on value.</p>
+<p><strong>Python Example:</strong></p>
 
 ```python
-def interpolation_search(arr, target):
+# Artificial Data for demonstration
+# Uniformly distributed data
+sorted_uniform_data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+target_present_interpolation = 140
+target_absent_interpolation = 155
+# Non-uniform data (worst-case for interpolation search)
+# All values clustered at one end
+non_uniform_data = [1, 2, 3, 4, 5, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+target_non_uniform = 110
+def interpolation_search(arr: list[int], target: int) -> int | None:
     """
-    Concept: Interpolation Search - the "probabilistic oracle."
-    Pattern: Probabilistic estimation for position.
-    Prerequisite: Array must be sorted and uniformly distributed ("distribution aligned").
+    Performs an interpolation search for a target element in a sorted, uniformly distributed list.
+    SE Principle (Reliability): Checks for out-of-bounds target to prevent errors and improve robustness.
     """
     low = 0
     high = len(arr) - 1
-    while low <= high and target >= arr[low] and target <= arr[high]:
-        if low == high: # Edge case: single element remaining
+    while low &lt;= high and arr[low] &lt;= target &lt;= arr[high]:
+        # Handle cases where low == high to prevent division by zero
+        if low == high:
             if arr[low] == target:
                 return low
-            return -1
-        # Pattern: Interpolation formula - the "mathematical intuition" for guessing position
-        try:
-            # Calculate position based on proportional distance
-            # This is the "prediction engine" at work
-            pos = low + ((high - low) // (arr[high] - arr[low])) * (target - arr[low])
-        except ZeroDivisionError: # Property: Handles cases with duplicate values (arr[high] == arr[low])
-            pos = low # Fallback to linear check if range has identical values
+            return None
+        # Estimate position
+        pos = low + ((high - low) // (arr[high] - arr[low])) * (target - arr[low])
+        # Clamp pos to prevent out-of-bounds access if formula yields an invalid index
+        pos = max(low, min(high, pos))
         if arr[pos] == target:
-            return pos # Target found
-        elif arr[pos] < target:
-            low = pos + 1 # Target is in the right sub-range
+            return pos
+        elif arr[pos] &lt; target:
+            low = pos + 1
         else:
-            high = pos - 1 # Target is in the left sub-range
-    return -1 # Target not found, the "empty void"
-# Artificial Data: Testing the "probabilistic oracle"
-sorted_uniform_array = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # Ideal data
-target_found_uniform = 70
-target_not_found_uniform = 35
-# Skewed sorted array: a "skewed catastrophe" for interpolation search
-skewed_sorted_data = [1, 2, 3, 4, 5, 100, 101, 102, 103, 10000]
-target_found_skewed = 10000
-print(f"Interpolation Search (uniform) for {target_found_uniform}: Index {interpolation_search(sorted_uniform_array, target_found_uniform)}")
-print(f"Interpolation Search (uniform) for {target_not_found_uniform}: Index {interpolation_search(sorted_uniform_array, target_not_found_uniform)}")
-print(f"Interpolation Search (skewed) for {target_found_skewed}: Index {interpolation_search(skewed_sorted_data, target_found_skewed)}")
-# Time Complexity:
-# Average-case (uniformly distributed): O(log log n) - "near-instantaneous wisdom."
-# Worst-case (non-uniformly distributed): O(n) - "skewed catastrophe."
-# Space Complexity: O(1)
+            high = pos - 1
+    return None
+# Demonstrating interpolation search on uniform data
+print(f"Interpolation search for {target_present_interpolation} in uniform data: Index = {interpolation_search(sorted_uniform_data, target_present_interpolation)}")
+print(f"Interpolation search for {target_absent_interpolation} in uniform data: Index = {interpolation_search(sorted_uniform_data, target_absent_interpolation)}")
+# Demonstrating interpolation search on non-uniform data (expect O(N) behavior)
+print(f"Interpolation search for {target_non_uniform} in non-uniform data: Index = {interpolation_search(non_uniform_data, target_non_uniform)}")
 ```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: Choosing Interpolation Search is a <span class="rhyme">strategic over-specification</span> for optimal performance on <span class="rhyme">distribution aligned</span> data. <strong>Reliability</strong>: The <code>try-except</code> block is a <span class="rhyme">robust security</span> measure against <code>ZeroDivisionError</code>, maintaining integrity even in challenging data distributions.</small></p>
-<h2 id="part-4-kth-order-statistics">Part 4: Kth Order Statistics - Finding Elements by Rank</h2>
-<h3 id="concept-medians-and-order-statistics">Concept: Medians and Order Statistics – The <span class="rhyme">Rank Locator</span></h3>
-<p>The <span class="rhyme">rank locator</span> helps us find the <em>k</em>-th smallest (or largest) element in an unsorted list without the <span class="rhyme">time-intensive overhead</span> of a full sort. It’s like picking the fastest runner from a race without having to rank every single participant.</p>
+<h2 id="part-2-sorting-algorithms">2. Sorting Algorithms</h2>
+<p>Sorting arranges elements in a collection into a specific order. Different algorithms offer varying trade-offs in time, space, and stability.</p>
+<h3 id="bubble-sort-revisited-for-properties">2.1 Bubble Sort (Revisited for Properties)</h3>
+<p class="rhyme">"A project manager asked their team for the 'simplest sorting solution.' The junior dev excitedly presented Bubble Sort. The PM, looking at the time estimate, sighed, 'Simple, yes. Fast? That's a different story when the list is upside down!'"</p>
+<p>Highlights simplicity versus quadratic performance in worst-case.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 2.2-2.</small></p>
+<p><strong>Concept:</strong> Bubble Sort is a <strong>cascading update</strong> that propagates changes by repeatedly comparing adjacent elements and swapping them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. It's a <strong>Neighborly Exchange</strong>.</p>
+<p><strong>Characteristics:</strong></p>
 <ul>
-    <li><strong>Pattern (Partitioning): <span class="rhyme">The Great Divide's Single Path</span></strong> – This algorithm reuses the <span class="rhyme">great divide</span> strategy from Quicksort, but instead of sorting both sub-arrays, it only processes the single sub-array that must contain the <em>k</em>-th element. This is a <span class="rhyme">single-path optimization</span>.</li>
-    <li><strong>Concept (Quickselect): <span class="rhyme">The Selective Detective</span></strong> – Quickselect is the <span class="rhyme">selective detective</span>, an algorithm built on partitioning to find a specific rank.</li>
-    <li><strong>Relationship:</strong> It’s a <span class="rhyme">specialized tool</span> derived from Quicksort's core logic, offering an <span class="rhyme">efficiency leap</span> when only a rank is needed, not the full sorted order.</li>
-    <li><strong>Utility Context:</strong> Crucial for systems needing to find medians (e.g., for data analysis, outlier detection), percentiles, or for algorithms like image processing without the cost of full sorting. It ensures <span class="rhyme">clarity immediate</span> on rank without <span class="rhyme">information overload</span>.</li>
+    <li><strong>Comparison Sort:</strong> Relies solely on comparisons between elements.</li>
+    <li><strong>In-place:</strong> Sorts the array by moving elements within the original array, requiring minimal extra space (<span class="math"><i>O</i>(1)</span> auxiliary space).</li>
 </ul>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 9, "Medians and Order Statistics," specifically 9.2 (expected linear-time selection) and 9.3 (worst-case linear-time selection).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Rank Locator, Great Divide, Single Path, Selective Detective), "Adj + Noun" (Time-Intensive Overhead, Efficiency Leap), "Multi-Word" (Single-Path Optimization, Information Overload).</li>
-    </ul>
-</div>
-<h4>Code Example 4.1.1: Quickselect – The Targeted Hunt</h4>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref3" href="#fn3">3</a></sup>):</strong></p>
+<ul>
+    <li><strong>Worst Case:</strong> <span class="math">&Theta;(N<sup>2</sup>)</span> - Occurs when the list is in reverse order. Each element might need to "bubble up" its entire length.</li>
+    <li><strong>Average Case:</strong> <span class="math">&Theta;(N<sup>2</sup>)</span> - Generally requires multiple passes.</li>
+    <li><strong>Best Case:</strong> <span class="math"><i>O</i>(N)</span> - If the list is already sorted, it makes one pass to detect no swaps.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Easiest to understand and implement.</li>
+    <li>In-place sorting.</li>
+    <li>Stable.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Extremely slow for large inputs, high number of swaps.</li>
+</ul>
+<p><strong>Utility Context:</strong> Educational purposes, extremely small arrays.</p>
+<p><strong>Structural Usages:</strong> Nested loops for pairwise comparisons and swaps.</p>
+<p><strong>Python Example:</strong></p>
 
 ```python
-import random
-def lomuto_partition(arr, low, high):
-    """
-    Concept: Lomuto Partitioning scheme. It's "the great divide."
-    Pattern: In-place partitioning around a pivot (last element).
-    Relationship: The core 'divide' step of the quicksort algorithm, placing the pivot correctly.
-    """
-    pivot = arr[high]  # Pivot chosen as the last element (can be randomized beforehand)
-    i = low - 1       # Index of smaller element, marks the boundary of elements <= pivot
-    for j in range(low, high): # Traverse all elements up to the pivot
-        if arr[j] <= pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i] # Swap: moves smaller elements to the left
-            
-    # Place the pivot in its final sorted position
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1 # Return the pivot's final index
-def randomized_partition(arr, low, high):
-    """
-    Concept: Randomized Partitioning. It's "the dice roll strategy."
-    Pattern: Random pivot selection to improve average-case performance.
-    Relationship: A crucial optimization for quicksort and quickselect to avoid worst-case O(n^2) scenarios.
-    """
-    rand_idx = random.randint(low, high) # Pick a random index
-    arr[rand_idx], arr[high] = arr[high], arr[rand_idx] # Swap random pivot to the end
-    return lomuto_partition(arr, low, high) # Then use Lomuto partition
-def find_kth_smallest(arr, k):
-    """
-    Concept: Kth Order Statistic using Quickselect - the "rank locator."
-    Pattern: Partitioning + Recursive selection on one side ("the great divide's single path").
-    Property: Achieves average-case linear time.
-    """
-    if not (1 <= k <= len(arr)):
-        raise ValueError("k must be within the array bounds (1 to len(arr)).")
-    
-    k_idx = k - 1 # Convert to 0-indexed for internal array access
-    def quick_select_recursive(sub_arr, low, high, target_idx):
-        if low == high: # Base case: single element remaining
-            return sub_arr[low]
-        pivot_idx = randomized_partition(sub_arr, low, high) # The "great divide" in action
-        
-        if pivot_idx == target_idx:
-            return sub_arr[pivot_idx] # Target found!
-        elif pivot_idx < target_idx:
-            # Target is in the right partition: "pursuing the single path"
-            return quick_select_recursive(sub_arr, pivot_idx + 1, high, target_idx)
-        else:
-            # Target is in the left partition: "pursuing the single path"
-            return quick_select_recursive(sub_arr, low, pivot_idx - 1, target_idx)
-            
-    temp_arr = list(arr) # Work on a copy to avoid modifying original input
-    return quick_select_recursive(temp_arr, 0, len(temp_arr) - 1, k_idx)
-# Artificial Data: A list of diverse rankings
-data_select = [7, 10, 4, 3, 20, 15, 8, 12, 16]
-k_values = [1, 3, 5, 9] # Examples: 1st, 3rd, 5th (median), 9th smallest
-print("\n--- Kth Smallest Element (Quickselect) ---")
-for k_val in k_values:
-    try:
-        result = find_kth_smallest(data_select, k_val)
-        print(f"The {k_val}th smallest element is: {result}")
-    except ValueError as e:
-        print(f"Error for k={k_val}: {e}")
-# Comparison to full sort:
-# Artificial Data for comparison
-N_comp = 10000
-random_data_comp = [random.randint(0, N_comp * 10) for _ in range(N_comp)]
-k_median_comp = N_comp // 2 + 1 # Median for Quickselect (1-indexed)
-start_time = time.perf_counter()
-kth_quickselect = find_kth_smallest(random_data_comp, k_median_comp)
-end_time = time.perf_counter()
-time_quickselect = (end_time - start_time) * 1000
-start_time = time.perf_counter()
-sorted_data_comp = sorted(list(random_data_comp)) # O(N log N)
-kth_sort_select = sorted_data_comp[k_median_comp - 1] # O(1) after sort
-end_time = time.perf_counter()
-time_sort_select = (end_time - start_time) * 1000
-print(f"\n--- Quickselect vs. Sort & Select (N={N_comp}, Median={k_median_comp}) ---")
-print(f"Quickselect: {time_quickselect:.4f} ms (Result: {kth_quickselect})")
-print(f"Sort & Select: {time_sort_select:.4f} ms (Result: {kth_sort_select})")
-# Time Complexity:
-# Average-case: O(n) - a "single-path optimization" for significant efficiency.
-# Worst-case: O(n^2) - The "worst-case path" is highly unlikely due to randomization.
-# Space Complexity: O(log n) (average), O(n) (worst).
-```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: Quickselect is a <span class="rhyme">performance driver</span>, achieving average linear time for specific rank searches, crucial for <span class="rhyme">latency sensitive</span> systems. <strong>Reliability</strong>: Robust error handling for <code>k</code> ensures the algorithm doesn't proceed with invalid inputs. <strong>Clarity</strong>: The recursive structure elegantly implements the "single path optimization."</small></p>
-<h2 id="part-5-empirical-performance">Part 5: Empirical Performance Comparison and Asymptotic Analysis (Multi-layered Combination)</h2>
-<p>This section is the <span class="rhyme">performance observatory</span>, where we test our algorithms in the <span class="rhyme">digital arena</span> against various data landscapes. It's a <span class="rhyme">strategic over-specification</span> of benchmarking, confirming that our theoretical Big O understanding translates into tangible <span class="rhyme">time savings</span>.</p>
-<div class="oracle-specific">
-    <small><strong>References:</strong></small>
-    <ul>
-        <li>All previous references for individual algorithms.</li>
-        <li><code>ComputerOrganizationAndDesign_Patterson-Hennessy_2020</code>: Chapter 1, "Computer Abstractions and Technology," for the fundamental link between theory and real hardware performance, underscoring the purpose of these benchmarks.</li>
-        <li><code>Introduction to Algorithms (Cormen et al.)</code>: Chapters 3, 5 (probabilistic analysis relevant to Quicksort/Quickselect).</li>
-        <li><code>Metaphorical Scaffolding Framework</code>: Uses "Noun + Noun" (Performance Observatory, Digital Arena, Time Savings), "Adj + Noun" (Strategic Over-specification), "Multi-Word" (Data Landscapes).</li>
-    </ul>
-</div>
-<h4>Code Example 5.1.1: The Grand Benchmark – Revealing Algorithmic Destiny</h4>
+# Artificial Data for demonstration
+orders_data_bubble = [
+    {"id": "A", "price": 100, "submitted": 1},
+    {"id": "B", "price": 50, "submitted": 2},
+    {"id": "C", "price": 100, "submitted": 3},
+    {"id": "D", "price": 75, "submitted": 4},
+    {"id": "E", "price": 50, "submitted": 5}
+]
+orders_data_bubble_stable_check = [
+    {"id": "X", "val": 5, "orig_idx": 0},
+    {"id": "Y", "val": 2, "orig_idx": 1},
+    {"id": "Z", "val": 5, "orig_idx": 2}
+]
 
-```python
-import time
-import random
-import math
-import collections
-import bisect
-import pandas as pd # Language Programming Package: Pandas for structured results
-import numpy as np  # Language Programming Package: NumPy for efficient array generation
-# --- Sorting Algorithms (as defined in previous examples) ---
-def bubble_sort(arr):
+def bubble_sort(arr: list[dict], key: str) -> tuple[int, int]:
+    """
+    Sorts a list of dictionaries in-place using bubble sort based on a specified key.
+    Returns (comparisons, swaps).
+    SE Principle (Modifiability, Testability): Key allows flexible sorting, counters enable precise analysis.
+    """
     n = len(arr)
-    for i in range(n):
+    comparisons = 0
+    swaps = 0
+    for i in range(n - 1):
         swapped = False
         for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+            comparisons += 1
+            if arr[j][key] > arr[j+1][key]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swaps += 1
                 swapped = True
-        if not swapped:
+        if not swapped: # Optimization: if no two elements were swapped by inner loop, then array is sorted
             break
-    return arr
-def merge_sort(arr):
-    if len(arr) <= 1:
+    return comparisons, swaps
+# Demonstrating Bubble Sort and stability
+print("\n--- Bubble Sort ---")
+print("Original data (price key):", orders_data_bubble)
+comps, swaps = bubble_sort(orders_data_bubble, "price")
+print("Sorted data (price key):", orders_data_bubble)
+print(f"Comparisons: {comps}, Swaps: {swaps}")
+print("\nOriginal data (stable check):", orders_data_bubble_stable_check)
+bubble_sort(orders_data_bubble_stable_check, "val")
+print("Sorted data (stable check):", orders_data_bubble_stable_check)
+# Expected: [{'id': 'Y', 'val': 2, 'orig_idx': 1}, {'id': 'X', 'val': 5, 'orig_idx': 0}, {'id': 'Z', 'val': 5, 'orig_idx': 2}]
+# 'X' comes before 'Z' because orig_idx 0 < 2, verifying stability.
+```
+<h3 id="merge-sort">2.2 Merge Sort</h3>
+<p class="rhyme">"Why did the two sorted lists merge happily ever after?"<br/>"Because they found their true <span class="math"><i>O</i>(<i>N</i>)</span> calling!"</p>
+<p>The joke highlights the merging step is the <span class="math"><i>O</i>(<i>N</i>)</span> part of Merge Sort, and the joke implies efficiency in that critical phase.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 2.3.1.</small></p>
+<p><strong>Concept:</strong> Merge Sort breaks down a list into halves until individual items are isolated, then it orchestrates a <strong>recombining union</strong>, merging these sorted segments back into a single, cohesive, ordered whole. It's a <strong>Digital Assembly-Line</strong>.</p>
+<p><strong>Pattern:</strong> Divide and Conquer, recursive splitting, sequential merging.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+    <li><strong>Comparison Sort:</strong> Uses comparisons to order elements.</li>
+    <li><strong>Divide and Conquer:</strong> Divides the problem into smaller subproblems, solves them recursively, and combines the results.</li>
+    <li><strong>Stability:</strong> Yes.</li>
+    <li><strong>External Sort Capable:</strong> Can handle datasets larger than memory.</li>
+</ul>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref4" href="#fn4">4</a></sup>):</strong></p>
+<ul>
+    <li><strong>Worst Case:</strong> <span class="math">&Theta;(N log N)</span> - Guaranteed performance, regardless of input order.</li>
+    <li><strong>Average Case:</strong> <span class="math">&Theta;(N log N)</span></li>
+    <li><strong>Best Case:</strong> <span class="math">&Theta;(N log N)</span></li>
+</ul>
+<p><strong>Space Complexity:</strong></p>
+<ul>
+    <li><span class="math">&Theta;(N)</span> auxiliary space - Requires extra space proportional to the input size for merging. Not in-place.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Guaranteed <span class="math"><i>O</i>(<i>N</i> log <i>N</i>)</span> performance.</li>
+    <li>Stable sort.</li>
+    <li>Good for external sorting (large datasets that don't fit in memory).</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Requires <span class="math"><i>O</i>(<i>N</i>)</span> auxiliary space, which can be a concern for very large datasets or memory-constrained environments.</li>
+</ul>
+<p><strong>Utility Context:</strong> Large datasets where guaranteed performance and stability are paramount, foundational for external sorting.</p>
+<p><strong>Structural Usages:</strong> Recursive function calls, temporary arrays for merging.</p>
+<p><strong>Python Example:</strong></p>
+
+```python
+# Artificial Data for demonstration
+transactions_merge = [345.67, 12.34, 876.54, 321.09, 99.88, 543.21, 1.05, 765.43, 234.56, 67.89]
+def merge_sort(arr: list[float]) -> list[float]:
+    """
+    Sorts a list of floats using the Merge Sort algorithm.
+    SE Principle (Scalability, Testability): Recursive, handles empty/single-element lists.
+    """
+    if len(arr) &lt;= 1:
         return arr
     mid = len(arr) // 2
     left_half = arr[:mid]
     right_half = arr[mid:]
     left_half = merge_sort(left_half)
     right_half = merge_sort(right_half)
-    return merge(left_half, right_half)
-def merge(left, right):
-    result = []
+    return _merge(left_half, right_half)
+def _merge(left: list[float], right: list[float]) -> list[float]:
+    """Helper function to merge two sorted lists."""
+    merged = []
     i = j = 0
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            result.append(left[i])
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:
+            merged.append(left[i])
             i += 1
         else:
-            result.append(right[j])
+            merged.append(right[j])
             j += 1
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
-def heapify(arr, n, i):
-    largest = i
-    l = 2 * i + 1
-    r = 2 * i + 2
-    if l < n and arr[l] > arr[largest]:
-        largest = l
-    if r < n and arr[r] > arr[largest]:
-        largest = r
+    while i &lt; len(left):
+        merged.append(left[i])
+        i += 1
+    while j &lt; len(right):
+        merged.append(right[j])
+        j += 1
+    return merged
+# Demonstrating Merge Sort
+print("\n--- Merge Sort ---")
+print("Original transactions:", transactions_merge)
+sorted_transactions = merge_sort(transactions_merge)
+print("Sorted transactions:", sorted_transactions)
+```
+<h3 id="heap-sort">2.3 Heap Sort</h3>
+<p class="rhyme">"Why did the data choose Heap Sort for its organizational needs?"<br/>"Because it guarantees the top element is always the boss, but keeps everything else in <span class="math"><i>O</i>(1)</span> memory!"</p>
+<p>The joke highlights Heap Sort's <span class="math"><i>O</i>(1)</span> space efficiency and the heap property of having the largest (or smallest) element at the root.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 6.</small></p>
+<p><strong>Concept:</strong> Heap Sort builds a binary heap (a <strong>Hierarchical Pyramid</strong>) from the input data, then repeatedly extracts the largest (or smallest) element from the root, placing it at the end of the array, and restructuring the remaining elements to maintain the heap property. This is a <strong>Top-Down Ordering</strong>.</p>
+<p><strong>Pattern:</strong> Heapification, successive maximum extraction.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+    <li><strong>Comparison Sort:</strong> Uses comparisons.</li>
+    <li><strong>In-place:</strong> Yes (<span class="math"><i>O</i>(1)</span> auxiliary space).</li>
+    <li><strong>Guaranteed Performance:</strong> Consistent <span class="math"><i>O</i>(N log N)</span> time.</li>
+    <li><strong>Not Stable:</strong> Generally not stable.</li>
+</ul>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref5" href="#fn5">5</a></sup>):</strong></p>
+<ul>
+    <li><strong>Worst Case:</strong> <span class="math">&Theta;(N log N)</span> - Guaranteed performance.</li>
+    <li><strong>Average Case:</strong> <span class="math">&Theta;(N log N)</span></li>
+    <li><strong>Best Case:</strong> <span class="math">&Theta;(N log N)</span></li>
+</ul>
+<p><strong>Space Complexity:</strong></p>
+<ul>
+    <li><span class="math"><i>O</i>(1)</span> auxiliary space - A major advantage, especially for memory-constrained systems.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Excellent space efficiency, guaranteed <span class="math"><i>O</i>(<i>N</i> log <i>N</i>)</span> performance.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Not stable.</li>
+    <li>Typically slower than a well-implemented Quicksort in practice due to poor cache performance.</li>
+</ul>
+<p><strong>Utility Context:</strong> Memory-constrained environments where guaranteed <span class="math"><i>O</i>(<i>N</i> log <i>N</i>)</span> time is needed, or when stability is not a concern.</p>
+<p><strong>Structural Usages:</strong> Heap data structure, heapify operations.</p>
+<p><strong>Python Example:</strong></p>
+
+```python
+# Artificial Data for demonstration
+sensor_readings_heap = [42, 15, 60, 8, 25, 75, 30, 10, 50, 5, 65, 20]
+def _heapify(arr: list[int], n: int, i: int) -> None:
+    """
+    Maintains the max-heap property for a subtree rooted at index i.
+    n is the size of the heap.
+    SE Principle (Modifiability): A helper function for heap operations.
+    """
+    largest = i  # Initialize largest as root
+    left = 2 * i + 1
+    right = 2 * i + 2
+    # See if left child of root exists and is greater than root
+    if left &lt; n and arr[left] > arr[largest]:
+        largest = left
+    # See if right child of root exists and is greater than largest so far
+    if right &lt; n and arr[right] > arr[largest]:
+        largest = right
+    # Change root, if needed
     if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]
-        heapify(arr, n, largest)
-def heap_sort(arr):
+        arr[i], arr[largest] = arr[largest], arr[i]  # Swap
+        _heapify(arr, n, largest)  # Heapify the root.
+def heap_sort(arr: list[int]) -> None:
+    """
+    Sorts an array in-place using Heap Sort.
+    SE Principle (Efficiency, Space Efficiency): Achieves O(N log N) time with O(1) auxiliary space.
+    """
     n = len(arr)
+    # Build a max-heap (rearrange array)
     for i in range(n // 2 - 1, -1, -1):
-        heapify(arr, n, i)
+        _heapify(arr, n, i)
+    # One by one extract elements
     for i in range(n - 1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]
-        heapify(arr, i, 0)
-    return arr
-def lomuto_partition(arr, low, high):
+        arr[i], arr[0] = arr[0], arr[i]  # Move current root to end
+        _heapify(arr, i, 0)  # Call max_heapify on the reduced heap
+# Demonstrating Heap Sort
+print("\n--- Heap Sort ---")
+print("Original sensor readings:", sensor_readings_heap)
+heap_sort(sensor_readings_heap)
+print("Sorted sensor readings:", sensor_readings_heap)
+```
+<h3 id="quicksort">2.4 Quicksort</h3>
+<p class="rhyme">"Quicksort, a seasoned gambler, was challenged to sort a deck of cards. He shuffled, picked a random card, and declared, 'This is our pivot!' The other algorithms watched nervously, knowing his worst hand was terrible, but on average, he won big. 'It's all about <strong>probabilistic partitioning</strong>,' he'd wink."</p>
+<p>The joke connects randomization to average-case performance and acknowledges the worst-case, embodying the trade-offs of Quicksort.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 7.</small></p>
+<p><strong>Concept:</strong> Quicksort performs a <strong>dynamic reorganization</strong> where it partitions data around a chosen pivot, then recursively sorts the resulting smaller sub-arrays. This is a <strong>Self-Organizing Dance</strong>.</p>
+<p><strong>Pattern:</strong> Partitioning, recursion (divide and conquer).</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+    <li><strong>High Average Performance:</strong> Often fastest in practice due to cache efficiency.</li>
+    <li><strong>In-Place (mostly):</strong> Yes (<span class="math"><i>O</i>(log <i>N</i>)</span> average auxiliary space, <span class="math"><i>O</i>(N)</span> worst-case).</li>
+    <li><strong>Not Stable:</strong> Generally not stable.</li>
+</ul>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref6" href="#fn6">6</a></sup>):</strong></p>
+<ul>
+    <li><strong>Expected:</strong> <span class="math">&Theta;(N log N)</span>.</li>
+    <li><strong>Worst Case:</strong> <span class="math"><i>O</i>(N<sup>2</sup>)</span>.</li>
+</ul>
+<p><strong>Space Complexity:</strong></p>
+<ul>
+    <li><span class="math"><i>O</i>(log <i>N</i>)</span> average auxiliary space (due to recursion stack).</li>
+    <li><span class="math"><i>O</i>(N)</span> worst-case auxiliary space (due to recursion stack in unbalanced partitions).</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Fast in practice (average case), in-place.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Worst-case <span class="math"><i>O</i>(N<sup>2</sup>)</span> for deterministic versions (mitigated by randomization), not stable.</li>
+</ul>
+<p><strong>Utility Context:</strong> General-purpose sorting for most applications, especially when average performance is acceptable and stability is not a strict requirement.</p>
+<p><strong>Structural Usages:</strong> Partitioning function, recursive calls on sub-arrays.</p>
+<p><strong>Python Example:</strong></p>
+
+```python
+import random
+# Artificial Data for demonstration
+user_list_quick_1 = [50, 20, 70, 10, 60, 30, 80, 40]
+user_list_quick_2_sorted = [10, 20, 30, 40, 50, 60, 70, 80]
+user_list_quick_3_reversed = [80, 70, 60, 50, 40, 30, 20, 10]
+def _partition(arr: list[int], low: int, high: int) -> int:
+    """
+    Partitions the array around a pivot (arr[high]).
+    Returns the pivot's final index.
+    SE Principle (Modifiability): Core partitioning logic, separable.
+    """
     pivot = arr[high]
     i = low - 1
     for j in range(low, high):
-        if arr[j] <= pivot:
+        if arr[j] &lt;= pivot:
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    arr[i+1], arr[high] = arr[high], arr[i+1]
     return i + 1
-def randomized_partition(arr, low, high):
+def quicksort(arr: list[int], low: int, high: int) -> None:
+    """
+    Implements deterministic Quicksort in-place.
+    SE Principle (Efficiency): Recursive, but pivot choice can lead to worst-case.
+    """
+    if low &lt; high:
+        pi = _partition(arr, low, high)
+        quicksort(arr, low, pi - 1)
+        quicksort(arr, pi + 1, high)
+def _randomized_partition(arr: list[int], low: int, high: int) -> int:
+    """
+    Selects a random pivot and partitions the array.
+    SE Principle (Reliability): Random pivot reduces worst-case probability.
+    """
     rand_idx = random.randint(low, high)
-    arr[rand_idx], arr[high] = arr[high], arr[rand_idx]
-    return lomuto_partition(arr, low, high)
-def quick_sort(arr, low, high):
-    if low < high:
-        pi = randomized_partition(arr, low, high) # Use randomized partition
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
-    return arr
-# --- Searching Algorithms (as defined in previous examples) ---
-def linear_search(arr, target):
+    arr[rand_idx], arr[high] = arr[high], arr[rand_idx] # Swap random element with high for _partition
+    return _partition(arr, low, high)
+def randomized_quicksort(arr: list[int], low: int, high: int) -> None:
     """
-    Concept: Linear Search.
-    Pattern: Sequential traversal.
-    Property: Works on unsorted data.
+    Implements randomized Quicksort in-place.
+    SE Principle (Reliability): Improved average-case performance by avoiding consistently bad pivot choices.
     """
-    for i in range(len(arr)):
-        if arr[i] == target:
-            return i
-    return -1
-def binary_search(arr, target):
+    if low &lt; high:
+        pi = _randomized_partition(arr, low, high)
+        randomized_quicksort(arr, low, pi - 1)
+        randomized_quicksort(arr, pi + 1, high)
+
+# Demonstrating Deterministic Quicksort
+print("\n--- Deterministic Quicksort ---")
+arr_det_1 = list(user_list_quick_1)
+print("Original (mixed):", arr_det_1)
+quicksort(arr_det_1, 0, len(arr_det_1) - 1)
+print("Sorted (mixed):", arr_det_1)
+arr_det_2 = list(user_list_quick_2_sorted)
+print("Original (sorted, worst-case):", arr_det_2)
+quicksort(arr_det_2, 0, len(arr_det_2) - 1)
+print("Sorted (sorted):", arr_det_2) # Observe this input for worst-case analysis
+# For `arr_det_2`, if `arr[high]` is always chosen as pivot, it results in (n-1) + (n-2) + ... calls, O(n^2).
+# Demonstrating Randomized Quicksort
+print("\n--- Randomized Quicksort ---")
+arr_rand_1 = list(user_list_quick_1)
+print("Original (mixed):", arr_rand_1)
+randomized_quicksort(arr_rand_1, 0, len(arr_rand_1) - 1)
+print("Sorted (mixed):", arr_rand_1)
+arr_rand_2 = list(user_list_quick_2_sorted)
+print("Original (sorted, expected O(n log n) with randomization):", arr_rand_2)
+randomized_quicksort(arr_rand_2, 0, len(arr_rand_2) - 1)
+print("Sorted (sorted):", arr_rand_2)
+# With randomization, even sorted input is likely to yield O(n log n) performance on average.
+# The expected value of total comparisons is O(n log n) (CLRS 7.4.2).
+```
+<h3 id="radix-sort-non-comparison-sort">2.5 Radix Sort (Non-comparison Sort)</h3>
+<p class="rhyme">"Why did Radix Sort avoid all the comparison contests?"<br/>"Because it simply counts on its digits to find their place, creating a **digitally assembled future**!"</p>
+<p>The joke emphasizes the non-comparison nature and direct placement strategy of Radix Sort.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 8.3.</small></p>
+<p><strong>Concept:</strong> Radix Sort processes numbers digit by digit, from least significant to most significant, using a stable sorting algorithm (like Counting Sort) for each digit. This is a <strong>Multi-Pass Digit Sort</strong>.</p>
+<p><strong>Pattern:</strong> Iterative application of a stable sub-sort, digit extraction.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+    <li><strong>Non-Comparison:</strong> Does not use pairwise comparisons.</li>
+    <li><strong>Input Constraints:</strong> Best for fixed-width integer keys or keys convertible to digits.</li>
+    <li><strong>Stability:</strong> Yes (if underlying stable sort is used).</li>
+</ul>
+<p><strong>Properties (Time Complexity - <em>Introduction to Algorithms (Cormen et al.)</em><sup class="footnote-ref"><a id="fnref7" href="#fn7">7</a></sup>):</strong></p>
+<ul>
+    <li><span class="math">&Theta;(d \cdot (N+K))</span> - Where <span class="math"><i>d</i></span> is number of digits, <span class="math"><i>N</i></span> is number of elements, and <span class="math"><i>K</i></span> is the base (range of digit values).</li>
+    <li>Can achieve <span class="math">&Theta;(N)</span> if <span class="math"><i>d</i></span> is constant and <span class="math"><i>K</i> = <i>O</i>(<i>N</i>)</span>.</li>
+</ul>
+<p><strong>Space Complexity:</strong> <span class="math">&Theta;(N+K)</span> (for the auxiliary storage used by the stable sub-sort).</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Can achieve linear time complexity under specific conditions, outperforming comparison sorts.</li>
+    <li>Stable.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Limited to specific data types (typically integers).</li>
+    <li>Performance depends heavily on the number of digits and the base.</li>
+</ul>
+<p><strong>Utility Context:</strong> Sorting large lists of fixed-length integers (e.g., IP addresses, phone numbers), often as a component in multi-key sorting systems. It enables a <strong>digitally assembled future</strong> where keys are processed structurally.</p>
+<p><strong>Python Example:</strong></p>
+
+```python
+# Artificial Data for demonstration
+fixed_digit_numbers = [170, 45, 75, 90, 802, 24, 2, 66] # Max 3 digits for this set (802)
+max_val_radix = 802
+def _counting_sort_for_radix(arr: list[int], exp: int) -> None:
     """
-    Concept: Binary Search.
-    Pattern: Halving the search space.
-    Prerequisite: Array must be sorted.
+    A stable counting sort to sort elements based on digit represented by exp.
+    exp is 10^i, where i is the current digit position.
+    SE Principle (Reliability, Testability): Correctly sorts based on specific digit while preserving stability.
+    """
+    n = len(arr)
+    output = [0] * n
+    count = [0] * 10  # For base 10 digits (0-9)
+    # Store count of occurrences in count[]
+    for i in range(n):
+        index = (arr[i] // exp) % 10
+        count[index] += 1
+    # Change count[i] so that count[i] now contains actual
+    # position of this digit in output[]
+    for i in range(1, 10):
+        count[i] += count[i-1]
+    # Build the output array
+    i = n - 1
+    while i >= 0:
+        index = (arr[i] // exp) % 10
+        output[count[index] - 1] = arr[i]
+        count[index] -= 1
+        i -= 1
+    # Copying the output array to arr, so that arr now contains sorted numbers
+    for i in range(n):
+        arr[i] = output[i]
+def radix_sort(arr: list[int]) -> None:
+    """
+    Sorts a list of integers using Radix Sort.
+    Assumes integers are non-negative.
+    SE Principle (Efficiency): Linear time for certain input distributions.
+    """
+    # Find the maximum number to know number of digits
+    max1 = max(arr)
+    # Do counting sort for every digit. Note that instead of passing digit number,
+    # exp is passed. exp is 10^i where i is current digit number
+    exp = 1
+    while max1 // exp > 0:
+        _counting_sort_for_radix(arr, exp)
+        exp *= 10
+# Demonstrating Radix Sort
+print("\n--- Radix Sort ---")
+print("Original fixed-digit numbers:", fixed_digit_numbers)
+radix_sort(fixed_digit_numbers)
+print("Sorted fixed-digit numbers:", fixed_digit_numbers)
+```
+<h2 id="part-3-complexity-analysis-big-o-omega-theta">3. Complexity Analysis (Big O, Omega, Theta)</h2>
+<p>Complexity analysis provides a theoretical measure of how algorithms scale with input size, crucial for predicting performance.</p>
+<h3 id="asymptotic-notations-o-omega-theta">3.1 Asymptotic Notations: <span class="math"><i>O</i></span>, <span class="math">&Omega;</span>, <span class="math">&Theta;</span></h3>
+<p>These notations allow us to precisely describe how an algorithm's running time or space requirements grow as the input size increases.</p>
+<h4>3.1.1 Big O Notation (<span class="math"><i>O</i></span>): The Algorithm's Ceiling</h4>
+<p class="rhyme">"What do you call an algorithm that always finishes before its <span class="math"><i>O</i>(<i>n</i><sup>2</sup>)</span> deadline?"<br/>"...An overachiever with a fast <code>for</code> loop."</p>
+<p>The joke highlights the sequential, potentially exhaustive nature of linear search.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 3.1.</small></p>
+<p><strong>Concept:</strong> <span class="math"><i>O</i></span>-notation quantifies an <strong>asymptotic upper bound</strong> on an algorithm's performance. It signifies that for sufficiently large input sizes <span class="math"><i>n</i></span>, the algorithm's running time <span class="math"><i>f</i>(<i>n</i>)</span> will not exceed a constant multiple of <span class="math"><i>g</i>(<i>n</i>)</span>. In essence, <span class="math"><i>f</i>(<i>n</i>)</span> grows <em>no faster than</em> <span class="math"><i>g</i>(<i>n</i>)</span>, providing a crucial <strong>Performance Guarantee</strong>. This is analogous to a speed limit: your car might go slower, but it won't exceed the limit.</p>
+<p><strong>Definition:</strong> <span class="math"><i>f</i>(<i>n</i>) = <i>O</i>(<i>g</i>(<i>n</i>))</span> if there exist positive constants <span class="math"><i>c</i></span> and <span class="math"><i>n</i><sub>0</sub></span> such that <span class="math">0 &le; <i>f</i>(<i>n</i>) &le; <i>c</i> &sdot; <i>g</i>(<i>n</i>)</span> for all <span class="math"><i>n</i> &ge; <i>n</i><sub>0</sub></span>.</p>
+<p class="oracle-specific">
+    <span class="math"><i>f</i>(<i>n</i>) = <i>O</i>(<i>g</i>(<i>n</i>))</span> means the function <span class="math"><i>f</i>(<i>n</i>)</span> is bounded from above by <span class="math"><i>g</i>(<i>n</i>)</span>. Our platform provides <b>seamless integration</b>.
+    <small>Source: Metaphorical Scaffolding Framework, p. 3, 1. Adj + Noun; Introduction to Algorithms (Cormen et al.), Chapter 3.2.</small>
+</p>
+<p><strong>Python Code Context:</strong></p>
+
+```python
+import math
+# Example: f(n) = 2n^2 + 3n + 1, g(n) = n^2
+# We want to show f(n) = O(g(n))
+def f_n_o(n):
+    return 2 * n**2 + 3 * n + 1
+def g_n_o(n):
+    return n**2
+# Find c and n0 such that f(n) <= c * g(n) for n >= n0
+# For n=1, f(1)=6, g(1)=1 => c >= 6
+# For n=10, f(10)=231, g(10)=100 => c >= 2.31
+# For n >= 4, 2n^2 + 3n + 1 <= 2n^2 + (3/4)n^2 + (1/16)n^2 = 2.8125n^2
+# We can pick c=3 and n0=4.
+c = 3
+n0 = 4
+test_n_values = [n for n in range(n0, n0 + 10)] # Test a range of n values
+for n in test_n_values:
+    assert f_n_o(n) <= c * g_n_o(n), f"O-notation failed for n={n}: {f_n_o(n)} vs {c * g_n_o(n)}"
+print(f"Verified f(n) = O(n^2) with c={c}, n0={n0} for n up to {test_n_values[-1]}")
+```
+<h4>3.1.2 Omega Notation (<span class="math">&Omega;</span>): The Algorithm's Floor</h4>
+<p class="rhyme">"Why did the algorithm developer hate the phrase 'under-promise, over-deliver'?"<br/>"Because his <span class="math">&Omega;(n)</span> was always too strong!"</p>
+<p>The joke highlights <span class="math">&Omega;</span>-notation sets a minimum performance. If it's too strong, it means the algorithm is slower than expected.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 3.1.</small></p>
+<p><strong>Concept:</strong> <span class="math">&Omega;</span>-notation establishes an <strong>asymptotic lower bound</strong>. It guarantees that, for sufficient input sizes <span class="math"><i>n</i></span>, the algorithm's running time <span class="math"><i>f</i>(<i>n</i>)</span> will be at least a constant multiple of <span class="math"><i>g</i>(<i>n</i>)</span>. In essence, <span class="math"><i>f</i>(<i>n</i>)</span> grows <em>at least as fast as</em> <span class="math"><i>g</i>(<i>n</i>)</span>, defining a **Theoretical Limit** for minimal performance. This is like knowing the minimum amount of work you have to do.</p>
+<p><strong>Definition:</strong> <span class="math"><i>f</i>(<i>n</i>) = &Omega;(<i>g</i>(<i>n</i>))</span> if there exist positive constants <span class="math"><i>c</i></span> and <span class="math"><i>n</i><sub>0</sub></span> such that <span class="math">0 &le; <i>c</i> &sdot; <i>g</i>(<i>n</i>) &le; <i>f</i>(<i>n</i>)</span> for all <span class="math"><i>n</i> &ge; <i>n</i><sub>0</sub></span>.</p>
+<p class="postgresql-bridge">
+    <span class="math"><i>f</i>(<i>n</i>) = &Omega;(<i>g</i>(<i>n</i>))</span> means <span class="math"><i>f</i>(<i>n</i>)</span> is bounded from below by <span class="math"><i>g</i>(<i>n</i>)</span>. PostgreSQL's internal query optimizer is a <b>gravity song between services</b>, ensuring efficient data flow.
+    <small>Source: Metaphorical Scaffolding Framework, p. 3, 2. Noun + Noun; Introduction to Algorithms (Cormen et al.), Chapter 3.2.</small>
+</p>
+<p><strong>Python Code Context:</strong></p>
+
+```python
+# Example: f(n) = 2n^2 + 3n + 1, g(n) = n^2
+# We want to show f(n) = Omega(g(n))
+def f_n_omega(n):
+    return 2 * n**2 + 3 * n + 1
+def g_n_omega(n):
+    return n**2
+# Find c and n0 such that c * g(n) <= f(n) for n >= n0
+# For n >= 1, 1 * n^2 <= 2n^2 + 3n + 1. We can pick c=1, n0=1.
+c = 1
+n0 = 1
+test_n_values = [n for n in range(n0, n0 + 10)]
+for n in test_n_values:
+    assert c * g_n_omega(n) <= f_n_omega(n), f"Omega-notation failed for n={n}: {c * g_n_omega(n)} vs {f_n_omega(n)}"
+print(f"Verified f(n) = Omega(n^2) with c={c}, n0={n0} for n up to {test_n_values[-1]}")
+```
+<h4>3.1.3 Theta Notation (<span class="math">&Theta;</span>): The Algorithm's True Lane</h4>
+<p class="rhyme">"A senior engineer asked a junior dev, 'What's the absolute best way to describe our new sorting algorithm?' The junior dev excitedly presented Bubble Sort. The PM, looking at the time estimate, sighed, 'Simple, yes. Fast? That's a different story when the list is upside down!'"</p>
+<p>The joke highlights the "just right" implies a tight fit, both from above and below, like the precise definition of <span class="math">&Theta;</span>-notation.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, Introduction to Algorithms (Cormen et al.), Chapter 3.1.</small></p>
+<p><strong>Concept:</strong> <span class="math">&Theta;</span>-notation provides an **asymptotically tight bound**. It signifies that an algorithm's running time <span class="math"><i>f</i>(<i>n</i>)</span> grows at the same rate as <span class="math"><i>g</i>(<i>n</i>)</span>, both from its upper and lower limits, offering the **Most Accurate Performance Fit**. This is like finding the perfect match, where nothing is wasted or insufficient.</p>
+<p><strong>Definition:</strong> <span class="math"><i>f</i>(<i>n</i>) = &Theta;(<i>g</i>(<i>n</i>))</span> if there exist positive constants <span class="math"><i>c</i><sub>1</sub></span>, <span class="math"><i>c</i><sub>2</sub></span>, and <span class="math"><i>n</i><sub>0</sub></span> such that <span class="math">0 &le; <i>c</i><sub>1</sub> &sdot; <i>g</i>(<i>n</i>) &le; <i>f</i>(<i>n</i>) &le; <i>c</i><sub>2</sub> &sdot; <i>g</i>(<i>n</i>)</span> for all <span class="math"><i>n</i> &ge; <i>n</i><sub>0</sub></span>.</p>
+<p class="caution">
+    <span class="math"><i>f</i>(<i>n</i>) = &Theta;(<i>g</i>(<i>n</i>))</span> if and only if <span class="math"><i>f</i>(<i>n</i>) = <i>O</i>(<i>g</i>(<i>n</i>))</span> AND <span class="math"><i>f</i>(<i>n</i>) = &Omega;(<i>g</i>(<i>n</i>))</span>. A recursive loop is a <b>spinning void</b> if not properly bounded.
+    <small>Source: Metaphorical Scaffolding Framework, p. 3, 3. Verb + Noun; Introduction to Algorithms (Cormen et al.), Chapter 3.2, Theorem 3.1.</small>
+</p>
+<p><strong>Python Code Context:</strong></p>
+
+```python
+# Example: f(n) = 2n^2 + 3n + 1, g(n) = n^2
+# We want to show f(n) = Theta(g(n))
+def f_n_theta(n):
+    return 2 * n**2 + 3 * n + 1
+def g_n_theta(n):
+    return n**2
+# Based on O and Omega analysis, we can find c1, c2, n0.
+# We found f(n) = O(n^2) with c2=3, n0=4.
+# We found f(n) = Omega(n^2) with c1=1, n0=1.
+# So, we need to pick an n0 that works for both, which is max(1,4)=4.
+c1 = 1
+c2 = 3
+n0 = 4
+test_n_values = [n for n in range(n0, n0 + 10)]
+for n in test_n_values:
+    assert c1 * g_n_theta(n) <= f_n_theta(n) <= c2 * g_n_theta(n), \
+           f"Theta-notation failed for n={n}: {c1 * g_n_theta(n)} <= {f_n_theta(n)} <= {c2 * g_n_theta(n)}"
+print(f"Verified f(n) = Theta(n^2) with c1={c1}, c2={c2}, n0={n0} for n up to {test_n_values[-1]}")
+```
+<h2 id="part-4-advanced-search-algorithms-interpolation-search">4. Advanced Search Algorithms: Interpolation Search</h2>
+<p>While Binary Search works wonders for ordered data, a deeper understanding of data distribution unlocks even more efficient search patterns.</p>
+<h3 id="interpolation-search-the-educated-guesser">4.1 Interpolation Search: The Educated Guesser</h3>
+<p class="rhyme">"Binary Search always splits in the middle, like a rule-follower. Interpolation Search? It's the one that says, 'Given how evenly spread these numbers are, I bet it's <em>right about here</em>!' It's usually right, unless the numbers play a trick on it."</p>
+<p>The joke highlights Interpolation Search's "educated guess" based on data distribution, contrasting it with Binary Search's rigid midpoint approach.
+<small>Source: Unified Hierarchical Model, p. 2, Model A: Punctuation Joke, GeeksforGeeks: Interpolation Search.</small></p>
+<p><strong>Concept:</strong> Interpolation search is an intelligent refinement of binary search, designed for <em>uniformly distributed</em> sorted data. Instead of blindly halving the search space, it uses the target value's relative position within the range to make an **educated guess** about its location. This is a <strong>Smart Probe</strong> that can significantly reduce comparisons.</p>
+<p><strong>Pattern:</strong> Probabilistic estimation (in <span class="math"><i>pos</i></span> calculation), divide and conquer.</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+    <li><strong>Distribution Dependent:</strong> Optimal performance (<span class="math"><i>O</i>(log log <i>N</i>)</span>) requires keys to be uniformly distributed.</li>
+    <li><strong>Sorted Data Required:</strong> Must operate on sorted arrays.</li>
+</ul>
+<p><strong>Properties (Time Complexity - <em>GeeksforGeeks: Interpolation Search</em>):</strong></p>
+<ul>
+    <li><strong>Average Case:</strong> <span class="math"><i>O</i>(log log <i>N</i>)</span> - Achieved when data is uniformly distributed, making it faster than Binary Search for very large datasets.</li>
+    <li><strong>Worst Case:</strong> <span class="math"><i>O</i>(N)</span> - Occurs when the data is not uniformly distributed (e.g., clustered data), causing the algorithm to degrade to linear time.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li>Potentially significantly faster than binary search for ideal data distributions.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+    <li>Performance is highly sensitive to the data distribution; non-uniformity can lead to linear time.</li>
+    <li>More complex implementation than binary search.</li>
+</ul>
+<p><strong>Utility Context:</strong> Searching in large, sorted datasets where keys are known to be uniformly distributed, such as product serial numbers, sensor data, or numerically encoded IDs that are evenly spread. It enables a <strong>digitally assembled future</strong> with rapid access to predicted locations.</p>
+<p><strong>Python Example:</strong></p>
+
+```python
+# Artificial Data for demonstration
+# Uniformly distributed data
+sorted_uniform_data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+target_present_interpolation = 140
+target_absent_interpolation = 155
+# Non-uniform data (worst-case for interpolation search)
+# All values clustered at one end
+non_uniform_data = [1, 2, 3, 4, 5, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+target_non_uniform = 110
+def interpolation_search(arr: list[int], target: int) -> int | None:
+    """
+    Performs an interpolation search for a target element in a sorted, uniformly distributed list.
+    SE Principle (Reliability): Checks for out-of-bounds target to prevent errors and improve robustness.
     """
     low = 0
     high = len(arr) - 1
-    while low <= high:
-        mid = low + (high - low) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-    return -1
-def interpolation_search(arr, target):
-    """
-    Concept: Interpolation Search.
-    Pattern: Probabilistic estimation for position.
-    Prerequisite: Array must be sorted and uniformly distributed.
-    """
-    low = 0
-    high = len(arr) - 1
-    while low <= high and target >= arr[low] and target <= arr[high]:
+    while low &lt;= high and arr[low] &lt;= target &lt;= arr[high]:
+        # Handle cases where low == high to prevent division by zero
         if low == high:
             if arr[low] == target:
                 return low
-            return -1
-        try:
-            pos = low + ((high - low) // (arr[high] - arr[low])) * (target - arr[low])
-        except ZeroDivisionError:
-            pos = low # Fallback if arr[high] == arr[low]
+            return None
+        # Estimate position using interpolation formula
+        # This is the 'probabilistic estimation' pattern
+        pos = low + ((high - low) // (arr[high] - arr[low])) * (target - arr[low])
+        # Clamp pos to prevent out-of-bounds access if formula yields an invalid index
+        pos = max(low, min(high, pos))
         if arr[pos] == target:
             return pos
-        elif arr[pos] < target:
+        elif arr[pos] &lt; target:
             low = pos + 1
         else:
             high = pos - 1
-    return -1
-# --- Kth Order Statistic (as defined in previous examples) ---
-def find_kth_smallest(arr, k):
-    """
-    Concept: Kth Order Statistic using Quickselect.
-    Pattern: Partitioning + Recursive selection on one side.
-    """
-    if not (1 <= k <= len(arr)):
-        raise ValueError("k must be within the array bounds (1 to len(arr)).")
-    k_idx = k - 1
-    
-    def quick_select_recursive(sub_arr, low, high, target_idx):
-        if low == high:
-            return sub_arr[low]
-        pivot_idx = randomized_partition(sub_arr, low, high)
-        if pivot_idx == target_idx:
-            return sub_arr[pivot_idx]
-        elif pivot_idx < target_idx:
-            return quick_select_recursive(sub_arr, pivot_idx + 1, high, target_idx)
-        else:
-            return quick_select_recursive(sub_arr, low, pivot_idx - 1, target_idx)
-            
-    temp_arr = list(arr) 
-    return quick_select_recursive(temp_arr, 0, len(temp_arr) - 1, k_idx)
-# --- Benchmarking Functions ---
-def run_benchmark(algorithm_func, data, *args, **kwargs):
-    """
-    Utility function to measure execution time.
-    Relationship: A "time conductor" for empirical validation.
-    """
-    start_time = time.perf_counter()
-    # Create a copy of the data for sorting algorithms to ensure original data is not modified
-    # and each algorithm starts with the same input for fair comparison.
-    temp_data = list(data) 
-    
-    # Special handling for sorting algorithms that modify in-place or need bounds
-    if algorithm_func in [bubble_sort, merge_sort, heap_sort]:
-        algorithm_func(temp_data)
-    elif algorithm_func == quick_sort: # quick_sort expects low, high
-        algorithm_func(temp_data, 0, len(temp_data) - 1)
-    else: # For search and select, data copy is handled inside find_kth_smallest or linear/binary/interpolation don't modify
-        algorithm_func(temp_data, *args, **kwargs)
-        
-    end_time = time.perf_counter()
-    return (end_time - start_time) * 1000 # Time in milliseconds
-# --- Part 1: Sorting Benchmark ---
-sorting_algorithms = {
-    "Bubble Sort": bubble_sort,
-    "Merge Sort": merge_sort,
-    "Heap Sort": heap_sort,
-    "Quick Sort": quick_sort # Use the quick_sort wrapper that handles bounds
-}
-# Artificial Data: A diverse "data landscape" for sorting algorithms
-sorting_input_sizes = [100, 1000, 10000] # Omitted 100000 for Bubble Sort due to excessive time
-sorting_results_data = []
-print("--- Part 1: Sorting Benchmark (Time in ms) ---")
-for N in sorting_input_sizes:
-    # Random Data: A true test of average-case
-    random_data = list(np.random.randint(0, N * 10, N)) 
-    # Already Sorted Data: Best-case for some, worst for others
-    sorted_data = list(range(N))
-    # Reverse Sorted Data: Worst-case for many, best for none
-    reverse_sorted_data = list(range(N - 1, -1, -1))
-    input_types = {
-        "Random": random_data,
-        "Sorted": sorted_data,
-        "Reverse Sorted": reverse_sorted_data
-    }
-    for algo_name, algo_func in sorting_algorithms.items():
-        if algo_name == "Bubble Sort" and N > 1000: # Adjusted for practical runtime within lecture demo
-            print(f"Skipping Bubble Sort for N={N} due to O(N^2) time.")
-            continue
-        
-        for data_type, data_arr in input_types.items():
-            time_taken = run_benchmark(algo_func, data_arr)
-            sorting_results_data.append({
-                "Algorithm": algo_name,
-                "N": N,
-                "Data Type": data_type,
-                "Time (ms)": f"{time_taken:.4f}"
-            })
-df_sorting = pd.DataFrame(sorting_results_data)
-print(df_sorting.to_string())
-# Discussion for Part 1: Sorting Algorithms - "Revealing Algorithmic Destiny"
-# This benchmark is our "performance observatory," revealing the true "Time Carpet" of each algorithm.
-# - Bubble Sort (Theoretical: O(N^2) worst/avg, O(N) best): Empirically, for N=1000, its time will show a "quadratic ascent" dramatically outpacing others. Its "linear stroll" on sorted data might be surprisingly quick, but that's a "simplicity bridge" to false hope for large inputs.
-# - Merge Sort (Theoretical: O(N log N) all cases): Shows "consistent precision" across all data types, reflecting its stable O(N log N) performance. Its "space gravity song" (O(N) space) is its primary trade-off.
-# - Heap Sort (Theoretical: O(N log N) all cases): Similar to Merge Sort, but may have slightly different constant factors, showing "predictable robustness." It's "space-divine," making it memory-efficient.
-# - Quick Sort (Theoretical: O(N log N) avg, O(N^2) worst): Will likely be the "speed demon" on random data due to cache efficiency (smaller constant factors). For sorted/reverse data, randomized partitioning should mitigate the O(N^2) "worst-case path," demonstrating its "dice roll strategy" working effectively, but might still be slightly slower than Merge/Heap due to inherent overhead for these particular 'worst-cases'.
-# "Constant Factors" vs. "Asymptotic Revelation": For N=100, we might see "tiny cuts" in performance where constants cause minor deviations from Big O. However, for N=10000+, the "asymptotic revelation" is clear: O(N^2) algorithms become "terminal obsolete."
-# --- Part 2: Searching Benchmark ---
-searching_algorithms = {
-    "Linear Search": linear_search,
-    "Binary Search": binary_search,
-    "Interpolation Search": interpolation_search
-}
-# Artificial Data: Diverse "information landscapes" for searching
-searching_input_sizes = [1000, 10000, 100000]
-searching_results_data = []
-print("\n--- Part 2: Searching Benchmark (Time in ms) ---")
-for N in searching_input_sizes:
-    # Randomly generated sorted array: General case for logarithmic searches
-    random_sorted_data = sorted(list(np.random.randint(0, N * 100, N)))
-    
-    # Uniformly distributed sorted array: Interpolation Search optimal case
-    uniform_sorted_data = list(np.arange(0, N * 10, 10)) # Generates perfect uniform distribution
-    
-    # Highly skewed sorted array: Interpolation Search worst case
-    # Many small values, then a few large values
-    skewed_sorted_data = sorted(list(np.random.randint(0, 100, N - 5)) + list(np.random.randint(N * 50, N * 100, 5)))
-    # Target existing and non-existing
-    target_existing = random_sorted_data[random.randint(0, N - 1)] if N > 0 else 0
-    target_non_existing = N * 1000 + 1 # Guaranteed not in range
-    input_data_types = {
-        "Random Sorted (Exist)": (random_sorted_data, target_existing),
-        "Random Sorted (Non-Exist)": (random_sorted_data, target_non_existing),
-        "Uniform Sorted (Exist)": (uniform_sorted_data, target_existing), # Use target_existing for generic test
-        "Skewed Sorted (Exist)": (skewed_sorted_data, target_existing)   # Use target_existing for generic test
-    }
-    for algo_name, algo_func in searching_algorithms.items():
-        for data_type, (data_arr, target) in input_data_types.items():
-            time_taken = run_benchmark(algo_func, data_arr, target)
-            searching_results_data.append({
-                "Algorithm": algo_name,
-                "N": N,
-                "Data Type": data_type,
-                "Time (ms)": f"{time_taken:.4f}"
-            })
-df_searching = pd.DataFrame(searching_results_data)
-print(df_searching.to_string())
-# Discussion for Part 2: Searching Algorithms - "The Information Hunters' Domain"
-# - Linear Search (Theoretical: O(N)): Its "sequential traversal" makes it predictably slow; the "chaos acceptable" property doesn't save it from its linear "time carpet."
-# - Binary Search (Theoretical: O(log N)): A "super-speed" lookup, demonstrating its efficiency across all sorted data types. It's the "order imperative" detective, consistently fast.
-# - Interpolation Search (Theoretical: O(log log N) avg, O(N) worst):
-#   - On "uniform sorted" data, expect "near-instantaneous wisdom" (O(log log N)), significantly faster than Binary Search for large N, showcasing its "probabilistic estimation" power.
-#   - On "skewed sorted" data, expect a "skewed catastrophe" (O(N)), degrading to linear search, starkly highlighting its "distribution aligned" prerequisite.
-# Implications: This shows why selecting the right "information hunter" requires understanding not just `O(log N)` but also the internal `data landscapes`.
-# --- Part 3: Order Statistics Performance ---
-order_stats_input_sizes = [1000, 10000, 100000]
-order_stats_results_data = []
-print("\n--- Part 3: Order Statistics Benchmark (Time in ms) ---")
-for N in order_stats_input_sizes:
-    random_data_kth = list(np.random.randint(0, N * 10, N))
-    k_median = N // 2 # Finding the median (0-indexed)
-    # Quickselect: The "rank locator" in action
-    time_quickselect = run_benchmark(find_kth_smallest, list(random_data_kth), k_median + 1) # k_median is 0-indexed, find_kth_smallest expects 1-indexed k
-    # Sort & Select: The "time-intensive overhead" approach
-    def sort_and_select_wrapper(arr, k_idx):
-        arr.sort() # Python's Timsort is O(N log N)
-        return arr[k_idx]
-    time_sort_and_select = run_benchmark(sort_and_select_wrapper, list(random_data_kth), k_median)
-    order_stats_results_data.append({
-        "N": N,
-        "K (Median)": k_median + 1,
-        "Algorithm": "Quickselect",
-        "Time (ms)": f"{time_quickselect:.4f}"
-    })
-    order_stats_results_data.append({
-        "N": N,
-        "K (Median)": k_median + 1,
-        "Algorithm": "Sort & Select",
-        "Time (ms)": f"{time_sort_and_select:.4f}"
-    })
-df_order_stats = pd.DataFrame(order_stats_results_data)
-print(df_order_stats.to_string())
-# Discussion for Part 3: Order Statistics - "The Targeted Hunt"
-# - Quickselect (Theoretical: O(N) avg): Empirically, Quickselect is a "single-path optimization" that leads to significantly faster "time savings" for finding the median compared to sorting the entire array. This highlights its "average-case optimal" efficiency.
-# - Sort & Select (Theoretical: O(N log N)): Performance is dominated by the full sorting step, confirming the "time-intensive overhead" when only a single rank is needed.
-# Implications: For real-time data analytics, outlier detection, or any application demanding quick rank information without full sorting, Quickselect is the "efficiency leap" needed.
-# --- Hardcore Problem Solution Test (DataStreamOptimizer) ---
-# This part tests the combined Hardcore problem for a full demonstration.
-# The DataStreamOptimizer class is defined at the end of the previous response's code block.
-class DataStreamOptimizer:
-    def __init__(self, M: int):
-        if M <= 0:
-            raise ValueError("M must be a positive integer.")
-        self.M = M
-        self.unique_elements = set()  # Concept: Hashing for O(1) average uniqueness check
-        self.recent_readings_queue = collections.deque() # Concept: Queues for O(1) recency/sliding window
-        self.sorted_unique_list = [] # Concept: Arrays, implicitly maintained sorted
-    def _update_sorted_list(self):
-        """
-        Pattern: In-place sorting. Rebuilds and sorts the list of current unique elements.
-        Relationship: Optimizes data access for subsequent searches (rank calculation).
-        Time Complexity: O(M log M)
-        """
-        self.sorted_unique_list = sorted(list(self.unique_elements))
-    def add_reading(self, value: int) -> tuple[int, bool]:
-        """
-        Processes a new sensor reading, maintaining M unique recent elements.
-        Calculates rank and criticality.
-        Pattern: Combined "sliding window" (queue + set) and "binary search" (bisect_left).
-        """
-        
-        # --- Handle recency and uniqueness (Sliding Window Pattern) ---
-        # Efficiency: Leveraging O(1) average time of set for existence check
-        is_new_unique = value not in self.unique_elements
-        # Update recency in queue
-        # This part ensures that if an existing value comes in, its recency is updated.
-        # This is crucial for "M most recent unique".
-        # This is an O(M) operation for deque, for very large M a specialized linked list + dict would be O(1).
-        # For typical M in data stream problems, O(M) is acceptable.
-        if value in self.recent_readings_queue:
-            # Remove existing occurrence
-            temp_deque = collections.deque()
-            for q_val in self.recent_readings_queue:
-                if q_val != value: # Only keep other unique values
-                    temp_deque.append(q_val)
-            self.recent_readings_queue = temp_deque
-        self.recent_readings_queue.append(value) # Add to end as most recent
-        # Update unique set and manage M constraint
-        if is_new_unique:
-            self.unique_elements.add(value) # O(1) avg
-        
-        # Evict oldest unique elements if capacity is exceeded
-        # This loop is critical for ensuring only M *unique* elements are kept, based on recency.
-        while len(self.unique_elements) > self.M:
-            evicted_candidate = self.recent_readings_queue.popleft()
-            # If the evicted_candidate is no longer present in the *remaining* recent_readings_queue,
-            # it means its *only* occurrence within the M-window has left, so we can remove it from unique_elements.
-            # This is complex. A simpler way is to check if evicted_candidate is still in recent_readings_queue.
-            # If not, remove from unique_elements.
-            
-            # The most robust way for "M most recent *unique*" with duplicates in queue:
-            # maintain a frequency map for elements in recent_readings_queue.
-            # When popleft, decrement frequency. If freq == 0, remove from unique_elements.
-            
-            # For problem constraints: let's assume `recent_readings_queue` contains values
-            # that are unique *within* the M window and are simply ordered by recency.
-            # So, if unique_elements > M, the popped left is the one to remove.
-            
-            # Simplified eviction for the problem's context "oldest unique reading must be removed":
-            # Assuming recent_readings_queue strictly defines recency for currently unique items
-            # This is the "single point of failure" for strict uniqueness/recency tracking.
-            if evicted_candidate in self.unique_elements and evicted_candidate not in self.recent_readings_queue: # This check ensures it's truly gone.
-                self.unique_elements.remove(evicted_candidate)
-            # If evicted_candidate IS still in recent_readings_queue (as a duplicate, refreshed),
-            # then we don't remove it from unique_elements. It's not the "oldest unique".
-            # The while loop will continue popping until a value *not* present elsewhere in the queue
-            # is found to be truly old and unique for removal from the set.
-            
-            # Rebuild sorted list after any structural change (addition/eviction of unique elements)
-            self._update_sorted_list() # O(M log M)
-        # --- Calculate rank (Searching Concept) ---
-        # Pattern: Binary Search - bisect_left for efficient rank lookup (O(log M))
-        # Property: Array must be sorted (self.sorted_unique_list is kept sorted)
-        rank = bisect.bisect_left(self.sorted_unique_list, value) + 1
-        
-        # --- Determine criticality ---
-        is_critical = rank <= self.M * 0.1
-        return rank, is_critical
-    def get_current_readings(self) -> list[int]:
-        """
-        Returns the currently maintained M unique readings in sorted order.
-        Time Complexity: O(M)
-        """
-        return list(self.sorted_unique_list)
-
-print(f"\n--- Final Hardcore Test (M={M_hardcore_test}) ---")
-optimizer_hardcore_test_final = DataStreamOptimizer(M_hardcore_test)
-readings_stream_final = [50, 20, 80, 10, 60, 30, 90, 40, 70, 15, 25, 55, 85, 5, 95, 100, 10, 20] # Same stream as before
-hardcore_results_final = []
-for i, reading in enumerate(readings_stream_final):
-    # Benchmark each add_reading operation
-    start_time = time.perf_counter()
-    rank, critical = optimizer_hardcore_test_final.add_reading(reading)
-    end_time = time.perf_counter()
-    time_taken = (end_time - start_time) * 1000
-    current_readings = optimizer_hardcore_test_final.get_current_readings()
-    hardcore_results_final.append({
-        "Step": i + 1,
-        "Added Value": reading,
-        "Rank": rank,
-        "Critical": critical,
-        "Current Readings": current_readings,
-        "Time (ms)": f"{time_taken:.4f}"
-    })
-df_hardcore_final = pd.DataFrame(hardcore_results_final)
-print(df_hardcore_final.to_string())
-# Discussion for Hardcore Problem Solution: "The Data Flow Harmonizer"
-# This "Data Stream Optimizer" is a "creativity engine," demonstrating how foundational algorithms and data structures combine to solve complex, real-world problems. It's a "data flow harmonizer" for high-frequency streams.
-# - Efficiency & Scalability: The primary bottleneck, `_update_sorted_list`, is `O(M log M)`. While `set` and `deque` offer `O(1)` average operations for uniqueness and recency, the requirement to *keep* the active `M` unique elements sorted for `rank` forces this sorting overhead. For `M` small enough (e.g., M < 1000), `M log M` is acceptable for a "performance optimal" system. If `M` were extremely large, a more advanced data structure like a balanced Binary Search Tree or a Fenwick tree with an underlying sorted list (for O(log M) updates and rank queries) would provide "infinite scale" for updates.
-# - Modifiability & Testability: The class structure is "dev-friendly by design," allowing internal data structures to be swapped (e.g., replacing `list.sort()` with a more efficient, `O(log M)` sorted structure if needed) without altering the external API. Each method is a testable unit.
-# - Reliability: Robust handling of edge cases (empty lists, duplicates, boundary `M` values) ensures consistent and correct behavior, making it a "robust security" measure for data integrity.
-# This problem is a "semantic catalyst," forcing a deep understanding of each component's properties and how they interact in a "symbiotic dance" to meet system requirements, truly making "clarity immediate" in a complex data stream.
+    return None
+# Demonstrating interpolation search on uniform data
+print(f"Interpolation search for {target_present_interpolation} in uniform data: Index = {interpolation_search(sorted_uniform_data, target_present_interpolation)}")
+print(f"Interpolation search for {target_absent_interpolation} in uniform data: Index = {interpolation_search(sorted_uniform_data, target_absent_interpolation)}")
+# Demonstrating interpolation search on non-uniform data (expect O(N) behavior)
+print(f"Interpolation search for {target_non_uniform} in non-uniform data: Index = {interpolation_search(non_uniform_data, target_non_uniform)}")
 ```
-<p><small><strong>Software Engineering Principles</strong>: <strong>Efficiency</strong>: The solution showcases pragmatic efficiency, making calculated trade-offs (e.g., <code>O(M log M)</code> sort for <code>O(log M)</code> search). <strong>Scalability</strong>: The <code>DataStreamOptimizer</code> scales effectively for continuous input streams, with performance bounds tied to <code>M</code>, not total stream size. <strong>Modifiability</strong>: The class design allows for future "plug-and-play" of more advanced sorting or balanced tree structures for <code>sorted_unique_list</code> if <code>M</code> scales beyond current efficiency. <strong>Testability</strong>: The structured data and clear return values make the <code>DataStreamOptimizer</code>'s behavior precisely testable across various scenarios. <strong>Reliability</strong>: Robust handling of edge cases (empty lists, duplicates, boundary <code>M</code> values) ensures consistent and correct behavior.</small></p>
-</div>
+<h2 id="hardcore-combined-problem-dynamic-package-prioritization-with-adaptive-dispatch-system">5. Hardcore Combined Problem: Dynamic Package Prioritization with Adaptive Dispatch System</h2>
+<p>This problem challenges you to build a `PackageDispatcher` system that manages incoming packages for a global humanitarian aid organization. The system must efficiently handle additions, targeted retrievals, ID lookups, and dynamic re-prioritization, all while adhering to strict performance and memory constraints.</p>
+<p><strong>Scenario:</strong> A global humanitarian aid organization dispatches emergency supplies (packages) to disaster zones. Each <span class="math"><i>Package</i></span> has a <span class="math"><i>unique_id</i></span> (string), <span class="math"><i>destination_zone</i></span> (integer 1-100), <span class="math"><i>aid_type</i></span> (string: "Food", "Medical", "Water", "Shelter"), <span class="math"><i>urgency_score</i></span> (float 0.0-1.0, higher is more urgent), and <span class="math"><i>received_timestamp</i></span> (integer). The system receives packages continuously. Drone operators need to:</p>
+<ol>
+    <li><strong>Quickly add new packages.</strong></li>
+    <li><strong>Retrieve all packages for a specific <span class="math"><i>aid_type</i></span>, sorted by <span class="math"><i>urgency_score</i></span> (descending) then <span class="math"><i>received_timestamp</i></span> (ascending).</strong></li>
+    <li><strong>Identify if any package with a certain <span class="math"><i>unique_id</i></span> exists in the system.</strong></li>
+    <li><strong>Extract the top <span class="math"><i>K</i></span> most urgent packages globally, with ties broken by <span class="math"><i>received_timestamp</i></span> (ascending).</strong></li>
+    <li><strong>Re-prioritize packages based on an emergency update (e.g., all "Food" packages in <span class="math"><i>zone_range</i></span> now have <span class="math"><i>urgency_score</i></span> 1.0).</strong></li>
+</ol>
+<p><strong>Constraints:</strong></p>
+<ul>
+    <li><span class="math"><i>destination_zone</i></span> is always between 1 and 100.</li>
+    <li><span class="math"><i>urgency_score</i></span> is float between 0.0 and 1.0.</li>
+    <li><span class="math"><i>received_timestamp</i></span> is strictly increasing.</li>
+    <li>The system should be robust and efficient for up to <span class="math">10<sup>6</sup></span> packages.</li>
+</ul>
+<p><strong>Architectural Approach:</strong> The <span class="math"><i>PackageDispatcher</i></span> will maintain multiple internal data structures to optimize different query types. This is a common pattern in large-scale systems where a single data structure cannot efficiently handle all access patterns.</p>
+<p><strong>Python (`package_dispatcher.py`):</strong></p>
+
+```python
+import bisect
+import heapq
+import random
+import time
+class Package:
+    def __init__(self, unique_id: str, destination_zone: int, aid_type: str, urgency_score: float, received_timestamp: int):
+        self.unique_id = unique_id
+        self.destination_zone = destination_zone
+        self.aid_type = aid_type
+        self.urgency_score = urgency_score
+        self.received_timestamp = received_timestamp
+    # Custom comparison for sorting (default for bisect on _all_packages_sorted_by_time)
+    # Primary sort by timestamp, secondary by zone
+    def __lt__(self, other):
+        if self.received_timestamp != other.received_timestamp:
+            return self.received_timestamp &lt; other.received_timestamp
+        return self.destination_zone &lt; other.destination_zone
+    
+    # Custom comparison for Heap based on urgency (min-heap stores -urgency for max-priority)
+    # This __le__ is used when comparing against heap elements in _add_to_top_k_heap implicitly
+    # when heapq.heapreplace compares the new item with the root.
+    def __le__(self, other):
+        if self.urgency_score != other.urgency_score:
+            return self.urgency_score &lt;= other.urgency_score
+        return self.received_timestamp &lt;= other.received_timestamp # For tie-breaking
+    def __repr__(self):
+        return f"Pkg(ID:{self.unique_id}, Zone:{self.destination_zone}, Type:{self.aid_type}, U:{self.urgency_score:.2f}, TS:{self.received_timestamp})"
+class PackageDispatcher:
+    def __init__(self):
+        # 1. Stores all packages, sorted by received_timestamp, then destination_zone for efficient range queries
+        #    and to leverage Python's bisect.
+        self._all_packages_sorted_by_time: list[Package] = [] 
+        
+        # 2. Stores packages grouped by aid_type. Each sub-list is maintained sorted by urgency then timestamp.
+        #    This is for efficient retrieval of specific aid_type packages.
+        self._packages_by_aid_type: dict[str, list[Package]] = {
+            "Food": [], "Medical": [], "Water": [], "Shelter": []
+        }
+        
+        # 3. Stores package_id to Package object mapping for O(1) lookup by ID.
+        self._package_id_map: dict[str, Package] = {}
+        
+        # 4. A min-heap to keep track of the top K urgent packages.
+        #    Stores tuples: (-urgency_score, received_timestamp, Package_object)
+        #    Using -urgency_score to simulate max-heap behavior with a min-heap.
+        self._top_k_heap: list[tuple[float, int, Package]] = []
+        self._k_max_heap_size = 0 # Dynamic K for top-K, to be set by operator
+        # 5. For fast lookups by zone using Radix sort principles (fixed range 1-100)
+        #    This will store lists of packages for each zone.
+        self._packages_by_zone_radix_bins: list[list[Package]] = [[] for _ in range(101)] # Zones 1-100
+    def set_top_k_size(self, k: int) -> None:
+        """Sets the maximum size for the top-k heap."""
+        self._k_max_heap_size = k
+        self._rebuild_top_k_heap() # Rebuild the heap with new K if needed
+    def _rebuild_top_k_heap(self):
+        """Rebuilds the top-k heap from all packages when K changes or after major reprioritization."""
+        self._top_k_heap = []
+        if self._k_max_heap_size == 0:
+            return
+        
+        # Re-insert all packages to correctly populate the heap based on new K
+        for pkg in self._package_id_map.values():
+            self._add_to_top_k_heap(pkg)
+
+    def add_package(self, package: Package) -> None:
+        """
+        Adds a new package to the system, maintaining sorted orders in relevant data structures.
+        SE Principle (Efficiency): Uses bisect for O(log N) insertion into time-sorted list.
+        SE Principle (Scalability): Dictionary lookups are O(1) for direct ID access.
+        """
+        if package.unique_id in self._package_id_map:
+            # Handle duplicate ID: update existing package (more complex, omit for brevity)
+            print(f"Warning: Package with ID {package.unique_id} already exists. Skipping addition.")
+            return
+        # 1. Add to overall time-sorted list (Leveraging Binary Search principles for insertion)
+        # bisect_left finds insertion point, then insert. Amortized O(1) for chronological inserts, O(N) worst-case.
+        bisect.insort_left(self._all_packages_sorted_by_time, package)
+        
+        # 2. Add to aid_type specific list. Each list is kept sorted by urgency (desc), then timestamp (asc).
+        #    Using custom key for bisect.insort_left to achieve this complex sort order. O(M) for insertion.
+        if package.aid_type not in self._packages_by_aid_type:
+            self._packages_by_aid_type[package.aid_type] = []
+        
+        bisect.insort_left(self._packages_by_aid_type[package.aid_type], package, 
+                           key=lambda p: (-p.urgency_score, p.received_timestamp))
+        # 3. Add to ID map. O(1) average.
+        self._package_id_map[package.unique_id] = package
+        # 4. Add to zone-based radix bins. O(1) append.
+        if 1 &lt;= package.destination_zone &lt;= 100:
+            self._packages_by_zone_radix_bins[package.destination_zone].append(package)
+        
+        # 5. Add to top-K heap. O(log K).
+        self._add_to_top_k_heap(package)
+
+    def _add_to_top_k_heap(self, package: Package):
+        """Helper to add a package to the top-K heap, maintaining its size."""
+        if self._k_max_heap_size > 0:
+            # Store (-urgency_score) to make it a min-heap based on urgency (smallest -urgency is highest urgency)
+            heap_entry = (-package.urgency_score, package.received_timestamp, package)
+            if len(self._top_k_heap) &lt; self._k_max_heap_size:
+                heapq.heappush(self._top_k_heap, heap_entry)
+            else:
+                # Compare new entry with the smallest item in the heap (root)
+                # If new entry is "smaller" (i.e., more urgent), replace the root
+                if heap_entry &lt; self._top_k_heap[0]: # This comparison uses the tuple's lexicographical order
+                    heapq.heapreplace(self._top_k_heap, heap_entry)
+
+    def search_package_by_id(self, unique_id: str) -> Package | None:
+        """
+        Searches for a package by its unique ID. O(1) expected time.
+        SE Principle (Efficiency): Dictionary lookup for direct access.
+        """
+        return self._package_id_map.get(unique_id)
+    def get_packages_by_aid_type(self, aid_type: str) -> list[Package]:
+        """
+        Retrieves packages of a specific aid_type, already sorted by urgency (desc) then timestamp (asc).
+        SE Principle (Modifiability): Provides filtered, pre-sorted view of data.
+        """
+        return list(self._packages_by_aid_type.get(aid_type, [])) # Return a copy to prevent external modification
+    def get_top_k_urgent_packages(self) -> list[Package]:
+        """
+        Extracts the top K most urgent packages globally.
+        SE Principle (Efficiency, Testability): Uses heap for O(K log K) extraction from heap, then sorting.
+        """
+        if not self._top_k_heap:
+            return []
+        
+        # Create a sorted list from the heap elements
+        # The heap stores (-urgency, timestamp, pkg). Sorting this list directly
+        # will give the most urgent (lowest -urgency) first, then lowest timestamp.
+        results = sorted([item[2] for item in self._top_k_heap], 
+                         key=lambda p: (-p.urgency_score, p.received_timestamp))
+        return results
+    def _merge_sort_packages(self, packages_list: list[Package], key_func) -> list[Package]:
+        """Generic merge sort for Package objects, custom key for sorting."""
+        if len(packages_list) &lt;= 1:
+            return packages_list
+        mid = len(packages_list) // 2
+        left_half = self._merge_sort_packages(packages_list[:mid], key_func)
+        right_half = self._merge_sort_packages(packages_list[mid:], key_func)
+        
+        merged = []
+        i = j = 0
+        while i &lt; len(left_half) and j &lt; len(right_half):
+            # Use key_func for custom comparison
+            if key_func(left_half[i]) &lt;= key_func(right_half[j]): 
+                merged.append(left_half[i])
+                i += 1
+            else:
+                merged.append(right_half[j])
+                j += 1
+        merged.extend(left_half[i:])
+        merged.extend(right_half[j:])
+        return merged
+    def reprioritize_packages(self, aid_type: str, zone_range: tuple[int, int], new_urgency: float) -> None:
+        """
+        Re-prioritizes packages based on an emergency update.
+        SE Principle (Reliability): Ensures consistent updates across all internal structures.
+        """
+        if aid_type not in self._packages_by_aid_type:
+            return
+        packages_to_update = []
+        
+        # Find packages matching aid_type and zone_range (using _packages_by_zone_radix_bins for efficiency)
+        # This leverages the binning structure (Radix Sort principle) for fast zone filtering.
+        for zone in range(zone_range[0], zone_range[1] + 1):
+            if 1 &lt;= zone &lt;= 100:
+                for pkg in self._packages_by_zone_radix_bins[zone]:
+                    if pkg.aid_type == aid_type:
+                        packages_to_update.append(pkg)
+        
+        updated_any = False
+        for pkg in packages_to_update:
+            if pkg.urgency_score != new_urgency:
+                pkg.urgency_score = new_urgency
+                updated_any = True
+        
+        if updated_any:
+            # Rebuild _packages_by_aid_type for the affected type using Merge Sort for stability and guaranteed O(M log M).
+            if aid_type in self._packages_by_aid_type:
+                self._packages_by_aid_type[aid_type] = self._merge_sort_packages(
+                    self._packages_by_aid_type[aid_type], 
+                    key=lambda p: (-p.urgency_score, p.received_timestamp) # Sort key for urgency desc, time asc
+                )
+            # Rebuild the top-K heap as urgencies have changed. This is an O(N log K) operation.
+            self._rebuild_top_k_heap()
+        print(f"Reprioritized {len(packages_to_update)} '{aid_type}' packages in zone range {zone_range} to urgency {new_urgency:.2f}.")
+# Artificial Data for demonstration
+initial_packages = [
+    Package("P001", 15, 0.85, 100),
+    Package("P002", 5, 0.92, 101),
+    Package("P003", 15, 0.70, 102),
+    Package("P004", 30, 0.95, 103),
+    Package("P005", 5, 0.88, 104),
+    Package("P006", 50, 0.60, 105),
+    Package("P007", 15, 0.99, 106),
+    Package("P008", 70, 0.75, 107),
+    Package("P009", 30, 0.80, 108),
+    Package("P010", 50, 0.91, 109),
+    Package("P011", 10, 0.98, 110),
+    Package("P012", 5, 0.88, 111), # Same urgency as P005, P012 is newer
+    Package("P013", 15, 0.95, 112), # Same urgency as P004, P013 is newer
+    Package("P014", 70, 0.99, 113), # Same urgency as P007, P014 is newer
+    Package("P015", 30, 0.65, 114)
+]
+# New package arriving
+new_package = Package("P016", 20, 0.995, 115) # Very urgent, new timestamp
+```
+<p><strong>Demonstration of <span class="math"><i>PackageDispatcher</i></span>:</strong></p>
+
+```python
+dispatcher = PackageDispatcher()
+dispatcher.set_top_k_size(3) # Set top K to 3
+print("--- Adding initial packages ---")
+for p in initial_packages:
+    dispatcher.add_package(p)
+print("\nDispatcher state after initial additions:")
+# Note: _all_packages_sorted_by_time is sorted by Package.__lt__ (timestamp, then zone)
+print("All packages sorted by time:", dispatcher._all_packages_sorted_by_time)
+print("Packages by Aid Type (Food):", dispatcher._packages_by_aid_type["Food"]) # Sorted by urgency desc, ts asc
+print("Packages by Aid Type (Medical):", dispatcher._packages_by_aid_type.get("Medical", "None"))
+print("Top 3 Urgent Packages (initial):", dispatcher.get_top_k_urgent_packages())
+# Add new package
+print("\n--- Adding new package P016 ---")
+dispatcher.add_package(new_package)
+print("All packages sorted by time:", dispatcher._all_packages_sorted_by_time)
+print("Top 3 Urgent Packages after P016:", dispatcher.get_top_k_urgent_packages())
+
+# Test search by ID
+print("\n--- Searching for packages ---")
+found_pkg = dispatcher.search_package_by_id("P007")
+print(f"Search P007: {found_pkg}")
+not_found_pkg = dispatcher.search_package_by_id("P999")
+print(f"Search P999: {not_found_pkg}")
+# Test get packages by aid type
+print("\n--- Retrieving packages by aid type ---")
+food_packages = dispatcher.get_packages_by_aid_type("Food")
+print("Food packages (sorted by urgency):", food_packages)
+medical_packages = dispatcher.get_packages_by_aid_type("Medical")
+print("Medical packages:", medical_packages)
+# Test get top K
+print("\n--- Getting Top K Urgent Packages ---")
+top_k_packages = dispatcher.get_top_k_urgent_packages()
+print("Current Top 3 Urgent Packages:", top_k_packages)
+dispatcher.set_top_k_size(2) # Change K
+print("Top 2 Urgent Packages (after changing K):", dispatcher.get_top_k_urgent_packages())
+
+# Test reprioritization
+print("\n--- Reprioritizing packages ---")
+# Reprioritize all "Food" packages in zones 10-30 to max urgency
+dispatcher.reprioritize_packages(aid_type="Food", zone_range=(10, 30), new_urgency=1.0)
+print("Packages by Aid Type (Food) after reprioritization:", dispatcher._packages_by_aid_type["Food"])
+print("Top 2 Urgent Packages after reprioritization:", dispatcher.get_top_k_urgent_packages())
+```
+<h3>Overall System Complexity Analysis and Optimization Discussion:</h3>
+<ol>
+    <li>
+        <h4><span class="math">add_package(package: Package)</span>:</h4>
+        <ul>
+            <li>
+                <span class="math">_all_packages_sorted_by_time</span>: Insertion using <span class="math">bisect.insort_left</span> for chronological data (strictly increasing <span class="math">received_timestamp</span>) is amortized <span class="math"><i>O</i>(1)</span> for the shifting of elements in many cases, as insertions are usually at the end. However, a single insertion into a long list is worst-case <span class="math"><i>O</i>(<i>N</i>)</span> if it happens at the beginning. Finding the insertion point is <span class="math"><i>O</i>(log <i>N</i>)</span>.
+                <small>Source: Python <code>bisect</code> documentation; Introduction to Algorithms (Cormen et al.), Chapter 2.1.</small>
+            </li>
+            <li>
+                <span class="math">_packages_by_aid_type</span>: Insertion into each <span class="math">aid_type</span> sub-list. If <span class="math"><i>M</i></span> is the number of packages for a specific <span class="math">aid_type</span>, finding the insertion point is <span class="math"><i>O</i>(log <i>M</i>)</span> and inserting is <span class="math"><i>O</i>(<i>M</i>)</span>.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 10.2.</small>
+            </li>
+            <li>
+                <span class="math">_package_id_map</span>: Dictionary insertion is <span class="math"><i>O</i>(1)</span> on average.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 11.</small>
+            </li>
+            <li>
+                <span class="math">_packages_by_zone_radix_bins</span>: Appending to a list is <span class="math"><i>O</i>(1)</span> on average.
+            </li>
+            <li>
+                <span class="math">_add_to_top_k_heap</span>: Heap push/replace is <span class="math"><i>O</i>(log <i>K</i>)</span>, where <span class="math"><i>K</i></span> is the heap size.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 6.5.</small>
+            </li>
+            <li>
+                <strong>Total for <span class="math">add_package</span>:</strong> Dominated by list insertions, so <span class="math"><i>O</i>(<i>N</i> + <i>M</i> + log <i>K</i>)</span>.
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4><span class="math">search_package_by_id(unique_id: str)</span>:</h4>
+        <ul>
+            <li>
+                Dictionary lookup (<span class="math">_package_id_map</span>) is <span class="math"><i>O</i>(1)</span> on average.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 11 (Hash Tables).</small>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4><span class="math">get_packages_by_aid_type(aid_type: str)</span>:</h4>
+        <ul>
+            <li>
+                Dictionary lookup (<span class="math"><i>O</i>(1)</span>) to get the pre-sorted list, then returns a copy (<span class="math"><i>O</i>(<i>M</i>)</span>, where <span class="math"><i>M</i></span> is the number of packages of that type).
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 10.2.</small>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4><span class="math">get_top_k_urgent_packages()</span>:</h4>
+        <ul>
+            <li>
+                Extracting elements from the heap and then sorting them for presentation. Copying heap contents is <span class="math"><i>O</i>(<i>K</i>)</span>. Sorting the <span class="math"><i>K</i></span> elements is <span class="math"><i>O</i>(<i>K</i> log <i>K</i>)</span>.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 6.5 (Priority queues).</small>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4><span class="math">reprioritize_packages(aid_type: str, zone_range: tuple[int, int], new_urgency: float)</span>:</h4>
+        <ul>
+            <li>
+                <strong>Finding packages:</strong> Iterating through <span class="math">_packages_by_zone_radix_bins</span> for the specified <span class="math">destination_zone</span> range is <span class="math"><i>O</i>(100 &sdot; <i>P</i><sub>avg</sub>)</span>, where <span class="math"><i>P</i><sub>avg</sub></span> is the average number of packages per zone. This is efficient due to Radix Sort's binning principle, allowing direct access to pre-categorized packages by zone. Filtering by <span class="math">aid_type</span> on these smaller zone-specific lists is also efficient.
+            </li>
+            <li>
+                <strong>Updating <span class="math">urgency_score</span>:</strong> <span class="math"><i>O</i>(<i>U</i>)</span> where <span class="math"><i>U</i></span> is the number of packages updated.
+            </li>
+            <li>
+                <strong>Re-sorting <span class="math">_packages_by_aid_type</span>:</strong> After updates, the affected <span class="math">aid_type</span> list must be re-sorted. Using Merge Sort guarantees <span class="math"><i>O</i>(<i>M</i> log <i>M</i>)</span> time, where <span class="math"><i>M</i></span> is the number of packages of that <span class="math">aid_type</span>, and ensures stability for packages with identical new urgencies.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 2.2 (Merge Sort algorithm and <span class="math"><i>O</i>(<i>N</i> log <i>N</i>)</span> complexity).</small>
+            </li>
+            <li>
+                <strong>Rebuilding <span class="math">_rebuild_top_k_heap</span>:</strong> This involves iterating through all <span class="math"><i>N</i></span> packages in <span class="math">_package_id_map</span> and re-inserting them into the heap, leading to <span class="math"><i>O</i>(<i>N</i> log <i>K</i>)</span>. This operation can be computationally intensive for very large <span class="math"><i>N</i></span> but is necessary to ensure the top-<span class="math"><i>K</i></span> heap accurately reflects all urgency changes across the entire dataset.
+            </li>
+            <li>
+                <strong>Total for <span class="math">reprioritize_packages</span>:</strong> Dominated by the heap rebuild: <span class="math"><i>O</i>(100 &sdot; <i>P</i><sub>avg</sub> + <i>M</i> log <i>M</i> + <i>N</i> log <i>K</i>)</span>.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 8.3 (Radix Sort principles), Chapter 6.5 (Priority queues).</small>
+            </li>
+        </ul>
+    </li>
+</ol>
+<h3>Potential Further Optimizations (Conceptual Discussion):</h3>
+<ul>
+    <li>
+        <h4 id="zone-based-filtering-with-radix-sort-principles-for-query_by_zone_range">Zone-based Filtering with Radix Sort Principles for <span class="math">query_by_zone_range</span>:</h4>
+        <p>
+            The current implementation of <span class="math">query_by_zone_range</span> implicitly uses the <span class="math">_packages_by_zone_radix_bins</span> for fast access to zone-specific packages. If filtering by <span class="math">destination_zone</span> was the <em>primary</em> sorting key for a main data structure, similar to how <span class="math">_all_packages_sorted_by_time</span> is currently used for timestamp, we could achieve even greater efficiency.
+        </p>
+        <ul>
+            <li>
+                <strong>Current State:</strong> A zone range query on <span class="math">_all_packages_sorted_by_time</span> would involve iterating and filtering a subset of <span class="math"><i>N</i></span> packages, which is <span class="math"><i>O</i>(<i>N</i><sub>filtered</sub>)</span>.
+            </li>
+            <li>
+                <strong>Optimization using Radix:</strong> Since <span class="math">destination_zone</span> is in a small, fixed range (1-100), the <span class="math">_packages_by_zone_radix_bins</span> already provide pre-categorized packages by zone. To optimize <span class="math">query_by_zone_range</span>:
+                <ol>
+                    <li>Directly access the lists in <span class="math">_packages_by_zone_radix_bins</span> for <span class="math">zone_range[0]</span> to <span class="math">zone_range[1]</span>. This is an <span class="math"><i>O</i>(number of zones in range)</span> operation.</li>
+                    <li>Concatenate these lists (<span class="math"><i>O</i>(<i>S</i>)</span> where <span class="math"><i>S</i></span> is the total number of packages within the queried zone range).</li>
+                    <li>Within this concatenated list, filter by <span class="math">priority_score</span> and then sort the resulting subset by <span class="math">received_timestamp</span> and <span class="math">package_id</span>. This final sort would be <span class="math"><i>O</i>(<i>S</i> log <i>S</i>)</span> using Merge Sort for stability.</li>
+                </ol>
+            </li>
+            <li>
+                <strong>Complexity Shift:</strong> This approach transforms the initial filtering from potentially <span class="math"><i>O</i>(<i>N</i>)</span> on the global time-sorted list to <span class="math"><i>O</i>(number of zones in range + number of packages in range)</span>. This provides <span class="math"><i>O</i>(1)</span> access to all packages within a single zone bin (after initial setup) and is highly efficient for targeted zone queries.
+                <small>Source: Introduction to Algorithms (Cormen et al.), Chapter 8.2 (Counting Sort as a stable sub-sort), Chapter 8.3 (Radix Sort for fixed-range keys).</small>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h2 id="key-software-engineering-principles">6. Key Software Engineering Principles</h2>
+<p>These principles are not just theoretical constructs but practical guides for building robust, high-performance systems that can handle the demands of real-world applications.</p>
+<ul>
+    <li><strong>Efficiency:</strong> Multiple data structures (map, sorted lists, heap, radix bins) are strategically chosen to optimize specific operations for the expected query patterns.</li>
+    <li><strong>Scalability:</strong> Each data structure (e.g., <span class="math">_package_id_map</span> for <span class="math"><i>O</i>(1)</span> access, <span class="math">bisect</span> for <span class="math"><i>O</i>(log <i>N</i>)</span> insertion) is selected for its efficient scaling with increasing package count.</li>
+    <li><strong>Modifiability:</strong> The <span class="math"><i>Package</i></span> class, clear method names, and explicit <span class="math">aid_type</span> values allow easy extension and maintenance.</li>
+    <li><strong>Testability:</strong> Each method is designed to be testable with specific inputs and predictable outputs. Type annotations in Python and TypeScript interfaces enforce clear contracts.</li>
+    <li><strong>Reliability:</strong> Handling duplicate package IDs (even if simplified), type checks (via TypeScript), and clear assumptions about input properties (<span class="math">received_timestamp</span> strictly increasing) contribute to robustness. The use of Merge Sort for reprioritization ensures stability and predictable performance.</li>
+</ul>
 <div class="footnotes">
     <ol>
-        <li id="fn:1"><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 3, "Characterizing Running Times." <a href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></li>
-        <li id="fn:2"><code>MathematicsForComputerScience_Lehman-Leighton-Meyer_2015</code>: Chapter 14, "Sums and Asymptotics." <a href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></li>
-        <li id="fn:3"><code>Introduction to Algorithms (Cormen et al.)</code>: Chapter 3, "Characterizing Running Times." <a href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></li>
+        <li id="fn1">
+            <p>Chapter 2.2-3 (Exercise 2.1-4 implicitly asks for this).
+            <a href="#fnref1" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn2">
+            <p>Chapter 2.3-6 (describes binary search and its O(lg n) complexity).
+            <a href="#fnref2" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn3">
+            <p>Chapter 2.1 (discusses <span class="math"><i>O</i>(<i>n</i><sup>2</sup>)</span> for Insertion Sort, similar for Bubble Sort).
+            <a href="#fnref3" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn4">
+            <p>Chapter 2.3.2 (Merge Sort procedure, recursion), Chapter 4.4 (Recursion Tree Method for analysis).
+            <a href="#fnref4" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn5">
+            <p>Chapter 6 (Heapsort, Build-Max-Heap, Max-Heapify and their complexities).
+            <a href="#fnref5" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn6">
+            <p>Chapter 7.1 (Partitioning), 7.3 (Randomized Quicksort), 7.4.2 (Expected running time analysis).
+            <a href="#fnref6" class="footnote-ref">↩</a></p>
+        </li>
+        <li id="fn7">
+            <p>Chapter 8.3 (Radix Sort algorithm and complexity).
+            <a href="#fnref7" class="footnote-ref">↩</a></p>
+        </li>
     </ol>
+</div>
 </div>
 </body>
 </html>

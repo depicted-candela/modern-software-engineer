@@ -19,6 +19,7 @@
 --header-font: 'Lato', 'Oracle Sans', 'Helvetica Neue', Arial, sans-serif;
 --body-font: 'Roboto', 'Georgia', Times, serif;
 --code-font: 'Fira Code', 'Oracle Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+--math-font: 'Georgia', 'Cambria', 'Times New Roman', serif;
 
 /* Animation variables */
 --transition-speed: 0.4s;
@@ -65,6 +66,7 @@ radial-gradient(circle at 10% 20%, #2a2d2a 0%, transparent 20%),
 radial-gradient(circle at 90% 80%, #2a2d2a 0%, transparent 20%);
 overflow-x: hidden;
 font-size: 1.2rem;
+counter-reset: equation;
 /* user-select: none; */ /* Allow text selection */
 }
 
@@ -916,4 +918,173 @@ margin-top: 5px;
 
 .grid-cell li {
 font-size: 1em;
+}
+
+
+/* --- Custom Styles for Inline HTML Math --- */
+/*
+    This section provides styles for rendering mathematical notation using
+    standard HTML tags (<i>, <sup>, <sub>, <span>) without external libraries.
+    It's designed to be cohesive with the existing theme.
+*/
+
+/* 1. Main container for a math expression */
+.math {
+    display: inline-flex; /* Use flexbox for better alignment of children */
+    align-items: center;  /* Vertically align elements like fractions */
+    font-family: var(--math-font); /* Use a serif font for clarity */
+    color: var(--secondary-color); /* Slightly brighter than normal text */
+    white-space: nowrap; /* Prevent expressions from breaking across lines */
+    font-size: 1.1em; /* Make math stand out slightly */
+    transition: all 0.3s ease;
+}
+
+.math:hover {
+    color: #ffffff; /* Brighten on hover */
+    text-shadow: 0 0 6px var(--primary-color); /* Add a subtle glow */
+}
+
+/* 2. Style for variables (italicized and accented) */
+.math i, .math em {
+    color: var(--accent-color); /* Use accent color for variables */
+    font-style: italic;
+    padding: 0 0.1em; /* Add a tiny bit of horizontal space */
+}
+
+/* 3. Improved Superscripts and Subscripts */
+.math sup, .math sub {
+    font-size: 0.75em;
+    line-height: 0; /* Prevents affecting the line-height of the paragraph */
+    position: relative;
+    vertical-align: baseline;
+}
+
+.math sup {
+    top: -0.6em; /* Adjust vertical position */
+}
+
+.math sub {
+    top: 0.3em; /* Adjust vertical position */
+}
+
+/* 4. Custom Fraction Style */
+/* HTML structure: <span class="fraction"><span class="num">a</span><span class="den">b</span></span> */
+.math .fraction {
+    display: inline-flex;
+    flex-direction: column; /* Stack numerator and denominator */
+    text-align: center;
+    position: relative;
+    vertical-align: middle;
+    margin: 0 0.2em;
+    font-size: 0.9em; /* Make fractions slightly smaller */
+}
+
+.math .num {
+    padding: 0 0.2em;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.math .den {
+    padding: 0 0.2em;
+}
+
+/* 5. Custom Radical (Square Root) Style */
+/* HTML structure: <span class="radical">&radic;<span class="radicand">x+y</span></span> */
+.math .radical {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.math .radical-symbol {
+    font-size: 1.5em; /* Make the root symbol larger */
+    margin-right: 2px;
+    color: var(--primary-color);
+}
+
+.math .radicand {
+    border-top: 1px solid var(--primary-color);
+    padding: 1px 3px 0 3px;
+}
+
+/* 6. Style for large operators like Summation/Integral */
+.math .large-op {
+    font-size: 1.6em;
+    margin-right: 2px;
+    color: var(--primary-color);
+    vertical-align: middle;
+}
+
+
+/* --- Custom Styles for Display (Block) HTML Math --- */
+/*
+    This section styles block-level math expressions that should appear
+    centered on their own line. It includes a container, larger font sizes,
+    and automatic equation numbering.
+*/
+
+/* 2. The main display container for a block-level equation */
+.math-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 2.5em auto; /* Provide vertical spacing and center the block */
+    padding: 1.5em 2em; /* Generous padding around the math */
+    
+    background-color: var(--code-background);
+    border: 1px solid var(--code-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--box-shadow-color);
+    
+    max-width: 90%; /* Prevent very short equations from looking too wide */
+    overflow-x: auto; /* Allow scrolling for very long equations */
+    position: relative; /* Needed for the equation number positioning */
+    
+    /* Re-use the content slide-up animation for a cohesive feel */
+    opacity: 0;
+    animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.2s; /* Slight delay after paragraph */
+
+    transition: 
+        border-color var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        transform var(--transition-speed) ease;
+}
+
+.math-display:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(160, 193, 184, 0.3); /* The signature green glow */
+}
+
+/* 3. Style the math inside the display block to be larger */
+.math-display .math {
+    font-size: 1.4em; /* Significantly larger for display emphasis */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Add depth */
+}
+
+/* No need to redefine .math i, .fraction, etc. They are inherited and scaled! */
+
+/* 4. Automatic Equation Numbering */
+/* This will add (1), (2), (3)... to each .math-display block */
+.math-display {
+    counter-increment: equation; /* Increment the number for each block */
+}
+
+.math-display::after {
+    content: '(' counter(equation) ')'; /* Display as (1), (2), etc. */
+    position: absolute;
+    bottom: 0.8em;
+    right: 1.2em;
+    
+    font-family: var(--body-font);
+    font-size: 0.9em;
+    color: var(--footnote-color);
+    
+    transition: color var(--transition-speed) ease;
+}
+
+.math-display:hover::after {
+    color: var(--secondary-color); /* Brighten the number on hover */
 }
