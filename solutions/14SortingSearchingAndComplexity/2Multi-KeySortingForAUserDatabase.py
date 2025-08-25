@@ -35,5 +35,38 @@ def generate_user_data(size=1000):
     return users
 
 user_database = generate_user_data()
+original_user_database = user_database.copy()
 
-print(user_database, indent=2)
+database_sorted_by_date = sorted(
+    user_database, 
+    key=lambda x: x['last_login_date'], 
+    reverse=True
+    )
+
+level_orders = {'Admin': 0, 'Premium': 1, 'User': 2}
+database_sorted_by_date_and_level = sorted(
+    database_sorted_by_date, 
+    key=lambda x: level_orders[x['account_level']]
+    )
+
+def validate_multi_key_sort(sorted_users):
+    level_order = {"Admin": 0, "Premium": 1, "User": 2}
+
+    for i in range(len(sorted_users) - 1):
+        current_user = sorted_users[i]
+        next_user = sorted_users[i + 1]
+
+        current_level_val = level_order[current_user["account_level"]]
+        next_level_val = level_order[next_user["account_level"]]
+
+        # Primary key check
+        assert current_level_val <= next_level_val, f"Primary key (account_level) sort failed at index {i}."
+
+        # Secondary key check (if primary keys are equal)
+        if current_level_val == next_level_val:
+            assert current_user["last_login_date"] >= next_user["last_login_date"], \
+                f"Secondary key (last_login_date) sort failed for account level {current_user['account_level']} at index {i}."
+
+    print("Multi-Key Sort Validation Passed.")
+
+validate_multi_key_sort(database_sorted_by_date_and_level)
